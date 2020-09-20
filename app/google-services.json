@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "334553520115",
+    "firebase_url": "https://stockfarm-1600591177826.firebaseio.com",
+    "project_id": "stockfarm-1600591177826",
+    "storage_bucket": "stockfarm-1600591177826.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334553520115:android:94d55ba3c30d2f8211e486",
+        "android_client_info": {
+          "package_name": "com.example.stockfarm_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334553520115-vvr8gvgu7nmmodphl1l3jk3pnksgtlmi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stockfarm_app",
+            "certificate_hash": "42d4b4d05752fa38ba38bde2be6851a6d7c55f50"
+          }
+        },
+        {
+          "client_id": "334553520115-lkejcaefjo1orri5lntuqksnlr1ssgtn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNLhNDmo1uVvLrwNUDNsZLWQh879R2pjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334553520115-lkejcaefjo1orri5lntuqksnlr1ssgtn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

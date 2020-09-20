@@ -1,0 +1,2 @@
+rootProject.name='StockFarm_App'
+include ':app'
