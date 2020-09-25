@@ -1,0 +1,283 @@
+package com.example.stockfarm_app;
+
+import androidx.annotation.NonNull;
+
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.stockfarm_app.data.UserData;
+import com.google.android.gms.auth.api.signin.*;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.*;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.gson.Gson;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener,
+        OnCompleteListener<DocumentSnapshot> {
+    int RC_GOOGLE_SIGN_IN = 646;
+    StockFarmApplication app;
+    LoginActivity activity;
+    private GoogleSignInClient googleClient;
+    private FirebaseAuth mAuth;
+    EditText emailBox;
+    EditText passwordBox;
+    Button logInButton;
+    SignInButton googleButton;
+    AlertDialog loadingAlert;
+    View loadingView;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        app = (StockFarmApplication) getApplication();
+        activity = this;
+        emailBox = findViewById(R.id.email_box);
+        passwordBox = findViewById(R.id.password_box);
+        logInButton = findViewById(R.id.login_button);
+        TextWatcher textListen = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                logInButtonEnabler();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                logInButtonEnabler();
+            }
+        };
+        emailBox.addTextChangedListener(textListen);
+        passwordBox.addTextChangedListener(textListen);
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        googleClient = GoogleSignIn.getClient(this, gso);
+        mAuth = FirebaseAuth.getInstance();
+        googleButton = findViewById(R.id.sign_in_button);
+        googleButton.setSize(SignInButton.SIZE_STANDARD);
+        googleButton.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            openLoadingWindow();
+            app.getUserById(currentUser.getUid(), this);
+            if (app.userData == null) // the logged-in user does'nt have an existing app account.
+            {
+//                app.generateAccountGoogleUser(currentUser);
+//                // TODO: add UI to indicate an account was created
+            }
+        }
+    }
+
+    void openLoadingWindow() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        loadingView = inflater.inflate(R.layout.loading_window, null);
+        builder.setView(loadingView);
+        loadingAlert = builder.create();
+        loadingAlert.setCancelable(false);
+        loadingAlert.setCanceledOnTouchOutside(false);
+        GifImageView gifImageView = (GifImageView) loadingView.findViewById(R.id.loading_gif);
+        gifImageView.setGifImageResource(R.drawable.loading_drop);
+        loadingAlert.show();
+    }
+
+    void closeLoadingWindow() {
+        loadingAlert.cancel();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.sign_in_button: // google sign in button pressed
+                openLoadingWindow();
+                Intent signInIntent = googleClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
+                break;
+
+            case R.id.login_button:
+
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_GOOGLE_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            HandleGoogleSignIn(task);
+        }
+    }
+
+    private void HandleGoogleSignIn(@NonNull Task<GoogleSignInAccount> task) {
+        try {
+            GoogleSignInAccount acct = task.getResult(ApiException.class);
+            if (acct != null) firebaseAuthWithGoogle(acct);
+
+        } catch (ApiException e) {
+            Log.w("signIn", "handleSignInResult:error", e);
+            // updateUI(null);
+        }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d("FireBase", "firebaseAuthWithGoogle:" + acct.getId());
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            app.getUserById(user.getUid(), activity);
+                        } else {
+                            // Sign in failed
+                            Log.w("TAG", "signInWithCredential:failure", task.getException());
+                            Snackbar.make(findViewById(R.id.sign_in_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onComplete(@NonNull Task<DocumentSnapshot> task) { // user data request result
+        if (task.isSuccessful()) {
+            FirebaseUser user = mAuth.getCurrentUser();
+            String name = user.getDisplayName();
+            DocumentSnapshot document = (DocumentSnapshot) task.getResult();
+            if (document != null && document.exists()) {
+                // found existing StockFarm account with uid, now we retrieve its data
+                String json = (String) document.get(getString(R.string.firestore_fieldname_userdata));
+                app.setUserDataFromServer(user.getUid(), json);
+                String welcomeMsg = "Welcome Back, " + name;
+                Snackbar.make(loadingView, welcomeMsg, Snackbar.LENGTH_SHORT).show();
+            } else {
+                // no such account, need to create one for google user
+                String msg = "Welcome " + name + getString(R.string.user_found_no_account);
+                Snackbar.make(loadingView, msg, Snackbar.LENGTH_SHORT).show();
+                app.generateAccountGoogleUser(user);
+            }
+            new CountDownTimer(2000, 2000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                }
+
+                public void onFinish() {
+                    closeLoadingWindow();
+                    // TODO transition to farm
+                }
+            }.start();
+        } else {
+            closeLoadingWindow();
+            Snackbar.make(findViewById(R.id.sign_in_layout), getString(R.string.err_query_user_data), Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    private void regularSignInOrRegister() {
+        final String email = emailBox.getText().toString();
+        final String password = passwordBox.getText().toString();
+        passwordBox.setText(null);
+        if (email.equals("") || !isEmailValid(email)) {
+            Snackbar.make(findViewById(R.id.sign_in_layout),
+                    getString(R.string.invalid_email), Snackbar.LENGTH_SHORT).show();
+            return;
+        } else if (!isPasswordValid(password)) {
+            Snackbar.make(findViewById(R.id.sign_in_layout),
+                    getString(R.string.invalid_password), 10000).show();
+            return;
+        }
+        DocumentReference userDocRef = app.db.collection("users").document(email);
+        userDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = (DocumentSnapshot) task.getResult();
+                    if (document != null && document.exists()) {
+                        // found existing StockFarm account with uid, now we retrieve its data
+                        if (verifyPassword(document, password)) {   // password match
+                            String json = (String) document.get(getString(R.string.firestore_fieldname_userdata));
+                            String name = app.setUserDataFromServer(email, json);
+                            String welcomeMsg = "Welcome Back, " + name;
+                            Snackbar.make(loadingView, welcomeMsg, Snackbar.LENGTH_SHORT).show();
+                        } else {   // wrong password
+                            Snackbar.make(findViewById(R.id.sign_in_layout),
+                                    getString(R.string.wrong_password), Snackbar.LENGTH_SHORT).show();
+                        }
+                    } else {   // no account associated with mail, refer to register
+
+                    }
+                }
+            }
+        });
+    }
+
+
+    private boolean verifyPassword(DocumentSnapshot document, String enteredPassword) {
+        String password = (String) document.get("password");
+        if (password == null) return false;
+        return (password.equals(enteredPassword));
+    }
+
+    private void logInButtonEnabler() {
+        if (!emailBox.getText().toString().equals("")
+                && !passwordBox.getText().toString().equals(""))
+            logInButton.setEnabled(true);
+    }
+
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public static boolean isPasswordValid(String password) {
+        String expression = "[\\w]+";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(password);
+        return (matcher.matches() && password.length() >= 6);
+    }
+
+    private void registerNewAccount()
+    {
+
+    }
+}
+

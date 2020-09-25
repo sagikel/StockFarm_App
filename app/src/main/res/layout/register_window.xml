@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/register_window"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/register_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/enter_details_message"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/email_text"
+        android:layout_width="wrap_content"
+        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/register_header"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        android:text="Email:"
+        />
+
+    <EditText
+        android:id="@+id/email_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="enter email"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/register_header"
+        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+    <TextView
+        android:id="@+id/name_text"
+        android:layout_width="wrap_content"
+        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/email_box"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        android:text="Full Name:"
+        />
+
+    <EditText
+        android:id="@+id/name_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="enter name"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/email_box"
+        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+    <TextView
+        android:id="@+id/password_text"
+        android:layout_width="wrap_content"
+        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/name_box"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        android:text="Password:"
+        />
+
+    <EditText
+        android:id="@+id/password_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="enter password"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/name_box"
+        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="Register"
+        app:layout_constraintTop_toBottomOf="@id/password_box"
+        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="Cancel"
+        app:layout_constraintTop_toBottomOf="@id/password_box"
+        app:layout_constraintEnd_toStartOf="@id/guideline"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

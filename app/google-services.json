@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "334553520115-vvr8gvgu7nmmodphl1l3jk3pnksgtlmi.apps.googleusercontent.com",
+          "client_id": "334553520115-gev6bbh1i53oi8683fht69os4fb12mad.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.stockfarm_app",
@@ -36,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "334553520115-lkejcaefjo1orri5lntuqksnlr1ssgtn.apps.googleusercontent.com",
+              "client_id": "334553520115-q05kjul1kf9poqqf7pnnpjv4bkuesoiv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
