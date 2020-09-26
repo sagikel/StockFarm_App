@@ -61,20 +61,30 @@ public class StockFarmApplication extends Application
         return userData.getName();
     }
 
-    public void generateAccountGoogleUser(final FirebaseUser user)
+    public void generateAccountRegularUser(String id, final String regEmail, final String regName, final String regPassword, final LoginActivity activity)
     {
-        UserData newUser = new UserData(user.getDisplayName(),
-                                        user.getEmail(),
-                                        initialFunds);
+        UserData newUser = new UserData(regName,
+                regEmail,
+                regPassword,
+                initialFunds);
         userData = newUser;
-        currId = user.getUid();
         final String json = new Gson().toJson(newUser);
         sp.edit().putString(getString(R.string.firestore_fieldname_userdata), json).apply();
         Map<String, String> data = new HashMap<String, String>()
-        {{  put("email", user.getEmail());
-            put("name", user.getDisplayName());
+        {{  put("email", regEmail);
+            put("name", regName);
+            put("password", regPassword);
             put(getString(R.string.firestore_fieldname_userdata), json);}};
-        db.collection("users").document(user.getUid()).set(data);
+        db.collection("users").document(id).set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {activity.registerResult(task.isSuccessful());}
+        });
+    }
+
+    public void generateAccountGoogleUser(final FirebaseUser user, LoginActivity activity)
+    {
+        generateAccountRegularUser(user.getUid(), user.getEmail(),
+                user.getDisplayName(), "", activity);
     }
 
     /**

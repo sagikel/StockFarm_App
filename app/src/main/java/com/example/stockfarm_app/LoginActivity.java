@@ -46,7 +46,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button logInButton;
     SignInButton googleButton;
     AlertDialog loadingAlert;
+    AlertDialog regAlert;
     View loadingView;
+    View registerView;
 
 
     @Override
@@ -58,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailBox = findViewById(R.id.email_box);
         passwordBox = findViewById(R.id.password_box);
         logInButton = findViewById(R.id.login_button);
+        logInButton.setOnClickListener(this);
         TextWatcher textListen = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -97,11 +100,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (currentUser != null) {
             openLoadingWindow();
             app.getUserById(currentUser.getUid(), this);
-            if (app.userData == null) // the logged-in user does'nt have an existing app account.
-            {
-//                app.generateAccountGoogleUser(currentUser);
-//                // TODO: add UI to indicate an account was created
-            }
         }
     }
 
@@ -131,8 +129,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent signInIntent = googleClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
                 break;
-
             case R.id.login_button:
+                regularSignInOrRegister();
+                break;
+            case R.id.cancel_button:
+                regAlert.cancel();
+            case R.id.register_button:
+                EditText emailRegBox = (EditText) registerView.findViewById(R.id.email_box);
+                EditText nameRegBox = (EditText) registerView.findViewById(R.id.name_box);
+                EditText passRegBox = (EditText) registerView.findViewById(R.id.password_box);
+                String regEmail = emailRegBox.getText().toString();
+                String regName = nameRegBox.getText().toString();
+                String regPassword = passRegBox.getText().toString();
+                if (!validEmailPassword(findViewById(R.id.sign_in_layout), regEmail, regPassword)) return;
+                regAlert.cancel();
+                openLoadingWindow();
+                app.generateAccountRegularUser(regEmail, regEmail, regName, regPassword, activity);
+                break;
 
         }
     }
@@ -190,9 +203,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Snackbar.make(loadingView, welcomeMsg, Snackbar.LENGTH_SHORT).show();
             } else {
                 // no such account, need to create one for google user
-                String msg = "Welcome " + name + getString(R.string.user_found_no_account);
-                Snackbar.make(loadingView, msg, Snackbar.LENGTH_SHORT).show();
-                app.generateAccountGoogleUser(user);
+                app.generateAccountGoogleUser(user, activity);
             }
             new CountDownTimer(2000, 2000) {
                 @Override
@@ -213,16 +224,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void regularSignInOrRegister() {
         final String email = emailBox.getText().toString();
         final String password = passwordBox.getText().toString();
-        passwordBox.setText(null);
-        if (email.equals("") || !isEmailValid(email)) {
-            Snackbar.make(findViewById(R.id.sign_in_layout),
-                    getString(R.string.invalid_email), Snackbar.LENGTH_SHORT).show();
-            return;
-        } else if (!isPasswordValid(password)) {
-            Snackbar.make(findViewById(R.id.sign_in_layout),
-                    getString(R.string.invalid_password), 10000).show();
-            return;
-        }
+        if (!validEmailPassword(findViewById(R.id.sign_in_layout), email, password)) return;
         DocumentReference userDocRef = app.db.collection("users").document(email);
         userDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -230,6 +232,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = (DocumentSnapshot) task.getResult();
                     if (document != null && document.exists()) {
+                        passwordBox.setText(null);
                         // found existing StockFarm account with uid, now we retrieve its data
                         if (verifyPassword(document, password)) {   // password match
                             String json = (String) document.get(getString(R.string.firestore_fieldname_userdata));
@@ -241,7 +244,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     getString(R.string.wrong_password), Snackbar.LENGTH_SHORT).show();
                         }
                     } else {   // no account associated with mail, refer to register
-
+                        registerNewAccount();
                     }
                 }
             }
@@ -261,6 +264,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             logInButton.setEnabled(true);
     }
 
+
+
+    private void registerNewAccount()
+    {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        registerView = inflater.inflate(R.layout.register_window, null);
+        builder.setView(registerView);
+        regAlert = builder.create();
+        regAlert.setCancelable(false);
+        regAlert.setCanceledOnTouchOutside(false);
+        final EditText emailRegBox = (EditText) registerView.findViewById(R.id.email_box);
+        final EditText nameRegBox = (EditText) registerView.findViewById(R.id.name_box);
+        final EditText passRegBox = (EditText) registerView.findViewById(R.id.password_box);
+        Button regButton = (Button) registerView.findViewById(R.id.register_button);
+        Button cancelButton = (Button) registerView.findViewById(R.id.cancel_button);
+        emailRegBox.setText(emailBox.getText().toString());
+        passRegBox.setText(passwordBox.getText().toString());
+        regButton.setOnClickListener(activity);
+        cancelButton.setOnClickListener(activity);
+        regAlert.show();
+
+    }
+
+    private boolean validEmailPassword(View v, String email, String password)
+    {
+        if (email.equals("") || !isEmailValid(email)) {
+            Snackbar.make(findViewById(R.id.sign_in_layout),
+                    getString(R.string.invalid_email), Snackbar.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (!isPasswordValid(password)) {
+            Snackbar.make(findViewById(R.id.sign_in_layout),
+                    getString(R.string.invalid_password), 10000).show();
+            return false;
+        }
+        return true;
+    }
+
     public static boolean isEmailValid(String email) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
@@ -275,9 +317,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return (matcher.matches() && password.length() >= 6);
     }
 
-    private void registerNewAccount()
+    public void registerResult(boolean successful)
     {
+        if (successful)
+        {
+            String msg = "Welcome, " + app.userData.getName() + getString(R.string.new_account_created);
+            Snackbar.make(loadingView,
+                    msg, 4000).show();
+            new CountDownTimer(2000, 2000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                }
 
+                public void onFinish() {
+                    closeLoadingWindow();
+                    // TODO transition to farm
+                }
+            }.start();
+        }
+        else
+        {
+            Snackbar.make(loadingView, getString(R.string.account_creation_failed) , 3000).show();
+            closeLoadingWindow();
+        }
     }
 }
 

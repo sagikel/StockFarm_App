@@ -15,12 +15,14 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/email_text"
         android:layout_width="wrap_content"
         android:textSize="15sp"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/register_header"
         app:layout_constraintEnd_toStartOf="@id/guideline"
@@ -31,15 +33,19 @@
         android:id="@+id/email_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="enter email"
         android:textSize="15sp"
         app:layout_constraintTop_toBottomOf="@id/register_header"
-        app:layout_constraintStart_toEndOf="@id/guideline"/>
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        android:autofillHints="enter email"
+        android:inputType="textEmailAddress" />
 
     <TextView
         android:id="@+id/name_text"
         android:layout_width="wrap_content"
         android:textSize="15sp"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/email_box"
         app:layout_constraintEnd_toStartOf="@id/guideline"
@@ -52,6 +58,9 @@
         android:layout_height="wrap_content"
         android:hint="enter name"
         android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="enter name"
+        android:inputType="textPersonName"
         app:layout_constraintTop_toBottomOf="@id/email_box"
         app:layout_constraintStart_toEndOf="@id/guideline"/>
 
@@ -59,6 +68,7 @@
         android:id="@+id/password_text"
         android:layout_width="wrap_content"
         android:textSize="15sp"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/name_box"
         app:layout_constraintEnd_toStartOf="@id/guideline"
@@ -71,9 +81,11 @@
         android:layout_height="wrap_content"
         android:hint="enter password"
         android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="enter password"
+        android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@id/name_box"
         app:layout_constraintStart_toEndOf="@id/guideline"/>
-
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -81,7 +93,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
     <Button
         android:id="@+id/register_button"
@@ -89,8 +108,10 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:text="Register"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintTop_toBottomOf="@id/password_box"
-        app:layout_constraintStart_toEndOf="@id/guideline"/>
+        app:layout_constraintStart_toEndOf="@id/guideline2"/>
 
     <Button
         android:id="@+id/cancel_button"
@@ -98,10 +119,9 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:text="Cancel"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/password_box"
-        app:layout_constraintEnd_toStartOf="@id/guideline"/>
-
-
+        app:layout_constraintEnd_toStartOf="@id/guideline2"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
