@@ -31,4 +31,38 @@
     <string name="title_my_farm">My Farm</string>
     <string name="title_stock_market">Stock Market</string>
     <string name="title_tutorial">Tutorial</string>
+
+    <!-- Market -->
+    <string-array name="Stock_Options">
+        <item>AAPL</item>
+        <item>AMGN</item>
+        <item>MMM</item>
+        <item>AXP</item>
+        <item>BA</item>
+        <item>CAT</item>
+        <item>CVX</item>
+        <item>CSCO</item>
+        <item>KO</item>
+        <item>DOW</item>
+        <item>GS</item>
+        <item>HD</item>
+        <item>HON</item>
+        <item>IBM</item>
+        <item>INTC</item>
+        <item>JNJ</item>
+        <item>JPM</item>
+        <item>MCD</item>
+        <item>MRK</item>
+        <item>MSFT</item>
+        <item>NKE</item>
+        <item>PG</item>
+        <item>CRM</item>
+        <item>TRV</item>
+        <item>UNH</item>
+        <item>VZ</item>
+        <item>V</item>
+        <item>WBA</item>
+        <item>WMT</item>
+        <item>DIS</item>
+    </string-array>
 </resources>
