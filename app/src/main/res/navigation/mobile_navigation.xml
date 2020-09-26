@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_my_farm">
+
+    <fragment
+        android:id="@+id/navigation_my_farm"
+        android:name="com.example.stockfarm_app.ui.myFarm.MyFarmFragment"
+        android:label="@string/title_my_farm"
+        tools:layout="@layout/fragment_my_farm" />
+
+    <fragment
+        android:id="@+id/navigation_stock_market"
+        android:name="com.example.stockfarm_app.ui.stockMarket.StockMarketFragment"
+        android:label="@string/title_stock_market"
+        tools:layout="@layout/fragment_stock_market" />
+
+    <fragment
+        android:id="@+id/navigation_tutorial"
+        android:name="com.example.stockfarm_app.ui.tutorial.TutorialFragment"
+        android:label="@string/title_tutorial"
+        tools:layout="@layout/fragment_tutorial" />
+</navigation>

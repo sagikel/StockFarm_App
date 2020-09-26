@@ -49,6 +49,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     AlertDialog regAlert;
     View loadingView;
     View registerView;
+    Button skip;
+
 
 
     @Override
@@ -60,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailBox = findViewById(R.id.email_box);
         passwordBox = findViewById(R.id.password_box);
         logInButton = findViewById(R.id.login_button);
+        skip = findViewById(R.id.skip);
         logInButton.setOnClickListener(this);
         TextWatcher textListen = new TextWatcher() {
             @Override
@@ -90,6 +93,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleButton = findViewById(R.id.sign_in_button);
         googleButton.setSize(SignInButton.SIZE_STANDARD);
         googleButton.setOnClickListener(this);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }
+        });
     }
 
 
