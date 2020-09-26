@@ -93,12 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleButton = findViewById(R.id.sign_in_button);
         googleButton.setSize(SignInButton.SIZE_STANDARD);
         googleButton.setOnClickListener(this);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            }
-        });
+        skip.setOnClickListener(this);
     }
 
 
@@ -143,6 +138,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.cancel_button:
                 regAlert.cancel();
+                break;
             case R.id.register_button:
                 EditText emailRegBox = (EditText) registerView.findViewById(R.id.email_box);
                 EditText nameRegBox = (EditText) registerView.findViewById(R.id.name_box);
@@ -154,6 +150,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 regAlert.cancel();
                 openLoadingWindow();
                 app.generateAccountRegularUser(regEmail, regEmail, regName, regPassword, activity);
+                break;
+            case R.id.skip:
+                goToFarm();
                 break;
 
         }
@@ -221,7 +220,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 public void onFinish() {
                     closeLoadingWindow();
-                    // TODO transition to farm
+                    goToFarm();
                 }
             }.start();
         } else {
@@ -340,7 +339,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 public void onFinish() {
                     closeLoadingWindow();
-                    // TODO transition to farm
+                    goToFarm();
                 }
             }.start();
         }
@@ -349,6 +348,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Snackbar.make(loadingView, getString(R.string.account_creation_failed) , 3000).show();
             closeLoadingWindow();
         }
+    }
+
+    private void goToFarm()
+    {
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
     }
 }
 
