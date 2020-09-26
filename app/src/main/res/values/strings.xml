@@ -25,4 +25,9 @@
 
     <!-- Errors -->
     <string name="err_query_user_data">Error accessing our servers, Try again later!</string>
+
+    <!-- navigation -->
+    <string name="title_my_farm">My Farm</string>
+    <string name="title_stock_market">Stock Market</string>
+    <string name="title_tutorial">Tutorial</string>
 </resources>

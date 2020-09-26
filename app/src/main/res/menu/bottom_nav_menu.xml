@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_my_farm"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_my_farm" />
+
+    <item
+        android:id="@+id/navigation_stock_market"
+        android:icon="@drawable/ic_baseline_storefront_24"
+        android:title="@string/title_stock_market" />
+
+    <item
+        android:id="@+id/navigation_tutorial"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_tutorial" />
+
+</menu>
