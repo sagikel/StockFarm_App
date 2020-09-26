@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleButton.setSize(SignInButton.SIZE_STANDARD);
         googleButton.setOnClickListener(this);
         skip.setOnClickListener(this);
+        getSupportActionBar().hide();
     }
 
 

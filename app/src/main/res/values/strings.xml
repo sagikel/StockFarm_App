@@ -34,6 +34,7 @@
 
     <!-- Market -->
     <string-array name="Stock_Options">
+        <item>Choose Stock Symbol</item>
         <item>AAPL</item>
         <item>AMGN</item>
         <item>MMM</item>
