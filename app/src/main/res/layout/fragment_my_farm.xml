@@ -7,11 +7,6 @@
     android:background="@drawable/farm_back"
     tools:context=".ui.myFarm.MyFarmFragment">
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <ImageView
         android:id="@+id/farm_reel"
         android:layout_width="700dp"
@@ -23,10 +18,20 @@
         app:layout_constraintBottom_toTopOf="@id/reel_guide"
         android:contentDescription="farm_reel" />
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/farm_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/reel_guide"
@@ -34,13 +39,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.70" />
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swiperefresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

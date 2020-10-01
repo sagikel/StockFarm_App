@@ -1,10 +1,11 @@
 package com.example.stockfarm_app.ui.myFarm;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,26 +16,24 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-
-
-
-
 import com.example.stockfarm_app.R;
 
 public class MyFarmFragment extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private ViewPager2 farmPager;
+    private ImageView farmReel;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_my_farm, container, false);
+        farmReel = view.findViewById(R.id.farm_reel);
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
         farmPager = view.findViewById(R.id.farm_pager);
         farmPager.setAdapter(new ViewPagerAdapter(getActivity()));
-        farmPager.setCurrentItem(1);
-
+        farmPager.registerOnPageChangeCallback(new PagerAnimationCallback());
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -46,6 +45,16 @@ public class MyFarmFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private class PagerAnimationCallback extends ViewPager2.OnPageChangeCallback
+    {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+        {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            Toast.makeText(getContext(), "scroll detected", Toast.LENGTH_LONG).show();
+        }
     }
 
     public class ViewPagerAdapter extends FragmentStateAdapter {
