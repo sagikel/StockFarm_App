@@ -53,7 +53,7 @@ public class MyFarmFragment extends Fragment {
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
         {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            Toast.makeText(getContext(), "scroll detected", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "scroll detected", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -81,6 +81,10 @@ public class TradeActivity extends AppCompatActivity {
     boolean action;
     RadioGroup radioGroup;
     EditText editText;
+    TextView feedback;
+    Double currentPrice;
+    int amount;
+    TextView own;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,12 +125,16 @@ public class TradeActivity extends AppCompatActivity {
         tradeText = findViewById(R.id.open_close);
         radioGroup = findViewById(R.id.radio);
         editText = findViewById(R.id.editTextNumber);
+        feedback = findViewById(R.id.feedback);
+        own = findViewById(R.id.own);
         trade = false;
         action = false;
         queue = Volley.newRequestQueue(this);
         volleyApiKeyUrl = new VolleyApiKeyUrl();
         swipe = false;
         context = this;
+        currentPrice = 0.0;
+        amount = 0;
 
         Intent intent = getIntent();
         symbol = intent.getExtras().getString("symbol");
@@ -152,12 +160,7 @@ public class TradeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (action) {
-                    action = false;
-                    charts.setText("Charts");
-                    visible();
-                    time.setVisibility(View.VISIBLE);
-                    radioGroup.setVisibility(View.INVISIBLE);
-                    editText.setVisibility(View.INVISIBLE);
+                    mainTrade();
                 }
                 else {
                     Intent intent = new Intent(context, ChartActivity.class);
@@ -182,6 +185,7 @@ public class TradeActivity extends AppCompatActivity {
                         charts.setVisibility(View.VISIBLE);
                         radioGroup.setVisibility(View.VISIBLE);
                         editText.setVisibility(View.VISIBLE);
+                        feedback.setVisibility(View.VISIBLE);
                     }
                     else {
                         new AlertDialog.Builder(context)
@@ -213,13 +217,28 @@ public class TradeActivity extends AppCompatActivity {
 
                 if (s.length() == 0)
                 {
+                    feedback.setText("N/A");
                     buyOrSell.setVisibility(View.INVISIBLE);
                 }else {
                     buyOrSell.setText("Make trade");
                     buyOrSell.setVisibility(View.VISIBLE);
+                    amount = Integer.parseInt(s.toString());
+                    feedback.setText("Value of " + String.format("%.2f", (Double.parseDouble(s.toString()) * currentPrice)) + " USD");
                 }
             }
         });
+    }
+
+    private void mainTrade() {
+        action = false;
+        charts.setText("Charts");
+        buyOrSell.setText("Buy/Sell");
+        visible();
+        time.setVisibility(View.VISIBLE);
+        buyOrSell.setVisibility(View.VISIBLE);
+        radioGroup.setVisibility(View.INVISIBLE);
+        editText.setVisibility(View.INVISIBLE);
+        feedback.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -239,7 +258,8 @@ public class TradeActivity extends AppCompatActivity {
 
                     time.setText(df.format(new Date(Long.parseLong(jsonObject.getString("timestamp")) * 1000)));
                     companyName.setText(jsonObject.getString("name"));
-                    price.setText(String.valueOf(Double.parseDouble(jsonObject.getString("price"))));
+                    currentPrice = Double.parseDouble(jsonObject.getString("price"));
+                    price.setText(String.format("%.2f", currentPrice));
                     percent.setText(Double.parseDouble(jsonObject.getString("changesPercentage")) + "%");
                     double changeValue = Double.parseDouble(jsonObject.getString("change"));
                     change.setText(String.valueOf(changeValue));
@@ -284,7 +304,6 @@ public class TradeActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 Log.e("server","error in respond");
-                progressBar.setVisibility(View.INVISIBLE);
                 change.setText("Something went wrong..");
                 change.setVisibility(View.VISIBLE);
                 percent.setText(new String(Character.toChars(0x1F635)));
@@ -362,6 +381,7 @@ public class TradeActivity extends AppCompatActivity {
 
         charts.setVisibility(View.INVISIBLE);
 
+        own.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
     }
 
@@ -394,9 +414,40 @@ public class TradeActivity extends AppCompatActivity {
         charts.setVisibility(View.VISIBLE);
 
         progressBar.setVisibility(View.INVISIBLE);
+        own.setVisibility(View.VISIBLE);
     }
 
     private void calculate(){
-        Toast.makeText(context, "Not ready yet..", Toast.LENGTH_LONG).show();
+
+
+        if (amount == 0){
+            Toast.makeText(context, "Cant make trade with 0 stocks", Toast.LENGTH_LONG).show();
+        } else {
+            double total = Math.round(amount*currentPrice*100.0)/100.0;
+            boolean buy = false;
+            if (radioGroup.getCheckedRadioButtonId() == R.id.radioButton){
+                    buy = true;
+            }
+            if (buy){
+                // total לבדוק אם יש מספיק כסף לקניה
+                //Toast.makeText(context, "לא מספיק כסף", Toast.LENGTH_LONG).show();
+            } else {
+                // amount לבדוק אם יש מספיק מניות למכור
+                //Toast.makeText(context, "אין לך כמות מניות נדרשת", Toast.LENGTH_LONG).show();
+            }
+            new AlertDialog.Builder(context)
+                    .setTitle("Trade Approval")
+                    .setMessage("\nAre you sure?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(context, "Trade executed!", Toast.LENGTH_LONG).show();
+                            mainTrade();
+                            //updateAmount();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(R.drawable.caution)
+                    .show();
+        }
     }
 }
