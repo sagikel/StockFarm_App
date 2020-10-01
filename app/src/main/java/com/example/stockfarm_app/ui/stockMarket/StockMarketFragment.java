@@ -36,6 +36,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.stockfarm_app.ChartActivity;
 import com.example.stockfarm_app.R;
+import com.example.stockfarm_app.TradeActivity;
 import com.example.stockfarm_app.VolleyApiKeyUrl;
 import com.example.stockfarm_app.data.StocksFixedData;
 
@@ -55,7 +56,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
     TextView descriptionText;
     TextView RealTimeText;
     TextView RealTimeHeadlineText;
-    Button buyOrSellButton;
+    Button tradeButton;
     Button moreInfoButton;
     Spinner spinner;
     ProgressBar progressBar;
@@ -77,8 +78,8 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stock_market, container, false);
-        stockNameText = view.findViewById(R.id.stock_info_text);
-        buyOrSellButton = view.findViewById(R.id.buy_Sell_button);
+        stockNameText = view.findViewById(R.id.stock_info_text2);
+        tradeButton = view.findViewById(R.id.trade_button);
         moreInfoButton = view.findViewById(R.id.more_info_button);
         spinner = (Spinner) view.findViewById(R.id.stock_options);
         ceoText = view.findViewById(R.id.textView2);
@@ -127,54 +128,27 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
         moreInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (info)
-                {
-                    sectorText.setText("Real Time Stock Data");
-                    industryText.setVisibility(View.INVISIBLE);
-                    ceoText.setVisibility(View.INVISIBLE);
-                    descriptionText.setVisibility(View.INVISIBLE);
-                    moreInfoButton.setVisibility(View.INVISIBLE);
-                    spinner.setVisibility(View.INVISIBLE);
+                sectorText.setText("Real Time Stock Data");
+                industryText.setVisibility(View.INVISIBLE);
+                ceoText.setVisibility(View.INVISIBLE);
+                descriptionText.setVisibility(View.INVISIBLE);
+                moreInfoButton.setVisibility(View.INVISIBLE);
+                spinner.setVisibility(View.INVISIBLE);
 
-                    buyOrSellButton.setText("back");
-                    listView.setVisibility(View.VISIBLE);
-                    info = false;
-                    //getPriceData(symbol, "quote-short", industryText);  בשביל מחיר מהיר
-                }
-                else
-                {
-                    moreInfoButton.setText("More info");
-
-                    stockNameText.setVisibility(View.VISIBLE);
-                    ceoText.setVisibility(View.VISIBLE);
-                    sectorText.setVisibility(View.VISIBLE);
-                    industryText.setVisibility(View.VISIBLE);
-                    descriptionText.setVisibility(View.VISIBLE);
-                    buyOrSellButton.setVisibility(View.VISIBLE);
-                    moreInfoButton.setVisibility(View.VISIBLE);
-                    circleImageView.setVisibility(View.VISIBLE);
-                    spinner.setVisibility(View.VISIBLE);
-                    info = true;
-                }
+                tradeButton.setText("back");
+                listView.setVisibility(View.VISIBLE);
+                info = false;
             }
         });
 
-        buyOrSellButton.setOnClickListener(new View.OnClickListener() {
+        tradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (info)
                 {
-                    stockNameText.setVisibility(View.INVISIBLE);
-                    ceoText.setVisibility(View.INVISIBLE);
-                    sectorText.setVisibility(View.INVISIBLE);
-                    industryText.setVisibility(View.INVISIBLE);
-                    descriptionText.setVisibility(View.INVISIBLE);
-                    buyOrSellButton.setVisibility(View.INVISIBLE);
-                    circleImageView.setVisibility(View.INVISIBLE);
-                    spinner.setVisibility(View.INVISIBLE);
-
-                    moreInfoButton.setText("back");
-                    info = false;
+                    Intent intent = new Intent(getActivity(), TradeActivity.class);
+                    intent.putExtra("symbol", symbol);
+                    startActivity(intent);
                 }
                 else
                 {
@@ -197,7 +171,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
                         realTimeInfo = false;
                     }
                     else {
-                        buyOrSellButton.setText("Buy/Sell");
+                        tradeButton.setText("Trade");
                         moreInfoButton.setText("More info");
                         sectorText.setText(stocksFixedData.getMap().get(symbol).get(2));
 
@@ -207,7 +181,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
                         sectorText.setVisibility(View.VISIBLE);
                         industryText.setVisibility(View.VISIBLE);
                         descriptionText.setVisibility(View.VISIBLE);
-                        buyOrSellButton.setVisibility(View.VISIBLE);
+                        tradeButton.setVisibility(View.VISIBLE);
                         moreInfoButton.setVisibility(View.VISIBLE);
                         spinner.setVisibility(View.VISIBLE);
 
@@ -248,7 +222,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
             sectorText.setVisibility(View.INVISIBLE);
             industryText.setVisibility(View.INVISIBLE);
             descriptionText.setVisibility(View.INVISIBLE);
-            buyOrSellButton.setVisibility(View.INVISIBLE);
+            tradeButton.setVisibility(View.INVISIBLE);
             moreInfoButton.setVisibility(View.INVISIBLE);
             circleImageView.setVisibility(View.INVISIBLE);
             return;
@@ -267,7 +241,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
         sectorText.setVisibility(View.VISIBLE);
         industryText.setVisibility(View.VISIBLE);
         descriptionText.setVisibility(View.VISIBLE);
-        buyOrSellButton.setVisibility(View.VISIBLE);
+        tradeButton.setVisibility(View.VISIBLE);
         moreInfoButton.setVisibility(View.VISIBLE);
         circleImageView.setVisibility(View.VISIBLE);
     }
@@ -335,7 +309,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
                 input.setRawInputType(Configuration.KEYBOARD_12KEY);
                 dialog.setTitle("Enter Earning Call Date")
                         .setView(input)
-                        .setMessage("Enter Quarter (1-4) and year, for Quarter number 4 and year 2019 enter: 42019")
+                        .setMessage("Enter Quarter (1-4) and Year, for Quarter number 4 and Year 2019 enter: 42019")
                         .setIcon(R.drawable.calendar_icon)
                         .setPositiveButton("Enter", new DialogInterface.OnClickListener() {
                             @Override

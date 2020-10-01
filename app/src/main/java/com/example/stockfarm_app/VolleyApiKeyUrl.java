@@ -33,4 +33,7 @@ public class VolleyApiKeyUrl {
         return urlPrefix + type + "?tickers=" + symbol
                 + "&" + urlSuffixForMany.substring(1) + apiKey;
     }
+    public String getCorrectUrlH(String type) {
+        return urlPrefix + type  + urlSuffix + apiKey;
+    }
 }

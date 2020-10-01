@@ -37,13 +37,13 @@
         <item>Choose Stock Symbol</item>
         <item>AAPL</item>
         <item>AMGN</item>
-        <item>MMM</item>
         <item>AXP</item>
         <item>BA</item>
         <item>CAT</item>
-        <item>CVX</item>
+        <item>CRM</item>
         <item>CSCO</item>
-        <item>KO</item>
+        <item>CVX</item>
+        <item>DIS</item>
         <item>DOW</item>
         <item>GS</item>
         <item>HD</item>
@@ -52,18 +52,18 @@
         <item>INTC</item>
         <item>JNJ</item>
         <item>JPM</item>
+        <item>KO</item>
         <item>MCD</item>
+        <item>MMM</item>
         <item>MRK</item>
         <item>MSFT</item>
         <item>NKE</item>
         <item>PG</item>
-        <item>CRM</item>
         <item>TRV</item>
         <item>UNH</item>
-        <item>VZ</item>
         <item>V</item>
+        <item>VZ</item>
         <item>WBA</item>
         <item>WMT</item>
-        <item>DIS</item>
     </string-array>
 </resources>
