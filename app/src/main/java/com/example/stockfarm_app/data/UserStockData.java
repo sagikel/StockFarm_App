@@ -11,10 +11,10 @@ public class UserStockData
     private double currAmount;
     private ArrayList<UserStockEvent> stockTradeHistory;
 
-    UserStockData(String name)
+    public UserStockData(String name, double amount)
     {
         this.stockName = name;
-        currAmount = 0;
+        currAmount = amount;
         stockTradeHistory = new ArrayList<UserStockEvent>();
     }
 
@@ -26,6 +26,7 @@ public class UserStockData
     public void addEvent(Date date, double amount, double value)
     {
         stockTradeHistory.add(new UserStockEvent(date, amount, value));
+        currAmount += amount;
     }
 
     public class UserStockEvent

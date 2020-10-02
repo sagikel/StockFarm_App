@@ -110,10 +110,11 @@ public class MyFarmFragment extends Fragment {
 
         public ViewPagerAdapter(FragmentActivity fa, LinkedList<UserStockData> activeStocks){//Pager constructor receives Activity instance
             super(fa);
+            mFragments = new LinkedList<>();
             mFragments.add(new SignFragment());
             for (UserStockData stock : activeStocks)
                 {
-                    mFragments.add(new CropFragment()); // TODO add stock data to fragment c'tor
+                    mFragments.add(new CropFragment(stock)); // TODO add stock data to fragment c'tor
                 }
         }
 

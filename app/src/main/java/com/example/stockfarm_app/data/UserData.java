@@ -9,7 +9,7 @@ public class UserData
     private String email;
     private String password;
     private double funds;
-    LinkedList<UserStockData> stocks;
+    public LinkedList<UserStockData> stocks;
 
     /**
      * this c'tor is for initializing users who authenticate via google and therefore no password.
@@ -25,6 +25,7 @@ public class UserData
         this.email = email;
         this.funds = initialFunds;
         this.password = password;
+        stocks = new LinkedList<>();
     }
 
     public String getName() {

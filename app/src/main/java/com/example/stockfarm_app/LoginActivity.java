@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.stockfarm_app.data.UserData;
+import com.example.stockfarm_app.data.UserStockData;
 import com.google.android.gms.auth.api.signin.*;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
@@ -153,6 +154,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 app.generateAccountRegularUser(regEmail, regEmail, regName, regPassword, activity);
                 break;
             case R.id.skip:
+                app.userData = dummyUser();
                 goToFarm();
                 break;
 
@@ -358,8 +360,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private UserData dummyUser()
     {
-        new UserData("Dudu Topaz", "rishon.babidur@hotmail.co.il", 1000);
-        User
+        UserData dudu = new UserData("Dudu Topaz", "rishon.babidur@hotmail.co.il", 1000);
+        dudu.stocks.add(new UserStockData("APPL", 100));
+        dudu.stocks.add(new UserStockData("AMZN", 500));
+        return dudu;
     }
 }
 
