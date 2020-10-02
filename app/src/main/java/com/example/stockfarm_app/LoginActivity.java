@@ -355,5 +355,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
     }
+
+    private UserData dummyUser()
+    {
+        new UserData("Dudu Topaz", "rishon.babidur@hotmail.co.il", 1000);
+        User
+    }
 }
 
