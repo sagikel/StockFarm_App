@@ -45,4 +45,17 @@ public class UserData
     public LinkedList<UserStockData> getStocks() {
         return stocks;
     }
+
+    public LinkedList<UserStockData> getActiveStocks() // used for farm crops creation
+    {
+        LinkedList<UserStockData> activeStocks = new LinkedList<>();
+        for (UserStockData stock : stocks)
+        {
+            if (stock.getCurrAmount() > 0)
+            {
+                activeStocks.add(stock);
+            }
+        }
+        return activeStocks;
+    }
 }

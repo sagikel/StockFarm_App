@@ -25,7 +25,7 @@ public class StockFarmApplication extends Application
     StockFarmApplication app;
     SharedPreferences sp;
     FirebaseFirestore db;
-    UserData userData;
+    public UserData userData;
     String currId;
 
     // updating values from the sp/server:
