@@ -1,4 +1,5 @@
 package com.example.stockfarm_app;
+// UPDATE GODDAMMIT!!!!
 
 import android.content.Context;
 import android.graphics.Canvas;
