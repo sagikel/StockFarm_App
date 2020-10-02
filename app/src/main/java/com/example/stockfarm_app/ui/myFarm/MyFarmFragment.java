@@ -100,24 +100,26 @@ public class MyFarmFragment extends Fragment {
 
     public class ViewPagerAdapter extends FragmentStateAdapter {
 
-        private final Fragment[] mFragments = new Fragment[] {//Initialize fragments views
-//Fragment views are initialized like any other fragment (Extending Fragment)
-                new SignFragment(),//First fragment to be displayed within the pager tab number 1
-                new CropFragment(),
-                new CropFragment(),
-        };
+        private LinkedList<Fragment> mFragments;
+//        = new Fragment[] {//Initialize fragments views
+////Fragment views are initialized like any other fragment (Extending Fragment)
+//                new SignFragment(),//First fragment to be displayed within the pager tab number 1
+//                new CropFragment(),
+//                new CropFragment(),
+//        };
 
         public ViewPagerAdapter(FragmentActivity fa, LinkedList<UserStockData> activeStocks){//Pager constructor receives Activity instance
             super(fa);
-//            for (UserStockDatastock : activeStocks)
-//                {
-//
-//                }
+            mFragments.add(new SignFragment());
+            for (UserStockData stock : activeStocks)
+                {
+                    mFragments.add(new CropFragment()); // TODO add stock data to fragment c'tor
+                }
         }
 
         @Override
         public int getItemCount() {
-            return mFragments.length;//Number of fragments displayed
+            return mFragments.size();//Number of fragments displayed
         }
 
         @Override
@@ -128,7 +130,7 @@ public class MyFarmFragment extends Fragment {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            return mFragments[position];
+            return mFragments.get(position);
         }
     }
 

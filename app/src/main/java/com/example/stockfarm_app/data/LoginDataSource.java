@@ -1,5 +1,6 @@
 package com.example.stockfarm_app.data;
 
+
 import com.example.stockfarm_app.data.model.LoggedInUser;
 
 import java.io.IOException;

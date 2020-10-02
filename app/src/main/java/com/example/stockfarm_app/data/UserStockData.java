@@ -1,5 +1,6 @@
 package com.example.stockfarm_app.data;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

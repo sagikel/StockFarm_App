@@ -1,5 +1,6 @@
 package com.example.stockfarm_app.ui.login;
 
+
 /**
  * Class exposing authenticated user details to the UI.
  */
