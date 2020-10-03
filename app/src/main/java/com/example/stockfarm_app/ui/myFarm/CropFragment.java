@@ -50,7 +50,7 @@ public class CropFragment extends Fragment {
         return view;
     }
 
-    private void setWindowText() {
+    public void setWindowText() {
         StringBuilder toShow = new StringBuilder();
         toShow.append("<big><b>").append(stock.getStockName())
                 .append("</b><br></big><small>Amount: <b>").append(stock.getCurrAmount())
@@ -89,10 +89,10 @@ public class CropFragment extends Fragment {
     }
 
 //    @Override
-//    public void onResume() {
-//        super.onResume();
-//        setWindowText();
-//    }
+////    public void onResume() {
+////        super.onResume();
+////        setWindowText();
+////    }
 
     /**
      *

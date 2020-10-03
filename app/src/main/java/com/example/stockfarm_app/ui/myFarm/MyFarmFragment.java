@@ -115,10 +115,9 @@ public class MyFarmFragment extends Fragment {
 //                        }
                         for (Fragment fragment : viewPagerAdapter.mFragments) // SAGI NOTICE: example for how crop fragments are updated
                         {
-                            String updated = "updated";
                             if (fragment instanceof CropFragment && ((CropFragment) fragment).stockName != null)
                             {   // the last condition is important because we can't update fragment which haven't yet been viewed
-                                ((CropFragment) fragment).stockName.setText(updated);
+                                ((CropFragment) fragment).setWindowText();
                             }
                         }
                         Toast.makeText(getContext(),"Refreshing prices", Toast.LENGTH_SHORT).show();
