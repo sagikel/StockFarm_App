@@ -13,24 +13,40 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.stockfarm_app.R;
 import com.example.stockfarm_app.StockFarmApplication;
+import com.example.stockfarm_app.VolleyApiKeyUrl;
 import com.example.stockfarm_app.data.UserStockData;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.LinkedList;
 
 public class MyFarmFragment extends Fragment {
     private StockFarmApplication app;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    FloatingActionButton floatingActionButton;
     private ViewPager2 farmPager;
     private ImageView farmReel;
     int pageNum;
+    boolean refresh;
+    ViewPagerAdapter viewPagerAdapter;
+    LinkedList<UserStockData> activeStocks;
+    VolleyApiKeyUrl volleyApiKeyUrl;
+    RequestQueue queue;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -39,26 +55,85 @@ public class MyFarmFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_my_farm, container, false);
         app = (StockFarmApplication) getActivity().getApplication();
         farmReel = view.findViewById(R.id.farm_reel);
-        swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
         farmPager = view.findViewById(R.id.farm_pager);
-        LinkedList<UserStockData> activeStocks = app.userData.getActiveStocks();
-        farmPager.setAdapter(new ViewPagerAdapter(getActivity(), activeStocks));
+        floatingActionButton = view.findViewById(R.id.floatingActionButton);
+        activeStocks = app.userData.getActiveStocks();
+        viewPagerAdapter = new ViewPagerAdapter(getActivity(), activeStocks);
+        farmPager.setAdapter(viewPagerAdapter);
         farmPager.registerOnPageChangeCallback(new PagerAnimationCallback());
+        refresh = false;
+        volleyApiKeyUrl = new VolleyApiKeyUrl();
+        queue = Volley.newRequestQueue(getContext());
 
         pageNum = 3; // TODO update dynamically
 
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshDataFromServer();
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                Toast.makeText(getContext(), "Not connected yet..", Toast.LENGTH_LONG).show();
-
-                // מתודה שמורידה מידע על המניות, מעדכנת, ואז קוראת למתודה swipeRefreshLayout.setRefreshing(false); בסופה
-
-                swipeRefreshLayout.setRefreshing(false);
+            public void onClick(View v) {
+                if (!refresh) {
+                    refreshDataFromServer();
+                    refresh = true;
+                }
             }
         });
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        farmPager.setCurrentItem(0,true);
+        // refresh ?
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        queue.cancelAll("All");
+    }
+
+    private void refreshDataFromServer() {
+        String url = volleyApiKeyUrl.getCorrectUrlA();
+        final String finalUrl = url;
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    for (int i = 0; i < 30; i++){
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        app.userData.getStocks().get(jsonObject.getString("symbol"))
+                                .setLastPrice(Double.parseDouble(jsonObject.getString("price")));
+                    }
+                    if (refresh) {
+                        if (farmPager.getCurrentItem() == 0) {
+                            farmPager.setAdapter(viewPagerAdapter);
+                        } else {
+                            farmPager.setCurrentItem(0,true);
+                        }
+                        Toast.makeText(getContext(),"Refreshing prices", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    if (refresh) {
+                        Toast.makeText(getContext(),"Refreshing prices failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                refresh = false;
+                Log.d("server","information was pass to the app from: " + finalUrl);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.e("server","error in respond");
+                Toast.makeText(getContext(),"Refreshing prices failed", Toast.LENGTH_SHORT).show();
+                refresh = false;
+            }
+        });
+        jsonArrayRequest.setTag("All");
+        queue.add(jsonArrayRequest);
     }
 
     protected int getReelMovementStep()

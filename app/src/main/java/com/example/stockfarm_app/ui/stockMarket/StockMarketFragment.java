@@ -608,31 +608,4 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
         scrollView.setVisibility(View.VISIBLE);
         textViewForData.setVisibility(View.VISIBLE);
     }
-
-
-
-
-    private void getPriceData(String type, final TextView textView) {
-        String url = volleyApiKeyUrl.getCorrectUrlForOne(symbol, type);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                try {
-                    JSONObject jsonObject = response.getJSONObject(0);
-                    double price = Double.parseDouble(jsonObject.getString("price"));
-                    textView.setText(String.valueOf(price) + " USD");
-                    Log.d("server",symbol + " price was pass to the app");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Log.e("server","error in respond");
-            }
-        });
-        queue.add(jsonArrayRequest);
-    }
 }

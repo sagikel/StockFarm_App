@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/farm_back"
-    tools:context=".ui.myFarm.MyFarmFragment">
+    tools:context=".ui.myFarm.MyFarmFragment"
+    android:paddingBottom="?attr/actionBarSize">
 
 
         <ImageView
@@ -20,22 +21,10 @@
             android:contentDescription="farm_reel" />
 
 
-
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swiperefresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/farm_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/reel_guide"
@@ -43,5 +32,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.70" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_baseline_refresh_24"
+        app:backgroundTint="#9CCC65"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

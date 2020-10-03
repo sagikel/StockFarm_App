@@ -14,7 +14,7 @@ public class VolleyApiKeyUrl {
         urlSuffixForQ = "?period=quarter&limit=100&apikey=";
         apiKey = "demo"; ///"136ed7203a27884b69d3b28e9d0bfb85";
     }
-
+ 
     public String getCorrectUrlForOne(String symbol, String type) {
         return urlPrefix + type + "/" + symbol + urlSuffix + apiKey;
     }
@@ -35,5 +35,11 @@ public class VolleyApiKeyUrl {
     }
     public String getCorrectUrlH(String type) {
         return urlPrefix + type  + urlSuffix + apiKey;
+    }
+
+    public String getCorrectUrlA() {
+        return urlPrefix + "quote-short/" + "AAPL,AMGN,AXP,BA,CAT,CRM,CSCO,CVX,DIS,DOW,GS," +
+                "HD,HON,IBM,INTC,JNJ,JPM,KO,MCD,MMM,MRK,MSFT,NKE,PG," +
+                "TRV,UNH,V,VZ,WBA,WMT" + urlSuffix + apiKey;
     }
 }

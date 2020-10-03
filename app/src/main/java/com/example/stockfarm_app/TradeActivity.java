@@ -9,10 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +36,7 @@ import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -85,6 +88,10 @@ public class TradeActivity extends AppCompatActivity {
     Double currentPrice;
     int amount;
     TextView own;
+    StockFarmApplication stockFarmApplication;
+    long stockAmount;
+    TextView money;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +134,7 @@ public class TradeActivity extends AppCompatActivity {
         editText = findViewById(R.id.editTextNumber);
         feedback = findViewById(R.id.feedback);
         own = findViewById(R.id.own);
+        money = findViewById(R.id.money);
         trade = false;
         action = false;
         queue = Volley.newRequestQueue(this);
@@ -135,14 +143,17 @@ public class TradeActivity extends AppCompatActivity {
         context = this;
         currentPrice = 0.0;
         amount = 0;
+        stockFarmApplication = (StockFarmApplication) getApplication();
+        handler = new Handler();
 
         Intent intent = getIntent();
         symbol = intent.getExtras().getString("symbol");
         stockName.setText(symbol);
         df = new SimpleDateFormat("'New York TimeZone:' MM/dd/yyyy HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("America/New_York"));
-        getDataFromServer();
-        getDataFromServer2();
+
+        stockAmount = stockFarmApplication.userData.getStocks().get(symbol).getCurrAmount();
+        setMoney();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -160,6 +171,7 @@ public class TradeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (action) {
+                    closeKeyboard();
                     mainTrade();
                 }
                 else {
@@ -174,9 +186,10 @@ public class TradeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (action) {
+                    closeKeyboard();
                     calculate();
                 } else {
-                    if (!trade) { // להוציא את הסימן שאלה ברגע שעוברים לזמן אמת
+                    if (!trade) { // להוציא את הסימן שאלה ברגע שעוברים לזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         action = true;
                         charts.setText("Back");
                         invisible();
@@ -186,11 +199,12 @@ public class TradeActivity extends AppCompatActivity {
                         radioGroup.setVisibility(View.VISIBLE);
                         editText.setVisibility(View.VISIBLE);
                         feedback.setVisibility(View.VISIBLE);
+                        money.setVisibility(View.VISIBLE);
                     }
                     else {
                         new AlertDialog.Builder(context)
                                 .setTitle("Stock Market Hours")
-                                .setMessage("New York trading hours are Monday to Friday:\n\n" +
+                                .setMessage("New York (Wall Street) trading hours are Monday to Friday:\n\n" +
                                         "Opening 09:30 a.m.\n\n" +
                                         "Closing 04:00 p.m.")
                                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -201,7 +215,6 @@ public class TradeActivity extends AppCompatActivity {
                                 .show();
                     }
                 }
-
             }
         });
 
@@ -223,10 +236,14 @@ public class TradeActivity extends AppCompatActivity {
                     buyOrSell.setText("Make trade");
                     buyOrSell.setVisibility(View.VISIBLE);
                     amount = Integer.parseInt(s.toString());
-                    feedback.setText("Value of " + String.format("%.2f", (Double.parseDouble(s.toString()) * currentPrice)) + " USD");
+                    feedback.setText("Value of " + String.format("%.2f", (amount * currentPrice)) + " USD");
                 }
             }
         });
+    }
+
+    private void setMoney() {
+        money.setText("You have " + String.format("%.2f", stockFarmApplication.userData.getFunds()) + " USD free for trade");
     }
 
     private void mainTrade() {
@@ -239,12 +256,33 @@ public class TradeActivity extends AppCompatActivity {
         radioGroup.setVisibility(View.INVISIBLE);
         editText.setVisibility(View.INVISIBLE);
         feedback.setVisibility(View.INVISIBLE);
+        money.setVisibility(View.INVISIBLE);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        handler.removeCallbacksAndMessages(null);
         queue.cancelAll(symbol);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startHandler();
+    }
+
+    private void startHandler() {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                getDataFromServer();
+                getDataFromServer2();
+                handler.postDelayed(this, 8000);
+            }
+        };
+        //Start
+        handler.postDelayed(runnable, 0);
     }
 
     private void getDataFromServer() {
@@ -267,11 +305,16 @@ public class TradeActivity extends AppCompatActivity {
                     highD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("dayHigh"))));
                     lowD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("dayLow"))));
                     marketCapD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("marketCap"))));
-                    volumeD.setText(String.valueOf(Long.parseLong(jsonObject.getString("volume"))));
+                    volumeD.setText(String.format("%,d", Long.parseLong(jsonObject.getString("volume"))));
                     pCloseD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("previousClose"))));
                     yearHD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("yearHigh"))));
                     yearLD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("yearLow"))));
                     exchangeD.setText(jsonObject.getString("exchange"));
+
+                    own.setText("You have " + stockAmount + " stocks worth " + String.format("%.2f", Math.round(stockAmount*currentPrice*100.0)/100.0) + " USD" );
+                    if (amount!=0){
+                        feedback.setText("Value of " + String.format("%.2f", (amount * currentPrice)) + " USD");
+                    }
 
                     if ( changeValue > 0){
                         change.setTextColor(getColor(R.color.colorPrimary));
@@ -290,6 +333,7 @@ public class TradeActivity extends AppCompatActivity {
                         swipeRefreshLayout.setRefreshing(false);
                         swipe = false;
                     }
+                    stockFarmApplication.userData.getStocks().get(symbol).setLastPrice(currentPrice);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     return;
@@ -309,6 +353,12 @@ public class TradeActivity extends AppCompatActivity {
                 percent.setText(new String(Character.toChars(0x1F635)));
                 percent.setVisibility(View.VISIBLE);
                 time.setText("Please try again!");
+
+                feedback.setVisibility(View.INVISIBLE);
+                money.setVisibility(View.INVISIBLE);
+                editText.setVisibility(View.INVISIBLE);
+                own.setVisibility(View.INVISIBLE);
+                radioGroup.setVisibility(View.INVISIBLE);
 
                 if (swipe){
                     swipeRefreshLayout.setRefreshing(false);
@@ -381,7 +431,6 @@ public class TradeActivity extends AppCompatActivity {
 
         charts.setVisibility(View.INVISIBLE);
 
-        own.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
     }
 
@@ -418,8 +467,6 @@ public class TradeActivity extends AppCompatActivity {
     }
 
     private void calculate(){
-
-
         if (amount == 0){
             Toast.makeText(context, "Cant make trade with 0 stocks", Toast.LENGTH_LONG).show();
         } else {
@@ -429,20 +476,31 @@ public class TradeActivity extends AppCompatActivity {
                     buy = true;
             }
             if (buy){
-                // total לבדוק אם יש מספיק כסף לקניה
-                //Toast.makeText(context, "לא מספיק כסף", Toast.LENGTH_LONG).show();
+                if (stockFarmApplication.userData.getFunds() < total) {
+                    Toast.makeText(context, "You don't have enough money", Toast.LENGTH_LONG).show();
+                    return;
+                }
             } else {
-                // amount לבדוק אם יש מספיק מניות למכור
-                //Toast.makeText(context, "אין לך כמות מניות נדרשת", Toast.LENGTH_LONG).show();
+                if (stockFarmApplication.userData.getStocks().get(symbol).getCurrAmount() < amount) {
+                    Toast.makeText(context, "You don't have " + amount + " stocks to sell", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
+            final boolean finalBuy = buy;
             new AlertDialog.Builder(context)
                     .setTitle("Trade Approval")
                     .setMessage("\nAre you sure?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(context, "Trade executed!", Toast.LENGTH_LONG).show();
                             mainTrade();
-                            //updateAmount();
+                            if (updateAmount(finalBuy)){
+                                Toast.makeText(context, "Trade executed!", Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                Toast.makeText(context, "Something went wrong.. Try again", Toast.LENGTH_LONG).show();
+                            }
+
+
                         }
                     })
                     .setNegativeButton(android.R.string.no, null)
@@ -450,4 +508,31 @@ public class TradeActivity extends AppCompatActivity {
                     .show();
         }
     }
+
+    private boolean updateAmount(boolean buy){
+        if (buy) {
+            stockFarmApplication.userData.setFunds((Math.round(amount*currentPrice*100.0)/100.0)*(-1));
+            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount,(Math.round(amount*currentPrice*100.0)/100.0)*(-1));
+            stockAmount += amount;
+            // firestore
+        }
+        else {
+            stockFarmApplication.userData.setFunds((Math.round(amount*currentPrice*100.0)/100.0));
+            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount*(-1),(Math.round(amount*currentPrice*100.0)/100.0));
+            stockAmount -= amount;
+            // firestore
+        }
+        setMoney();
+        own.setText("You have " + stockAmount + " stocks worth " + String.format("%.2f", Math.round(stockAmount*currentPrice*100.0)/100.0) + " USD" );
+        return true; // false in problem
+    }
+
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
 }

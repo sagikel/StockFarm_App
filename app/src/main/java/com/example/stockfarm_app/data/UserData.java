@@ -1,6 +1,6 @@
 package com.example.stockfarm_app.data;
 
-
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class UserData
@@ -9,7 +9,7 @@ public class UserData
     private String email;
     private String password;
     private double funds;
-    public LinkedList<UserStockData> stocks;
+    private HashMap<String, UserStockData> stocks;
 
     /**
      * this c'tor is for initializing users who authenticate via google and therefore no password.
@@ -19,13 +19,21 @@ public class UserData
         this(name, email, "", initialFunds);
     }
 
+
+
     public UserData(String name, String email, String password, double initialFunds)
     {
         this.name = name;
         this.email = email;
         this.funds = initialFunds;
         this.password = password;
-        stocks = new LinkedList<>();
+        stocks = new HashMap<>();
+        String[] list = {"AAPL","AMGN","AXP","BA","CAT","CRM","CSCO","CVX","DIS","DOW","GS",
+                "HD","HON","IBM","INTC","JNJ","JPM","KO","MCD","MMM","MRK","MSFT","NKE","PG",
+                "TRV","UNH","V","VZ","WBA","WMT"};
+        for (String symbol : list) {
+            stocks.put(symbol, new UserStockData(symbol, 0));
+        }
     }
 
     public String getName() {
@@ -44,20 +52,26 @@ public class UserData
         return funds;
     }
 
-    public LinkedList<UserStockData> getStocks() {
+    public HashMap<String, UserStockData> getStocks() {
         return stocks;
     }
 
     public LinkedList<UserStockData> getActiveStocks() // used for farm crops creation
     {
         LinkedList<UserStockData> activeStocks = new LinkedList<>();
-        for (UserStockData stock : stocks)
+        String[] list = {"AAPL","AMGN","AXP","BA","CAT","CRM","CSCO","CVX","DIS","DOW","GS",
+                "HD","HON","IBM","INTC","JNJ","JPM","KO","MCD","MMM","MRK","MSFT","NKE","PG",
+                "TRV","UNH","V","VZ","WBA","WMT"};
+        for (String stock : list)
         {
-            if (stock.getCurrAmount() > 0)
+            if (stocks.get(stock).getCurrAmount() > 0)
             {
-                activeStocks.add(stock);
+                activeStocks.add(stocks.get(stock));
             }
         }
         return activeStocks;
+    }
+    public void setFunds(double funds) {
+    this.funds += funds;
     }
 }
