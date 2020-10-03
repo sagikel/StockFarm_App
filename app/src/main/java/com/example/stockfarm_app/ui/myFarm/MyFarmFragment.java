@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -78,15 +81,20 @@ public class MyFarmFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        farmPager.setCurrentItem(0,true);
-        // refresh ?
+        //farmPager.setCurrentItem(0,true);
+        for (Fragment fragment : viewPagerAdapter.mFragments) // SAGI NOTICE: example for how crop fragments are updated
+        {
+            if (fragment instanceof CropFragment && ((CropFragment) fragment).stockName != null)
+            {   // the last condition is important because we can't update fragment which haven't yet been viewed
+                ((CropFragment) fragment).setWindowText();
+            }
+        }
     }
 
     @Override
@@ -236,6 +244,4 @@ public class MyFarmFragment extends Fragment {
 
 
     }
-
-
 }

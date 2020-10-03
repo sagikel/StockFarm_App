@@ -74,6 +74,7 @@ public class CropFragment extends Fragment {
                     break;
                 } else {
                     sum += amountTrade*stock.getStockTradeHistory().get(i).getTradeValue();
+                    amount += amountTrade;
                 }
             }
         }
@@ -93,10 +94,5 @@ public class CropFragment extends Fragment {
 ////        super.onResume();
 ////        setWindowText();
 ////    }
-
-    /**
-     *
-     *
-     */
 
 }

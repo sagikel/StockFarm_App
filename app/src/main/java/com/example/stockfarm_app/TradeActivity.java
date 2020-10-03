@@ -149,7 +149,7 @@ public class TradeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         symbol = intent.getExtras().getString("symbol");
         stockName.setText(symbol);
-        df = new SimpleDateFormat("'New York TimeZone:' MM/dd/yyyy HH:mm:ss");
+        df = new SimpleDateFormat("'New York Time Zone:' MM/dd/yyyy HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("America/New_York"));
 
         stockAmount = stockFarmApplication.userData.getStocks().get(symbol).getCurrAmount();
@@ -512,13 +512,13 @@ public class TradeActivity extends AppCompatActivity {
     private boolean updateAmount(boolean buy){
         if (buy) {
             stockFarmApplication.userData.setFunds((Math.round(amount*currentPrice*100.0)/100.0)*(-1));
-            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount,(Math.round(amount*currentPrice*100.0)/100.0)*(-1));
+            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount, (Math.round(amount*currentPrice*100.0)/100.0));
             stockAmount += amount;
             // firestore
         }
         else {
             stockFarmApplication.userData.setFunds((Math.round(amount*currentPrice*100.0)/100.0));
-            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount*(-1),(Math.round(amount*currentPrice*100.0)/100.0));
+            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount*(-1), (Math.round(amount*currentPrice*100.0)/100.0));
             stockAmount -= amount;
             // firestore
         }

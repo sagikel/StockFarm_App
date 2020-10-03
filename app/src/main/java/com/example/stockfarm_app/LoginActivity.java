@@ -31,6 +31,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.gson.Gson;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -362,8 +363,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private UserData dummyUser()
     {
         UserData dudu = new UserData("Dudu Topaz", "rishon.babidur@hotmail.co.il", 1000);
-        dudu.getStocks().get("AAPL").addEvent(null, 100, 100);
-        dudu.getStocks().get("AMGN").addEvent(new Date(System.currentTimeMillis()), 100, 300);
+        dudu.getStocks().get("AAPL").addEvent(Calendar.getInstance().getTime(), 100, 100.00);
+        dudu.getStocks().get("AAPL").addEvent(Calendar.getInstance().getTime(), -20, 120.00);
+        dudu.getStocks().get("AMGN").addEvent(Calendar.getInstance().getTime(), 100, 300.00);
         return dudu;
     }
 }
