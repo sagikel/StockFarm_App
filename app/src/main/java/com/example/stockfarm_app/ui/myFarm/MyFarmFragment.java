@@ -65,12 +65,13 @@ public class MyFarmFragment extends Fragment {
         volleyApiKeyUrl = new VolleyApiKeyUrl();
         queue = Volley.newRequestQueue(getContext());
 
-        pageNum = 3; // TODO update dynamically
+        pageNum = app.userData.getActiveStocks().size() + 1; // TODO update this field during trade
 
         refreshDataFromServer();
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 if (!refresh) {
                     refreshDataFromServer();
                     refresh = true;
@@ -107,10 +108,18 @@ public class MyFarmFragment extends Fragment {
                                 .setLastPrice(Double.parseDouble(jsonObject.getString("price")));
                     }
                     if (refresh) {
-                        if (farmPager.getCurrentItem() == 0) {
-                            farmPager.setAdapter(viewPagerAdapter);
-                        } else {
-                            farmPager.setCurrentItem(0,true);
+//                        if (farmPager.getCurrentItem() == 0) {
+//                            farmPager.setAdapter(viewPagerAdapter);
+//                        } else {
+//                            farmPager.setCurrentItem(0,true);
+//                        }
+                        for (Fragment fragment : viewPagerAdapter.mFragments) // SAGI NOTICE: example for how crop fragments are updated
+                        {
+                            String updated = "updated";
+                            if (fragment instanceof CropFragment && ((CropFragment) fragment).stockName != null)
+                            {   // the last condition is important because we can't update fragment which haven't yet been viewed
+                                ((CropFragment) fragment).stockName.setText(updated);
+                            }
                         }
                         Toast.makeText(getContext(),"Refreshing prices", Toast.LENGTH_SHORT).show();
                     }
@@ -140,7 +149,7 @@ public class MyFarmFragment extends Fragment {
     {
         int reelWidth = farmReel.getMeasuredWidth();
         int screenWidth = this.getResources().getDisplayMetrics().widthPixels;
-        Log.d("TAG", "reel: " + String.valueOf(reelWidth) + ", screen: " + String.valueOf(screenWidth));
+//        Log.d("TAG", "reel: " + String.valueOf(reelWidth) + ", screen: " + String.valueOf(screenWidth));
         return (int) (reelWidth - screenWidth) / (pageNum - 1);
     }
 
@@ -176,21 +185,15 @@ public class MyFarmFragment extends Fragment {
     public class ViewPagerAdapter extends FragmentStateAdapter {
 
         private LinkedList<Fragment> mFragments;
-//        = new Fragment[] {//Initialize fragments views
-////Fragment views are initialized like any other fragment (Extending Fragment)
-//                new SignFragment(),//First fragment to be displayed within the pager tab number 1
-//                new CropFragment(),
-//                new CropFragment(),
-//        };
 
         public ViewPagerAdapter(FragmentActivity fa, LinkedList<UserStockData> activeStocks){//Pager constructor receives Activity instance
             super(fa);
             mFragments = new LinkedList<>();
             mFragments.add(new SignFragment());
             for (UserStockData stock : activeStocks)
-                {
-                    mFragments.add(new CropFragment(stock)); // TODO add stock data to fragment c'tor
-                }
+            {
+                mFragments.add(new CropFragment(stock));
+            }
         }
 
         @Override
@@ -237,5 +240,3 @@ public class MyFarmFragment extends Fragment {
 
 
 }
-
-

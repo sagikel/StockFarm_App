@@ -88,11 +88,11 @@ public class CropFragment extends Fragment {
         return (String.format("%.2f", sum) + "%");
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        setWindowText();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        setWindowText();
+//    }
 
     /**
      *

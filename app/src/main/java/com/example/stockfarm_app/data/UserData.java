@@ -9,7 +9,8 @@ public class UserData
     private String email;
     private String password;
     private double funds;
-    private HashMap<String, UserStockData> stocks;
+
+    public HashMap<String, UserStockData> stocks;
 
     /**
      * this c'tor is for initializing users who authenticate via google and therefore no password.
@@ -36,7 +37,8 @@ public class UserData
         }
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 

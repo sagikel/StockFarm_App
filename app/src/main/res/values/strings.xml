@@ -16,14 +16,6 @@
     <string name="wrong_password">Password and email don\'t match</string>
     <string name="enter_details_message">Go ahead and register:</string>
 
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="login_failed">"Login failed"</string>
-
     <!-- Errors -->
     <string name="err_query_user_data">Error accessing our servers, Try again later!</string>
 
