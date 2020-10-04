@@ -15,6 +15,8 @@ import com.example.stockfarm_app.TradeActivity;
 import com.example.stockfarm_app.data.UserStockData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.NumberFormat;
+
 public class CropFragment extends Fragment {
     private UserStockData stock;
     TextView stockName;
@@ -46,15 +48,15 @@ public class CropFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         return view;
     }
 
     public void setWindowText() {
         StringBuilder toShow = new StringBuilder();
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
         toShow.append("<big><b>").append(stock.getStockName())
                 .append("</b><br></big><small>Amount: <b>").append(stock.getCurrAmount())
-                .append("</b><br>Last Price: <b>").append(String.format("%.2f", stock.getLastPrice()))
+                .append("</b><br>Last Price: <b>").append(formatter.format(stock.getLastPrice()))
                 .append("</b><br>Average Total Gain: <b>");
         String string = gainCalculate();
         toShow.append(color1).append(string).append(color2).append("</b>");
@@ -67,8 +69,8 @@ public class CropFragment extends Fragment {
         long amount = 0;
         for (int i = stock.getStockTradeHistory().size()-1; i >=0 ; i--) {
             long amountTrade = stock.getStockTradeHistory().get(i).getTradeAmount();
-            long temp = amountNow - amount;
             if (amountTrade > 0){
+                long temp = amountNow - amount;
                 if (amountTrade >= temp){
                     sum += temp*stock.getStockTradeHistory().get(i).getTradeValue();
                     break;
@@ -88,11 +90,4 @@ public class CropFragment extends Fragment {
         }
         return (String.format("%.2f", sum) + "%");
     }
-
-//    @Override
-////    public void onResume() {
-////        super.onResume();
-////        setWindowText();
-////    }
-
 }

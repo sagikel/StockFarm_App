@@ -35,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +48,6 @@ public class TradeActivity extends AppCompatActivity {
     TextView stockName;
     TextView companyName;
     TextView price;
-    TextView usd;
     TextView percent;
     TextView change;
     TextView time;
@@ -102,7 +102,6 @@ public class TradeActivity extends AppCompatActivity {
         stockName = findViewById(R.id.stock_info_text2);
         companyName = findViewById(R.id.company_name);
         price = findViewById(R.id.price);
-        usd = findViewById(R.id.usd);
         percent = findViewById(R.id.percent);
         change = findViewById(R.id.change);
         time = findViewById(R.id.time);
@@ -227,23 +226,24 @@ public class TradeActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
-
                 if (s.length() == 0)
                 {
                     feedback.setText("N/A");
                     buyOrSell.setVisibility(View.INVISIBLE);
                 }else {
+                    NumberFormat formatter = NumberFormat.getCurrencyInstance();
                     buyOrSell.setText("Make trade");
                     buyOrSell.setVisibility(View.VISIBLE);
                     amount = Integer.parseInt(s.toString());
-                    feedback.setText("Value of " + String.format("%.2f", (amount * currentPrice)) + " USD");
+                    feedback.setText("Value of " + formatter.format(amount * currentPrice));
                 }
             }
         });
     }
 
     private void setMoney() {
-        money.setText("You have " + String.format("%.2f", stockFarmApplication.userData.getFunds()) + " USD free for trade");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        money.setText("You have " + formatter.format(stockFarmApplication.userData.getFunds()) + " free for trade");
     }
 
     private void mainTrade() {
@@ -291,29 +291,30 @@ public class TradeActivity extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                NumberFormat formatter = NumberFormat.getCurrencyInstance();
                 try {
                     JSONObject jsonObject = response.getJSONObject(0);
 
                     time.setText(df.format(new Date(Long.parseLong(jsonObject.getString("timestamp")) * 1000)));
                     companyName.setText(jsonObject.getString("name"));
                     currentPrice = Double.parseDouble(jsonObject.getString("price"));
-                    price.setText(String.format("%.2f", currentPrice));
+                    price.setText(formatter.format(currentPrice));
                     percent.setText(Double.parseDouble(jsonObject.getString("changesPercentage")) + "%");
                     double changeValue = Double.parseDouble(jsonObject.getString("change"));
-                    change.setText(String.valueOf(changeValue));
-                    openD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("open"))));
-                    highD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("dayHigh"))));
-                    lowD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("dayLow"))));
-                    marketCapD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("marketCap"))));
+                    change.setText(formatter.format(changeValue));
+                    openD.setText(formatter.format(Double.parseDouble(jsonObject.getString("open"))));
+                    highD.setText(formatter.format(Double.parseDouble(jsonObject.getString("dayHigh"))));
+                    lowD.setText(formatter.format(Double.parseDouble(jsonObject.getString("dayLow"))));
+                    marketCapD.setText(formatter.format(Double.parseDouble(jsonObject.getString("marketCap"))));
                     volumeD.setText(String.format("%,d", Long.parseLong(jsonObject.getString("volume"))));
-                    pCloseD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("previousClose"))));
-                    yearHD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("yearHigh"))));
-                    yearLD.setText(String.valueOf(Double.parseDouble(jsonObject.getString("yearLow"))));
+                    pCloseD.setText(formatter.format(Double.parseDouble(jsonObject.getString("previousClose"))));
+                    yearHD.setText(formatter.format(Double.parseDouble(jsonObject.getString("yearHigh"))));
+                    yearLD.setText(formatter.format(Double.parseDouble(jsonObject.getString("yearLow"))));
                     exchangeD.setText(jsonObject.getString("exchange"));
 
-                    own.setText("You have " + stockAmount + " stocks worth " + String.format("%.2f", Math.round(stockAmount*currentPrice*100.0)/100.0) + " USD" );
+                    own.setText("You have " + stockAmount + " stocks worth " + formatter.format(Math.round(stockAmount*currentPrice*100.0)/100.0));
                     if (amount!=0){
-                        feedback.setText("Value of " + String.format("%.2f", (amount * currentPrice)) + " USD");
+                        feedback.setText("Value of " + formatter.format(amount * currentPrice));
                     }
 
                     if ( changeValue > 0){
@@ -510,20 +511,21 @@ public class TradeActivity extends AppCompatActivity {
     }
 
     private boolean updateAmount(boolean buy){
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
         if (buy) {
             stockFarmApplication.userData.setFunds((Math.round(amount*currentPrice*100.0)/100.0)*(-1));
-            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount, (Math.round(amount*currentPrice*100.0)/100.0));
+            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount, (Math.round(currentPrice*100.0)/100.0));
             stockAmount += amount;
             // firestore
         }
         else {
             stockFarmApplication.userData.setFunds((Math.round(amount*currentPrice*100.0)/100.0));
-            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount*(-1), (Math.round(amount*currentPrice*100.0)/100.0));
+            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount*(-1), (Math.round(currentPrice*100.0)/100.0));
             stockAmount -= amount;
             // firestore
         }
         setMoney();
-        own.setText("You have " + stockAmount + " stocks worth " + String.format("%.2f", Math.round(stockAmount*currentPrice*100.0)/100.0) + " USD" );
+        own.setText("You have " + stockAmount + " stocks worth " + formatter.format(Math.round(stockAmount*currentPrice*100.0)/100.0));
         return true; // false in problem
     }
 

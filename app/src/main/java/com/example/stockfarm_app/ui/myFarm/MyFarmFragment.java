@@ -93,6 +93,8 @@ public class MyFarmFragment extends Fragment {
             if (fragment instanceof CropFragment && ((CropFragment) fragment).stockName != null)
             {   // the last condition is important because we can't update fragment which haven't yet been viewed
                 ((CropFragment) fragment).setWindowText();
+            } else if (fragment instanceof SignFragment && ((SignFragment) fragment).playerName != null) {
+                ((SignFragment) fragment).getData();
             }
         }
     }
@@ -126,6 +128,8 @@ public class MyFarmFragment extends Fragment {
                             if (fragment instanceof CropFragment && ((CropFragment) fragment).stockName != null)
                             {   // the last condition is important because we can't update fragment which haven't yet been viewed
                                 ((CropFragment) fragment).setWindowText();
+                            } else if (fragment instanceof SignFragment && ((SignFragment) fragment).playerName != null) {
+                                ((SignFragment) fragment).getData();
                             }
                         }
                         Toast.makeText(getContext(),"Refreshing prices", Toast.LENGTH_SHORT).show();

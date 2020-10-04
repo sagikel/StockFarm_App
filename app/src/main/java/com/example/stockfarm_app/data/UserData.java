@@ -9,7 +9,7 @@ public class UserData
     private String email;
     private String password;
     private double funds;
-
+    private double fundsFix;
     public HashMap<String, UserStockData> stocks;
 
     /**
@@ -27,6 +27,7 @@ public class UserData
         this.name = name;
         this.email = email;
         this.funds = initialFunds;
+        this.fundsFix = initialFunds;
         this.password = password;
         stocks = new HashMap<>();
         String[] list = {"AAPL","AMGN","AXP","BA","CAT","CRM","CSCO","CVX","DIS","DOW","GS",
@@ -52,6 +53,10 @@ public class UserData
 
     public double getFunds() {
         return funds;
+    }
+
+    public double getFundsFix() {
+        return fundsFix;
     }
 
     public HashMap<String, UserStockData> getStocks() {

@@ -362,10 +362,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private UserData dummyUser()
     {
-        UserData dudu = new UserData("Dudu Topaz", "rishon.babidur@hotmail.co.il", 1000);
-        dudu.getStocks().get("AAPL").addEvent(Calendar.getInstance().getTime(), 100, 100.00);
+        UserData dudu = new UserData("Dudu Topaz", "rishon.babidur@hotmail.co.il", 10000);
+        dudu.getStocks().get("AAPL").addEvent(Calendar.getInstance().getTime(), 21, 100.00);
         dudu.getStocks().get("AAPL").addEvent(Calendar.getInstance().getTime(), -20, 120.00);
-        dudu.getStocks().get("AMGN").addEvent(Calendar.getInstance().getTime(), 100, 300.00);
+        dudu.getStocks().get("AMGN").addEvent(Calendar.getInstance().getTime(), 1, 300.00);
         return dudu;
     }
 }

@@ -45,6 +45,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.text.NumberFormat;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StockMarketFragment extends Fragment implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
@@ -496,6 +498,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
 
     private void parseForV(JSONArray jsonArray, TextView textViewForData) {
         StringBuilder toShow = new StringBuilder();
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
         try {
             for (int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -508,9 +511,18 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
                 String enterpriseValue = jsonObject.getString("enterpriseValue");
 
                 toShow.append("<b>").append(date).append("</b><br>").append("<br>Stock Price: ")
-                        .append(stockPrice).append("<br>Number Of Shares: ").append(numberOfShares)
-                        .append("<br>Market Capitalization: ").append(marketCapitalization).append("<br>Minus Cash And Cash Equivalents: ").append(minusCashAndCashEquivalents)
-                        .append("<br>Add Total Debt: ").append(addTotalDebt).append("<br>Enterprise Value: ").append(enterpriseValue).append("<br><br><br>");
+                        .append(formatter.format(Double.parseDouble(stockPrice)))
+                        .append("<br>Number Of Shares: ")
+                        .append(String.format("%,d", Long.parseLong(numberOfShares)))
+                        .append("<br>Market Capitalization: ")
+                        .append(formatter.format(Double.parseDouble(marketCapitalization)))
+                        .append("<br>Minus Cash And Cash Equivalents: ")
+                        .append(formatter.format(Double.parseDouble(minusCashAndCashEquivalents)))
+                        .append("<br>Add Total Debt: ")
+                        .append(formatter.format(Double.parseDouble(addTotalDebt)))
+                        .append("<br>Enterprise Value: ")
+                        .append(formatter.format(Double.parseDouble(enterpriseValue)))
+                        .append("<br><br><br>");
             }
             if (toShow.length() > 12) {
                 toShow.setLength(toShow.length()-12);
