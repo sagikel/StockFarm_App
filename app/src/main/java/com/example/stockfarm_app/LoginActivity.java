@@ -109,6 +109,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             openLoadingWindow();
             app.getUserById(currentUser.getUid(), this);
         }
+        else if (app.userData != null)
+        {
+            goToFarm();
+        }
     }
 
     void openLoadingWindow() {
@@ -156,8 +160,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 app.generateAccountRegularUser(regEmail, regEmail, regName, regPassword, activity);
                 break;
             case R.id.skip:
-                app.userData = dummyUser();
-                goToFarm();
+                dummyUser();
+//                goToFarm();
                 break;
 
         }
@@ -252,6 +256,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             String name = app.setUserDataFromServer(email, json);
                             String welcomeMsg = "Welcome Back, " + name;
                             Snackbar.make(loadingView, welcomeMsg, Snackbar.LENGTH_SHORT).show();
+                            new CountDownTimer(2000, 2000) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+                                }
+
+                                public void onFinish() {
+                                    closeLoadingWindow();
+                                    goToFarm();
+                                }
+                            }.start();
                         } else {   // wrong password
                             Snackbar.make(findViewById(R.id.sign_in_layout),
                                     getString(R.string.wrong_password), Snackbar.LENGTH_SHORT).show();
@@ -358,15 +372,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void goToFarm()
     {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 
-    private UserData dummyUser()
+    private void dummyUser()
     {
-        UserData dudu = new UserData("Dudu Topaz", "rishon.babidur@hotmail.co.il", 10000);
-        dudu.getStocks().get("AAPL").addEvent(Calendar.getInstance().getTime(), 21, 100.00);
-        dudu.getStocks().get("AAPL").addEvent(Calendar.getInstance().getTime(), -20, 120.00);
-        dudu.getStocks().get("AMGN").addEvent(Calendar.getInstance().getTime(), 1, 300.00);
-        return dudu;
+        emailBox.setText("rishon.babidur@hotmail.co.il");
+        passwordBox.setText("123456");
+        openLoadingWindow();
+        regularSignInOrRegister();
     }
 }
 

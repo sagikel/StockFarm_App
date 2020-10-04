@@ -125,6 +125,12 @@ public class StockFarmApplication extends Application
         });
     }
 
+    private void updateUserDataToServer(Activity activity)
+    {
+        String json = new Gson().toJson(userData);
+        db.collection("users").document(currId).update(getString(R.string.firestore_fieldname_userdata), json);
+    }
+
 
 
 
