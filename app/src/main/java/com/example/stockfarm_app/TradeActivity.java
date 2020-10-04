@@ -92,6 +92,7 @@ public class TradeActivity extends AppCompatActivity {
     long stockAmount;
     TextView money;
     Handler handler;
+    Double currentPriceForTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +142,7 @@ public class TradeActivity extends AppCompatActivity {
         swipe = false;
         context = this;
         currentPrice = 0.0;
+        currentPriceForTransaction = 0.0;
         amount = 0;
         stockFarmApplication = (StockFarmApplication) getApplication();
         handler = new Handler();
@@ -486,6 +488,9 @@ public class TradeActivity extends AppCompatActivity {
                     Toast.makeText(context, "You don't have " + amount + " stocks to sell", Toast.LENGTH_LONG).show();
                     return;
                 }
+            } if (trade){ //(!trade) להוסיף סימן קריאה בזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                Toast.makeText(context, "You pass the trading time!", Toast.LENGTH_LONG).show();
+                return;
             }
             final boolean finalBuy = buy;
             new AlertDialog.Builder(context)
@@ -493,15 +498,14 @@ public class TradeActivity extends AppCompatActivity {
                     .setMessage("\nAre you sure?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            if (trade){ //(!trade) להוסיף סימן קריאה בזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                Toast.makeText(context, "You pass the trading time!", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                            currentPriceForTransaction = currentPrice;
                             mainTrade();
-                            if (updateAmount(finalBuy)){
-                                Toast.makeText(context, "Trade executed!", Toast.LENGTH_LONG).show();
-                            }
-                            else {
-                                Toast.makeText(context, "Something went wrong.. Try again", Toast.LENGTH_LONG).show();
-                            }
-
-
+                            updateAmount(finalBuy);
+                            Toast.makeText(context, "Trade executed!", Toast.LENGTH_LONG).show();
                         }
                     })
                     .setNegativeButton(android.R.string.no, null)
@@ -510,23 +514,23 @@ public class TradeActivity extends AppCompatActivity {
         }
     }
 
-    private boolean updateAmount(boolean buy){
+    private void updateAmount(boolean buy){
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         if (buy) {
-            stockFarmApplication.userData.setFunds((Math.round(amount*currentPrice*100.0)/100.0)*(-1));
-            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount, (Math.round(currentPrice*100.0)/100.0));
+            stockFarmApplication.userData.setFunds((Math.round(amount*currentPriceForTransaction*100.0)/100.0)*(-1));
+            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount, (Math.round(currentPriceForTransaction*100.0)/100.0));
             stockAmount += amount;
-            // firestore
         }
         else {
-            stockFarmApplication.userData.setFunds((Math.round(amount*currentPrice*100.0)/100.0));
-            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount*(-1), (Math.round(currentPrice*100.0)/100.0));
+            stockFarmApplication.userData.setFunds((Math.round(amount*currentPriceForTransaction*100.0)/100.0));
+            stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount*(-1), (Math.round(currentPriceForTransaction*100.0)/100.0));
             stockAmount -= amount;
-            // firestore
+
         }
         setMoney();
-        own.setText("You have " + stockAmount + " stocks worth " + formatter.format(Math.round(stockAmount*currentPrice*100.0)/100.0));
-        return true; // false in problem
+        own.setText("You have " + stockAmount + " stocks worth " + formatter.format(Math.round(stockAmount*currentPriceForTransaction*100.0)/100.0));
+        // fireStore
+        fireStoreUpdate();
     }
 
     private void closeKeyboard() {
@@ -537,4 +541,7 @@ public class TradeActivity extends AppCompatActivity {
         }
     }
 
+    private void fireStoreUpdate() {
+        // ????
+    }
 }
