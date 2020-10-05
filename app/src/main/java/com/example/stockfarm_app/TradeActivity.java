@@ -530,7 +530,7 @@ public class TradeActivity extends AppCompatActivity {
         setMoney();
         own.setText("You have " + stockAmount + " stocks worth " + formatter.format(Math.round(stockAmount*currentPriceForTransaction*100.0)/100.0));
         // fireStore
-        fireStoreUpdate();
+        stockFarmApplication.updateUserDataToServer();
     }
 
     private void closeKeyboard() {
@@ -539,9 +539,5 @@ public class TradeActivity extends AppCompatActivity {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-    }
-
-    private void fireStoreUpdate() {
-        // ????
     }
 }

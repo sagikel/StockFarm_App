@@ -12,7 +12,7 @@ public class VolleyApiKeyUrl {
         urlSuffix = "?apikey=";
         urlSuffixForMany = "?limit=100&apikey=";
         urlSuffixForQ = "?period=quarter&limit=100&apikey=";
-        apiKey = "demo"; ///"136ed7203a27884b69d3b28e9d0bfb85";
+        apiKey = "136ed7203a27884b69d3b28e9d0bfb85"; /// 19$ plan: "136ed7203a27884b69d3b28e9d0bfb85", DEMO = "demo";
     }
  
     public String getCorrectUrlForOne(String symbol, String type) {

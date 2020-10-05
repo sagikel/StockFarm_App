@@ -84,9 +84,12 @@ public class CropFragment extends Fragment {
         if (sum > 0){
             color1 = "<font color='#00802b'>";
             color2 = "</font>";
-        } else {
+        } else if (sum < 0) {
             color1 = "<font color='#990000'>";
             color2 = "</font>";
+        } else {
+            color1 = "";
+            color2 = "";
         }
         return (String.format("%.2f", sum) + "%");
     }
