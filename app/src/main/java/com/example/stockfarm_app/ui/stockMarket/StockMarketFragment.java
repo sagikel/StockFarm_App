@@ -26,7 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -51,6 +53,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StockMarketFragment extends Fragment implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
 
+    ConstraintLayout basicStockInfoLayout;
     TextView stockNameText;
     TextView ceoText;
     TextView sectorText;
@@ -80,10 +83,12 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stock_market, container, false);
+        basicStockInfoLayout = view.findViewById(R.id.market_basic_info_container);
         stockNameText = view.findViewById(R.id.stock_info_text2);
         tradeButton = view.findViewById(R.id.trade_button);
         moreInfoButton = view.findViewById(R.id.more_info_button);
         spinner = (Spinner) view.findViewById(R.id.stock_options);
+
         ceoText = view.findViewById(R.id.textView2);
         sectorText = view.findViewById(R.id.textView3);
         industryText = view.findViewById(R.id.textView4);
@@ -178,7 +183,6 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
                         sectorText.setText(stocksFixedData.getMap().get(symbol).get(2));
 
                         listView.setVisibility(View.INVISIBLE);
-
                         ceoText.setVisibility(View.VISIBLE);
                         sectorText.setVisibility(View.VISIBLE);
                         industryText.setVisibility(View.VISIBLE);
@@ -219,14 +223,15 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
     private void stockInfo() {
         if (symbol.equals("Choose Stock Symbol"))
         {
-            stockNameText.setVisibility(View.INVISIBLE);
-            ceoText.setVisibility(View.INVISIBLE);
-            sectorText.setVisibility(View.INVISIBLE);
-            industryText.setVisibility(View.INVISIBLE);
-            descriptionText.setVisibility(View.INVISIBLE);
-            tradeButton.setVisibility(View.INVISIBLE);
-            moreInfoButton.setVisibility(View.INVISIBLE);
-            circleImageView.setVisibility(View.INVISIBLE);
+            basicStockInfoLayout.setVisibility(View.INVISIBLE);
+//            stockNameText.setVisibility(View.INVISIBLE);
+//            ceoText.setVisibility(View.INVISIBLE);
+//            sectorText.setVisibility(View.INVISIBLE);
+//            industryText.setVisibility(View.INVISIBLE);
+//            descriptionText.setVisibility(View.INVISIBLE);
+//            tradeButton.setVisibility(View.INVISIBLE);
+//            moreInfoButton.setVisibility(View.INVISIBLE);
+//            circleImageView.setVisibility(View.INVISIBLE);
             return;
         }
         stockNameText.setText(stocksFixedData.getMap().get(symbol).get(0));
@@ -237,15 +242,18 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
         String mDrawableName = symbol.toLowerCase();
         int resID = getResources().getIdentifier(mDrawableName , "drawable", getContext().getPackageName());
         circleImageView.setImageResource(resID);
-
-        stockNameText.setVisibility(View.VISIBLE);
-        ceoText.setVisibility(View.VISIBLE);
-        sectorText.setVisibility(View.VISIBLE);
-        industryText.setVisibility(View.VISIBLE);
-        descriptionText.setVisibility(View.VISIBLE);
-        tradeButton.setVisibility(View.VISIBLE);
-        moreInfoButton.setVisibility(View.VISIBLE);
-        circleImageView.setVisibility(View.VISIBLE);
+        basicStockInfoLayout.setVisibility(View.VISIBLE);
+        FragmentTransaction tx = getChildFragmentManager().beginTransaction();
+//        tx.replace(R.id.market_fragment, new StockMarketFragment()).addToBackStack( "tag" ).commit();
+        tx..addToBackStack( "tag" ).commit();
+//        stockNameText.setVisibility(View.VISIBLE);
+//        ceoText.setVisibility(View.VISIBLE);
+//        sectorText.setVisibility(View.VISIBLE);
+//        industryText.setVisibility(View.VISIBLE);
+//        descriptionText.setVisibility(View.VISIBLE);
+//        tradeButton.setVisibility(View.VISIBLE);
+//        moreInfoButton.setVisibility(View.VISIBLE);
+//        circleImageView.setVisibility(View.VISIBLE);
     }
 
     @Override
