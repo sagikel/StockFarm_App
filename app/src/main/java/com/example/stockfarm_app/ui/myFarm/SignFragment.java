@@ -1,16 +1,25 @@
 package com.example.stockfarm_app.ui.myFarm;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.stockfarm_app.MainActivity;
 import com.example.stockfarm_app.R;
 import com.example.stockfarm_app.StockFarmApplication;
 import com.example.stockfarm_app.data.UserStockData;
@@ -23,10 +32,12 @@ import java.util.TimeZone;
 
 public class SignFragment extends Fragment
 {
-    FloatingActionButton floatingActionButton;
+    FloatingActionButton floatingActionButtonH;
+    FloatingActionButton floatingActionButtonS;
     ScrollView scrollView;
     TextView history;
-    boolean open;
+    boolean historyBol;
+    boolean settingBol;
     StockFarmApplication app;
     DateFormat df;
     TextView playerName;
@@ -34,13 +45,18 @@ public class SignFragment extends Fragment
     TextView assets;
     TextView portfolioReturn;
     TextView Level;
+    LinearLayout setting;
+    Button logOut;
+    Button delete;
+    SwitchCompat switchCompat;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final ViewGroup view = (ViewGroup) inflater.inflate(
                 R.layout.sign_layout, container, false);
-        floatingActionButton = view.findViewById(R.id.floatingActionButton2);
+        floatingActionButtonH = view.findViewById(R.id.floatingActionButton2);
+        floatingActionButtonS = view.findViewById(R.id.floatingActionButton3);
         scrollView = view.findViewById(R.id.scroll_view_history);
         history = view.findViewById(R.id.history);
         playerName = view.findViewById(R.id.player_name);
@@ -48,31 +64,116 @@ public class SignFragment extends Fragment
         assets = view.findViewById(R.id.assets);
         portfolioReturn = view.findViewById(R.id.return2);
         Level = view.findViewById(R.id.level);
+        setting = view.findViewById(R.id.setting);
+        logOut = view.findViewById(R.id.log_out);
+        delete = view.findViewById(R.id.delete);
+        switchCompat = view.findViewById(R.id.switch1);
 
         app = (StockFarmApplication) getActivity().getApplication();
         playerName.setText(app.userData.getName());
 
-        open = false;
+        historyBol = false;
+        settingBol = false;
         df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss ':' ");
         df.setTimeZone(TimeZone.getTimeZone("America/New_York"));
 
+        boolean switchBool = app.sp.getBoolean(app.userData.getName()+"N", true);
+        if (switchBool) {
+            app.startAlarm();
+        }
+        switchCompat.setChecked(switchBool);
         getData();
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        floatingActionButtonH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 historyData();
-                if (open) {
+                if (settingBol) {
+                    setting.setVisibility(View.INVISIBLE);
+                    settingBol = false;
+                    return;
+                }
+                if (historyBol) {
                     scrollView.setVisibility(View.INVISIBLE);
-                    open = false;
+                    scrollView.fullScroll(scrollView.FOCUS_UP);
+                    historyBol = false;
                 } else {
                     scrollView.setVisibility(View.VISIBLE);
-                    open = true;
+                    historyBol = true;
                 }
             }
         });
+
+        floatingActionButtonS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                historyData();
+                if (historyBol) {
+                    scrollView.setVisibility(View.INVISIBLE);
+                    scrollView.fullScroll(scrollView.FOCUS_UP);
+                    historyBol = false;
+                    return;
+                }
+                if (settingBol) {
+                    setting.setVisibility(View.INVISIBLE);
+                    settingBol = false;
+                } else {
+                    setting.setVisibility(View.VISIBLE);
+                    settingBol = true;
+                }
+            }
+        });
+
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Log Out")
+                        .setMessage("\nAre you sure?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO log out
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(R.drawable.exit)
+                        .show();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Delete Account")
+                        .setMessage("\nAre you sure?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO delete account
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(R.drawable.delete_account)
+                        .show();
+            }
+        });
+
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    app.startAlarm();
+                    Log.d("switch", "onCheckedChanged: yes");
+                } else {
+                    app.cancelAlarm();
+                    Log.d("switch", "onCheckedChanged: no");
+                }
+            }
+        });
+
         return view;
     }
+
 
     public void getData() {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
@@ -88,9 +189,9 @@ public class SignFragment extends Fragment
         double change = (sum/app.userData.getFundsFix()-1)*100;
         portfolioReturn.setText(String.format("%.2f", change) + "%");
         if (change > 0) {
-            portfolioReturn.setTextColor(getContext().getColor(R.color.colorPrimary));
+            portfolioReturn.setTextColor(0xFF00802b);
         } else if (change < 0) {
-            portfolioReturn.setTextColor(Color.RED);
+            portfolioReturn.setTextColor(0xFF990000);
         } else {
             portfolioReturn.setTextColor(Color.GRAY);
         }
@@ -139,8 +240,15 @@ public class SignFragment extends Fragment
     @Override
     public void onPause() {
         super.onPause();
-        scrollView.setVisibility(View.INVISIBLE);
-        open = false;
+        if (historyBol){
+            scrollView.setVisibility(View.INVISIBLE);
+            scrollView.fullScroll(scrollView.FOCUS_UP);
+            historyBol = false;
+        }
+        if (settingBol) {
+            setting.setVisibility(View.INVISIBLE);
+            settingBol = false;
+        }
     }
 
     private void historyData() {

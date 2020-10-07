@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,10 +20,14 @@ import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
+        context = this;
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -32,22 +37,22 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        getSupportActionBar().hide();
+
+
 
         //NotificationHelper notificationHelper = new NotificationHelper(this);
         //NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
         //notificationHelper.getManager().notify(1, nb.build());
 
-        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
-        c.set(Calendar.HOUR_OF_DAY, 3);
-        c.set(Calendar.MINUTE, 7);
-        c.set(Calendar.SECOND, 0);
 
-        startAlarm(c);
     }
 
-    private void startAlarm(Calendar c) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+    public void startAlarm() {
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
+        c.set(Calendar.HOUR_OF_DAY, 9);
+        c.set(Calendar.MINUTE, 30);
+        c.set(Calendar.SECOND, 0);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, StockMarketBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         if (c.before(Calendar.getInstance())) {
@@ -55,11 +60,10 @@ public class MainActivity extends AppCompatActivity {
         }
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
-    private void cancelAlarm() {
+    public void cancelAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, StockMarketBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         alarmManager.cancel(pendingIntent);
     }
-
 }

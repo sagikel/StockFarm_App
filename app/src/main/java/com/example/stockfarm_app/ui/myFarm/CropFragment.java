@@ -42,7 +42,9 @@ public class CropFragment extends Fragment {
         color1 = "";
         color2 = "";
         sum = 0.0;
-        setWindowText();floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        setWindowText();
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TradeActivity.class);
