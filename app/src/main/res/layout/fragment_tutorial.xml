@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.tutorial.TutorialFragment"
-    android:paddingBottom="?attr/actionBarSize">
+    tools:context=".ui.tutorial.TutorialFragment">
 
     <EditText
         android:id="@+id/editTextFilter"
@@ -100,7 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="72dp"
         android:text="back"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -149,6 +148,7 @@
         android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:gravity="center"
         android:text="question"
         android:textSize="16dp"
@@ -161,7 +161,6 @@
 
     <Button
         android:id="@+id/buttonA"
-        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -173,7 +172,6 @@
 
     <Button
         android:id="@+id/buttonB"
-        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -185,7 +183,6 @@
 
     <Button
         android:id="@+id/buttonC"
-        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -197,7 +194,6 @@
 
     <Button
         android:id="@+id/buttonD"
-        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

@@ -23,6 +23,7 @@ public class CropFragment extends Fragment {
     String color1;
     String color2;
     FloatingActionButton floatingActionButton;
+    Double sum;
 
     public CropFragment(UserStockData stock)
     {
@@ -40,6 +41,7 @@ public class CropFragment extends Fragment {
         floatingActionButton = view.findViewById(R.id.floatingActionButton);
         color1 = "";
         color2 = "";
+        sum = 0.0;
         setWindowText();floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +59,7 @@ public class CropFragment extends Fragment {
         toShow.append("<big><b>").append(stock.getStockName())
                 .append("</b><br></big><small>Amount: <b>").append(stock.getCurrAmount())
                 .append("</b><br>Last Price: <b>").append(formatter.format(stock.getLastPrice()))
-                .append("</b><br>Average Total Gain: <b>");
+                .append("</b><br>Average Return: <b>");
         String string = gainCalculate();
         toShow.append(color1).append(string).append(color2).append("</b>");
         stockName.setText(Html.fromHtml(toShow.toString()));
@@ -81,6 +83,7 @@ public class CropFragment extends Fragment {
             }
         }
         sum = ((amountNow*stock.getLastPrice())/sum-1)*100;
+        this.sum = sum;
         if (sum > 0){
             color1 = "<font color='#00802b'>";
             color2 = "</font>";

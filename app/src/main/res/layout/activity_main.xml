@@ -13,17 +13,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
 
-    <!-- Add to bottom nav for more design:
+
 
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/round"
-        android:elevation="4dp"
-        app:itemIconTint="@drawable/color_selector"
-    -->
+        android:background="@drawable/round5"
+        android:elevation="4dp" />
 
     <fragment
         android:id="@+id/nav_host_fragment"
@@ -31,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/nav_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"

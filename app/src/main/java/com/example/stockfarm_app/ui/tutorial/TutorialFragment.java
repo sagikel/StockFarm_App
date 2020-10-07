@@ -88,6 +88,7 @@ public class TutorialFragment extends Fragment implements AdapterView.OnItemClic
         ArrayList<String> d = new ArrayList<>(tutorialData.getMap().keySet());
         Collections.sort(d); // אפשר למנוע את זה אם אסדר את המידע באופן אלפבתי בmap
         for (String string : d) {
+
             options[counter++] = string;
         }
 

@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Real Time"
+                android:text="Real Time OHLC Chart"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -75,42 +75,42 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="64dp"
-                android:text="1 min graph" />
+                android:text="1 min chart" />
 
             <Button
                 android:id="@+id/buttonChart2"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="5 min graph" />
+                android:text="5 min chart" />
 
             <Button
                 android:id="@+id/buttonChart3"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="15 min graph" />
+                android:text="15 min chart" />
 
             <Button
                 android:id="@+id/buttonChart4"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="30 min graph" />
+                android:text="30 min chart" />
 
             <Button
                 android:id="@+id/buttonChart5"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="1 hour graph" />
+                android:text="1 hour chart" />
 
             <Button
                 android:id="@+id/buttonChart6"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="1 day graph" />
+                android:text="1 day chart" />
         </LinearLayout>
     </ScrollView>
 

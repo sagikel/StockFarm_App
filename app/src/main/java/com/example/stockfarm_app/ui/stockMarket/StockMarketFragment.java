@@ -74,7 +74,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
     VolleyApiKeyUrl volleyApiKeyUrl;
     RequestQueue queue;
     ListView listView;
-    String[] options = {"Press Releases", "Stock News", "Analyst Stock Grades",
+    String[] options = {"Press Releases", "Stock News", "Analyst Stock Ratings",
             "Analyst Stock Recommendations", "Company Enterprise Value", "Historical Price Data",
             "Company Annual Reports", "Company Quarter Reports", "Earning Call Transcript"};
     ScrollView scrollView;
@@ -169,6 +169,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
                         RealTimeHeadlineText.setVisibility(View.INVISIBLE);
                         RealTimeText.setVisibility(View.INVISIBLE);
                         scrollView.setVisibility(View.INVISIBLE);
+                        scrollView.fullScroll(scrollView.FOCUS_UP);
 
                         sectorText.setVisibility(View.VISIBLE);
                         listView.setVisibility(View.VISIBLE);
@@ -245,7 +246,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
         basicStockInfoLayout.setVisibility(View.VISIBLE);
         FragmentTransaction tx = getChildFragmentManager().beginTransaction();
 //        tx.replace(R.id.market_fragment, new StockMarketFragment()).addToBackStack( "tag" ).commit();
-        tx..addToBackStack( "tag" ).commit();
+        tx.addToBackStack( "tag" ).commit();
 //        stockNameText.setVisibility(View.VISIBLE);
 //        ceoText.setVisibility(View.VISIBLE);
 //        sectorText.setVisibility(View.VISIBLE);
@@ -276,7 +277,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
                 RealTimeHeadlineText.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                RealTimeHeadlineText.setText("Analyst Stock Grade");
+                RealTimeHeadlineText.setText("Analyst Stock Ratings");
                 getDataFromServer("grade", RealTimeText, false, false, false, false);
                 RealTimeHeadlineText.setVisibility(View.VISIBLE);
                 break;
@@ -489,7 +490,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
                 }
 
                 toShow.append("<b>").append(date).append("</b><br>").append("<br>~U.S. Securities and Exchange Commission~")
-                        .append("<br>K-10 Form (Annual/Quarter report): <br>").append(finalLink).append("<br><br><br>");
+                        .append("<br>10-K/Q Form (Annual/Quarter report): <br>").append(finalLink).append("<br><br><br>");
             }
             if (toShow.length() > 12) {
                 toShow.setLength(toShow.length()-12);

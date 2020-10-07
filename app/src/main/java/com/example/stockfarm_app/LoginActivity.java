@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
         googleButton = findViewById(R.id.sign_in_button);
-        googleButton.setSize(SignInButton.SIZE_STANDARD);
+        googleButton.setSize(SignInButton.SIZE_WIDE);
         googleButton.setOnClickListener(this);
         skip.setOnClickListener(this);
         getSupportActionBar().hide();
@@ -288,6 +288,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void logInButtonEnabler() {
         if (!emailBox.getText().toString().equals("")
                 && !passwordBox.getText().toString().equals(""))
+            logInButton.setVisibility(View.VISIBLE);
             logInButton.setEnabled(true);
     }
 

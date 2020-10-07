@@ -1,5 +1,9 @@
 package com.example.stockfarm_app;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +13,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +33,33 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         getSupportActionBar().hide();
+
+        //NotificationHelper notificationHelper = new NotificationHelper(this);
+        //NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
+        //notificationHelper.getManager().notify(1, nb.build());
+
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
+        c.set(Calendar.HOUR_OF_DAY, 3);
+        c.set(Calendar.MINUTE, 7);
+        c.set(Calendar.SECOND, 0);
+
+        startAlarm(c);
+    }
+
+    private void startAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, StockMarketBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        if (c.before(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 1);
+        }
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+    private void cancelAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, StockMarketBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarmManager.cancel(pendingIntent);
     }
 
 }
