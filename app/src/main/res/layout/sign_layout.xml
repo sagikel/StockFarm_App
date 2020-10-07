@@ -20,10 +20,10 @@
     <TextView
         android:id="@+id/textView11"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="52dp"
+        android:layout_height="80sp"
+        android:layout_marginTop="48dp"
         android:gravity="center"
-        android:text="Welcom to your\nStockFarm"
+        android:text="Welcome to your\nStockFarm"
         android:textColor="#689F38"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -45,8 +45,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/round3"
+        android:layout_marginTop="24dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="20dp"
@@ -59,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:text="Free money for use:"
+            android:text="Available Funds:"
             android:textColor="@color/design_default_color_secondary_variant"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Total assets:"
+            android:text="Total Assets:"
             android:textColor="@color/design_default_color_secondary_variant"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Portfolio return:"
+            android:text="Portfolio Return:"
             android:textColor="@color/design_default_color_secondary_variant"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -133,12 +132,25 @@
         android:id="@+id/floatingActionButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="104dp"
         android:src="@drawable/ic_baseline_history_24"
+        android:tooltipText="History"
         app:backgroundTint="#B2EBF2"
         app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="56dp"
+        android:src="@drawable/ic_baseline_settings_24"
+        app:backgroundTint="#9575CD"
+        app:fabSize="mini"
+        android:tooltipText="Setting"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -146,13 +158,14 @@
         android:id="@+id/level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:text="Dynamic Level: ?"
         android:textColor="@android:color/holo_purple"
+        android:textSize="12dp"
         android:textStyle="italic|bold"
-        app:layout_constraintBottom_toBottomOf="@+id/farm_reel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/player_name" />
 
     <ScrollView
         android:id="@+id/scroll_view_history"
@@ -206,5 +219,60 @@
 
 
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/round2"
+        android:padding="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:text="Notification - Market Open" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/log_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:text="Log out"
+            android:backgroundTint="@color/greyFont"/>
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Account"
+            android:textColor="#D32F2F"
+            android:backgroundTint="@color/greyFont"/>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

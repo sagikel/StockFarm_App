@@ -13,7 +13,7 @@ import java.util.Calendar;
 public class StockMarketBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.e("broadcast", "fghfghfghfghfgh");
+        Log.d("BroadcastReceiver", "I AM AWAKE!");
 
         Calendar rightNow = Calendar.getInstance();
         if (rightNow.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || rightNow.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){

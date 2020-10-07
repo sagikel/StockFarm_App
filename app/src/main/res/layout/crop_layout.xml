@@ -57,6 +57,7 @@
         android:src="@drawable/ic_baseline_show_chart_24"
         app:backgroundTint="#C5CAE9"
         app:fabSize="mini"
+        android:tooltipText="Trade"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

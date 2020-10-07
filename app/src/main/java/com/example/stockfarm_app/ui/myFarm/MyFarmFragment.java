@@ -3,6 +3,7 @@ package com.example.stockfarm_app.ui.myFarm;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class MyFarmFragment extends Fragment {
         pageNum = app.userData.getActiveStocks().size() + 1; // TODO update this field during trade
 
         refreshDataFromServer();
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -79,6 +81,13 @@ public class MyFarmFragment extends Fragment {
                     refreshDataFromServer();
                     refresh = true;
                 }
+            }
+        });
+
+        floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
             }
         });
         return view;
@@ -132,12 +141,15 @@ public class MyFarmFragment extends Fragment {
                                 ((SignFragment) fragment).getData();
                             }
                         }
-                        Toast.makeText(getContext(),"Refreshing prices", Toast.LENGTH_SHORT).show();
+                        Toast toast = Toast.makeText(getContext(),"Refreshing..", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     if (refresh) {
-                        Toast.makeText(getContext(),"Refreshing prices failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"Refreshing Failed - check your internet connection", Toast.LENGTH_SHORT).show();
                     }
                 }
                 refresh = false;

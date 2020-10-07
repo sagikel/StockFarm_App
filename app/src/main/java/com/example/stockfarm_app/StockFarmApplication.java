@@ -1,7 +1,11 @@
 package com.example.stockfarm_app;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -16,17 +20,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.*;
 import com.google.gson.Gson;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 
 public class StockFarmApplication extends Application
 {
     StockFarmApplication app;
-    SharedPreferences sp;
+    public SharedPreferences sp;
     FirebaseFirestore db;
     public UserData userData;
     String currId;
+    boolean notification;
 
     // updating values from the sp/server:
     double initialFunds;
@@ -131,8 +138,26 @@ public class StockFarmApplication extends Application
         db.collection("users").document(currId).update(getString(R.string.firestore_fieldname_userdata), json);
     }
 
+    public void startAlarm() {
+        sp.edit().putBoolean(app.userData.getName()+"N", true).apply();
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
+        c.set(Calendar.HOUR_OF_DAY, 9);
+        c.set(Calendar.MINUTE, 30);
+        c.set(Calendar.SECOND, 0);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, StockMarketBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        if (c.before(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 1);
+        }
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
 
-
-
-
+    public void cancelAlarm() {
+        app.sp.edit().putBoolean(app.userData.getName()+"N", false).apply();
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, StockMarketBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarmManager.cancel(pendingIntent);
+    }
 }
