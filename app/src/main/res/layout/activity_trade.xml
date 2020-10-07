@@ -1,185 +1,443 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/trade_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/market_scale_empty"
     tools:context=".TradeActivity">
 
-
-    <TextView
-        android:id="@+id/stock_info_text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="Info"
-        android:textSize="38sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/price"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/layout_bg_semi_trans"
+        app:layout_constraintBottom_toBottomOf="@id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".TradeActivity">
 
-    <ProgressBar
-        android:id="@+id/progress_bar_trade"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Price"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/progress_bar_trade"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/percent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="%"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/progress_bar_trade"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price" />
-
-    <TextView
-        android:id="@+id/change"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="0.0"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent" />
-
-    <TextView
-        android:id="@+id/o1"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:visibility="invisible"
-        android:text="Open"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/h1"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/l1"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:visibility="invisible"
-        android:text="Low"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/pc1"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/h1"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:visibility="invisible"
-        android:text="High"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/l1"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/mc1"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:visibility="invisible"
-        android:text="Market Cap"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/v1"/>
-
-    <TextView
-        android:id="@+id/pc1"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:visibility="invisible"
-        android:text="Previous Close"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/v1" />
-
-    <TextView
-        android:id="@+id/v1"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:visibility="invisible"
-        android:text="Volume"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button_trade1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change" />
-
-    <TextView
-        android:id="@+id/yh1"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:visibility="invisible"
-        android:text="Year High"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mc1" />
-
-    <TextView
-        android:id="@+id/yl1"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:visibility="invisible"
-        android:text="Year Low"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yh1" />
-
-    <TextView
-        android:id="@+id/ex1"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="Exchange"
-        android:visibility="invisible"
-        android:padding="4dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yl1" />
+        <TextView
+            android:id="@+id/stock_info_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Info"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/button_trade1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="12dp"
-        android:text="Charts"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Price"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stock_info_text2" />
+
+        <TextView
+            android:id="@+id/percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="%"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/price" />
+
+        <TextView
+            android:id="@+id/change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="0.0"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/percent" />
+
+        <TextView
+            android:id="@+id/own"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You have 0 stocks worth 0.00 USD"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/change" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/trade_small_text_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/own">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/o1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Open"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/o2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/o1"
+                app:layout_constraintTop_toTopOf="@+id/o1" />
+
+
+            <TextView
+                android:id="@+id/h1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="High"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/o1"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <TextView
+                android:id="@+id/h2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/h1"
+                app:layout_constraintTop_toBottomOf="@+id/o2" />
+
+
+            <TextView
+                android:id="@+id/l1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Low"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@+id/h1"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+
+            <TextView
+                android:id="@+id/l2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/l1"
+                app:layout_constraintTop_toBottomOf="@+id/h2" />
+
+
+
+
+            <TextView
+                android:id="@+id/pc1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Previous Close"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@+id/l1"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <TextView
+                android:id="@+id/pc2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/pc1"
+                app:layout_constraintTop_toBottomOf="@+id/l2" />
+
+
+            <TextView
+                android:id="@+id/v1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Volume"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/guideline5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/v2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/v1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/mc1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Market Cap"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/v1" />
+
+
+            <TextView
+                android:id="@+id/mc2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/mc1"
+                app:layout_constraintTop_toBottomOf="@+id/v2" />
+
+
+            <TextView
+                android:id="@+id/yh1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Year High"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/mc1" />
+
+            <TextView
+                android:id="@+id/yh2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/yh1"
+                app:layout_constraintTop_toBottomOf="@+id/mc2" />
+
+            <TextView
+                android:id="@+id/yl1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Year Low"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/yh1" />
+
+
+            <TextView
+                android:id="@+id/yl2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/yl1"
+                app:layout_constraintTop_toBottomOf="@+id/yh2" />
+
+
+            <TextView
+                android:id="@+id/ex1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Exchange"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pc1" />
+
+
+            <TextView
+                android:id="@+id/ex2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/ex1"
+                app:layout_constraintTop_toBottomOf="@+id/pc2" />
+            ex2
+
+            <TextView
+                android:id="@+id/open_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text=" ?"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/ex2"
+                app:layout_constraintStart_toEndOf="@+id/ex2"
+                app:layout_constraintTop_toBottomOf="@+id/pc2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Waiting for real time data.."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <!--            app:layout_constraintTop_toBottomOf="@+id/ex1" -->
+
+
+        <TextView
+            android:id="@+id/company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="Apple inc."
+            android:textSize="10dp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/imageViewArrow"
+            android:layout_width="10dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/percent"
+            app:layout_constraintStart_toEndOf="@+id/percent"
+            app:layout_constraintTop_toTopOf="@+id/percent" />
+
+
+        <TextView
+            android:id="@+id/feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="N/A"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="You have 1000 USD free for trade"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/feedback" />
+
+
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ListView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <EditText
+            android:id="@+id/editTextNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="How many stocks?"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="5"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radio" />
+
+        <RadioGroup
+            android:id="@+id/radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/own"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:checked="true"
+                android:text="Buy" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Sell" />
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/button_trade2"
@@ -192,235 +450,34 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/o2"
+
+    <Button
+        android:id="@+id/button_trade1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:visibility="invisible"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/o1"
-        app:layout_constraintTop_toTopOf="@+id/o1" />
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="12dp"
+        android:text="Charts"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/h2"
+
+    <ProgressBar
+        android:id="@+id/progress_bar_trade"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:padding="4dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/h1"
-        app:layout_constraintTop_toBottomOf="@+id/o2" />
-
-    <TextView
-        android:id="@+id/l2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:padding="4dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/l1"
-        app:layout_constraintTop_toBottomOf="@+id/h2" />
-
-    <TextView
-        android:id="@+id/pc2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:padding="4dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/pc1"
-        app:layout_constraintTop_toBottomOf="@+id/l2" />
-
-    <TextView
-        android:id="@+id/v2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:padding="4dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/v1"
-        app:layout_constraintTop_toBottomOf="@+id/pc2" />
-
-    <TextView
-        android:id="@+id/mc2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:padding="4dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/mc1"
-        app:layout_constraintTop_toBottomOf="@+id/v2" />
-
-    <TextView
-        android:id="@+id/yh2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:padding="4dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/yh1"
-        app:layout_constraintTop_toBottomOf="@+id/mc2" />
-
-    <TextView
-        android:id="@+id/yl2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:padding="4dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/yl1"
-        app:layout_constraintTop_toBottomOf="@+id/yh2" />
-
-    <TextView
-        android:id="@+id/ex2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:padding="4dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/ex1"
-        app:layout_constraintTop_toBottomOf="@+id/yl2" />
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Waiting for real time data.."
-        app:layout_constraintBottom_toTopOf="@+id/button_trade1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ex1" />
-
-    <TextView
-        android:id="@+id/open_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" ?"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ex2"
-        app:layout_constraintStart_toEndOf="@+id/ex2"
-        app:layout_constraintTop_toBottomOf="@+id/yl2" />
-
-    <TextView
-        android:id="@+id/company_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="3dp"
-        android:text="Apple inc."
-        android:textSize="10dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <ImageView
-        android:id="@+id/imageViewArrow"
-        android:layout_width="10dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/percent"
-        app:layout_constraintStart_toEndOf="@+id/percent"
-        app:layout_constraintTop_toTopOf="@+id/percent" />
-
-
-
-    <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:maxLength="5"
-        android:inputType="number"
-        android:visibility="invisible"
-        android:hint="How many stocks?"
-        android:gravity="center"
-        android:imeOptions="actionDone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price" />
-
-    <RadioGroup
-        android:id="@+id/radio"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/progress_bar_trade">
+        app:layout_constraintGuide_percent="0.57"/>
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:checked="true"
-            android:text="Buy" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="Sell" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/feedback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="N/A"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
-
-    <TextView
-        android:id="@+id/own"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="You have 0 stocks worth 0.00 USD"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/radio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change" />
-
-    <TextView
-        android:id="@+id/money"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="You have 1000 USD free for trade"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feedback" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

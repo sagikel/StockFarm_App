@@ -245,8 +245,8 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
         circleImageView.setImageResource(resID);
         basicStockInfoLayout.setVisibility(View.VISIBLE);
         FragmentTransaction tx = getChildFragmentManager().beginTransaction();
-//        tx.replace(R.id.market_fragment, new StockMarketFragment()).addToBackStack( "tag" ).commit();
         tx.addToBackStack( "tag" ).commit();
+//        tx.replace(R.id.market_fragment, new StockMarketFragment()).addToBackStack( "tag" ).commit();
 //        stockNameText.setVisibility(View.VISIBLE);
 //        ceoText.setVisibility(View.VISIBLE);
 //        sectorText.setVisibility(View.VISIBLE);

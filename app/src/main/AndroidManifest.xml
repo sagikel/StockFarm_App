@@ -14,6 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".TradeActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -33,6 +34,7 @@
         <activity
             android:name=".ChartActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
+
         <receiver
             android:name=".StockMarketBroadcastReceiver"
             android:enabled="true"

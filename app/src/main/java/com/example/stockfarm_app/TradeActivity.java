@@ -1,6 +1,7 @@
 package com.example.stockfarm_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -44,6 +46,7 @@ import java.util.TimeZone;
 
 public class TradeActivity extends AppCompatActivity {
 
+    TradeActivity activity;
     String symbol;
     TextView stockName;
     TextView companyName;
@@ -99,7 +102,7 @@ public class TradeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade);
         getSupportActionBar().hide();
-
+        activity = this;
         stockName = findViewById(R.id.stock_info_text2);
         companyName = findViewById(R.id.company_name);
         price = findViewById(R.id.price);
@@ -174,6 +177,8 @@ public class TradeActivity extends AppCompatActivity {
                 if (action) {
                     closeKeyboard();
                     mainTrade();
+                    findViewById(R.id.trade_layout)
+                            .setBackground(ContextCompat.getDrawable(activity, R.drawable.market_scale_empty));
                 }
                 else {
                     Intent intent = new Intent(context, ChartActivity.class);
@@ -182,7 +187,16 @@ public class TradeActivity extends AppCompatActivity {
                 }
             }
         });
-
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int bg;
+                if (checkedId == R.id.radioButton)  bg = R.drawable.market_scale_seeds;
+                else bg = R.drawable.market_scale_cash;
+                findViewById(R.id.trade_layout)
+                        .setBackground(ContextCompat.getDrawable(activity, bg));
+            }
+        });
         buyOrSell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,6 +205,7 @@ public class TradeActivity extends AppCompatActivity {
                     calculate();
                 } else {
                     if (!trade) { // להוציא את הסימן שאלה ברגע שעוברים לזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        findViewById(R.id.trade_layout).setBackground(ContextCompat.getDrawable(activity, R.drawable.market_scale_seeds));
                         action = true;
                         charts.setText("Back");
                         invisible();
@@ -513,6 +528,7 @@ public class TradeActivity extends AppCompatActivity {
                     .show();
         }
     }
+
 
     private void updateAmount(boolean buy){
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
