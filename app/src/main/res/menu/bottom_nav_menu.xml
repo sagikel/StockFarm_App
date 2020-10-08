@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_my_farm"
-        android:icon="@drawable/farm_2"
+        android:icon="@drawable/scarecrow"
         android:title="@string/title_my_farm" />
 
     <item

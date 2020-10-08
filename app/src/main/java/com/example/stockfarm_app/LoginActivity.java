@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -122,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         builder.setView(loadingView);
         loadingAlert = builder.create();
         loadingAlert.setCancelable(false);
+        loadingAlert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         loadingAlert.setCanceledOnTouchOutside(false);
         GifImageView gifImageView = (GifImageView) loadingView.findViewById(R.id.loading_gif);
         gifImageView.setGifImageResource(R.drawable.loading_drop);
@@ -209,6 +213,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onComplete(@NonNull Task<DocumentSnapshot> task) { // user data request result
         if (task.isSuccessful()) {
+            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             FirebaseUser user = mAuth.getCurrentUser();
             String name = user.getDisplayName();
             DocumentSnapshot document = (DocumentSnapshot) task.getResult();

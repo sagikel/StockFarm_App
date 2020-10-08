@@ -41,6 +41,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 
@@ -248,7 +249,7 @@ public class TradeActivity extends AppCompatActivity {
                     feedback.setText("N/A");
                     buyOrSell.setVisibility(View.INVISIBLE);
                 }else {
-                    NumberFormat formatter = NumberFormat.getCurrencyInstance();
+                    NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
                     buyOrSell.setText("Make trade");
                     buyOrSell.setVisibility(View.VISIBLE);
                     amount = Integer.parseInt(s.toString());
@@ -259,7 +260,7 @@ public class TradeActivity extends AppCompatActivity {
     }
 
     private void setMoney() {
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
         money.setText("You have " + formatter.format(stockFarmApplication.userData.getFunds()) + " free for trade");
     }
 
@@ -308,7 +309,7 @@ public class TradeActivity extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                NumberFormat formatter = NumberFormat.getCurrencyInstance();
+                NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
                 try {
                     JSONObject jsonObject = response.getJSONObject(0);
 
@@ -322,7 +323,7 @@ public class TradeActivity extends AppCompatActivity {
                     openD.setText(formatter.format(Double.parseDouble(jsonObject.getString("open"))));
                     highD.setText(formatter.format(Double.parseDouble(jsonObject.getString("dayHigh"))));
                     lowD.setText(formatter.format(Double.parseDouble(jsonObject.getString("dayLow"))));
-                    marketCapD.setText(formatter.format(Double.parseDouble(jsonObject.getString("marketCap"))));
+                    marketCapD.setText(formatter.format((Double.parseDouble(jsonObject.getString("marketCap")))/1000000)+"M");
                     volumeD.setText(String.format("%,d", Long.parseLong(jsonObject.getString("volume"))));
                     pCloseD.setText(formatter.format(Double.parseDouble(jsonObject.getString("previousClose"))));
                     yearHD.setText(formatter.format(Double.parseDouble(jsonObject.getString("yearHigh"))));
@@ -531,7 +532,7 @@ public class TradeActivity extends AppCompatActivity {
 
 
     private void updateAmount(boolean buy){
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
         if (buy) {
             stockFarmApplication.userData.setFunds((Math.round(amount*currentPriceForTransaction*100.0)/100.0)*(-1));
             stockFarmApplication.userData.getStocks().get(symbol).addEvent(Calendar.getInstance().getTime(), amount, (Math.round(currentPriceForTransaction*100.0)/100.0));

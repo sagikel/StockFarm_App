@@ -8,6 +8,7 @@ import java.util.Map;
 public class TutorialData {
 
     private Map<String, ArrayList<String>> map;
+    private Map<String, ArrayList<String>> map2;
 
     public TutorialData()
     {
@@ -79,9 +80,50 @@ public class TutorialData {
         map.put("Board of Directors", new ArrayList<>(Arrays.asList("A board of directors (B of D) is an elected group of individuals that represent shareholders. The board is a governing body that typically meets at regular intervals to set policies for corporate management and oversight. Every public company must have a board of directors.","Question", "me?", "me?", "me?", "me?", "B")));
         map.put("Cash Flow", new ArrayList<>(Arrays.asList("Cash flow is the net amount of cash and cash-equivalents being transferred into and out of a business. At the most fundamental level, a company’s ability to create value for shareholders is determined by its ability to generate positive cash flows.","Question", "me?", "me?", "me?", "me?", "B")));
         map.put("Cash Equivalents", new ArrayList<>(Arrays.asList("Cash equivalents are investments securities that are meant for short-term investing, they are highly liquid - Means they can turn to real cash very quick.","Question", "me?", "me?", "me?", "me?", "B")));
+
+
+        map2 = new HashMap<>();
+        // What is this App?
+        map2.put("a", new ArrayList<>(Arrays.asList("A","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("b", new ArrayList<>(Arrays.asList("B","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("c", new ArrayList<>(Arrays.asList("C","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("d", new ArrayList<>(Arrays.asList("D","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("e", new ArrayList<>(Arrays.asList("E","Question", "me?", "me?", "me?", "me?", "B")));
+
+        // First Steps
+        map2.put("f", new ArrayList<>(Arrays.asList("F","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("g", new ArrayList<>(Arrays.asList("G","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("h", new ArrayList<>(Arrays.asList("H","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("i", new ArrayList<>(Arrays.asList("I","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("j", new ArrayList<>(Arrays.asList("J","Question", "me?", "me?", "me?", "me?", "B")));
+
+        // Learn The Market
+        map2.put("k", new ArrayList<>(Arrays.asList("K","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("l", new ArrayList<>(Arrays.asList("L","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("m", new ArrayList<>(Arrays.asList("M","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("n", new ArrayList<>(Arrays.asList("N","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("o", new ArrayList<>(Arrays.asList("O","Question", "me?", "me?", "me?", "me?", "B")));
+
+        // Risk & Reward
+        map2.put("p", new ArrayList<>(Arrays.asList("P","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("q", new ArrayList<>(Arrays.asList("Q","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("r", new ArrayList<>(Arrays.asList("R","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("s", new ArrayList<>(Arrays.asList("S","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("t", new ArrayList<>(Arrays.asList("T","Question", "me?", "me?", "me?", "me?", "B")));
+
+        // Smart Investor
+        map2.put("u", new ArrayList<>(Arrays.asList("U","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("v", new ArrayList<>(Arrays.asList("V","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("w", new ArrayList<>(Arrays.asList("W","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("x", new ArrayList<>(Arrays.asList("X","Question", "me?", "me?", "me?", "me?", "B")));
+        map2.put("y", new ArrayList<>(Arrays.asList("Y","Question", "me?", "me?", "me?", "me?", "B")));
     }
 
     public Map<String, ArrayList<String>> getMap() {
         return map;
+    }
+
+    public Map<String, ArrayList<String>> getMap2() {
+        return map2;
     }
 }

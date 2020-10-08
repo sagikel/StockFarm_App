@@ -11,6 +11,8 @@ public class UserData
     private double funds;
     private double fundsFix;
     public HashMap<String, UserStockData> stocks;
+    private boolean[] completeBol;
+
 
     /**
      * this c'tor is for initializing users who authenticate via google and therefore no password.
@@ -36,6 +38,7 @@ public class UserData
         for (String symbol : list) {
             stocks.put(symbol, new UserStockData(symbol, 0));
         }
+        completeBol = new boolean[30];
     }
 
     public String getName()
@@ -57,6 +60,10 @@ public class UserData
 
     public double getFundsFix() {
         return fundsFix;
+    }
+
+    public boolean[] getCompleteBol() {
+        return completeBol;
     }
 
     public HashMap<String, UserStockData> getStocks() {

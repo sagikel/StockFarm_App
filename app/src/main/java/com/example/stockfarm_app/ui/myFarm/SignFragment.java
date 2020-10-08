@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class SignFragment extends Fragment
@@ -132,7 +133,9 @@ public class SignFragment extends Fragment
                         .setMessage("\nAre you sure?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO log out
+
+                                // TODO log out : app.updateUserDataToServer();
+
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
@@ -176,7 +179,7 @@ public class SignFragment extends Fragment
 
 
     public void getData() {
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
         double funds = app.userData.getFunds();
         money.setText(formatter.format(funds));
         double sum = 0.0;

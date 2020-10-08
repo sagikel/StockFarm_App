@@ -16,6 +16,7 @@ import com.example.stockfarm_app.data.UserStockData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.NumberFormat;
+import java.util.Locale;
 
 public class CropFragment extends Fragment {
     private UserStockData stock;
@@ -57,7 +58,7 @@ public class CropFragment extends Fragment {
 
     public void setWindowText() {
         StringBuilder toShow = new StringBuilder();
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
         toShow.append("<big><b>").append(stock.getStockName())
                 .append("</b><br></big><small>Amount: <b>").append(stock.getCurrAmount())
                 .append("</b><br>Last Price: <b>").append(formatter.format(stock.getLastPrice()))

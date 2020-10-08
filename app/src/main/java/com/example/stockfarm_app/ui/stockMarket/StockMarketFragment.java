@@ -48,6 +48,7 @@ import org.json.JSONObject;
 
 
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -507,7 +508,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
 
     private void parseForV(JSONArray jsonArray, TextView textViewForData) {
         StringBuilder toShow = new StringBuilder();
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
         try {
             for (int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
