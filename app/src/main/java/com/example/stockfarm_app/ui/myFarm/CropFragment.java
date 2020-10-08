@@ -1,4 +1,5 @@
 package com.example.stockfarm_app.ui.myFarm;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -6,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.stockfarm_app.R;
@@ -53,6 +56,13 @@ public class CropFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+//        LayoutInflater inf = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View treeView = inflater.inflate(R.layout.trees_layout1, null);
+        ConstraintLayout.LayoutParams p = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT);
+        treeView.setLayoutParams(p);
+        view.addView(treeView);
         return view;
     }
 

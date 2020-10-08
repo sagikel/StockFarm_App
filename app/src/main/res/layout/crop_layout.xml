@@ -20,7 +20,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-       <LinearLayout
+
+
+
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,10 +58,17 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="104dp"
         android:src="@drawable/ic_baseline_show_chart_24"
+        android:tooltipText="Trade"
         app:backgroundTint="#C5CAE9"
         app:fabSize="mini"
-        android:tooltipText="Trade"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.88" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
