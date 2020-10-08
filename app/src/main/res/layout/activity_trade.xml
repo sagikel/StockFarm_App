@@ -194,7 +194,8 @@
                 android:id="@+id/v1"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:paddingStart="4dp"
+                android:paddingVertical="4dp"
                 android:text="Volume"
                 android:textStyle="bold"
                 android:visibility="invisible"
@@ -206,10 +207,10 @@
                 android:id="@+id/v2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
                 android:text="TextView"
+                android:paddingVertical="4dp"
                 android:visibility="invisible"
-                app:layout_constraintStart_toEndOf="@+id/v1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -217,7 +218,8 @@
                 android:id="@+id/mc1"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:paddingStart="4dp"
+                android:paddingVertical="4dp"
                 android:text="Market Cap"
                 android:textStyle="bold"
                 android:visibility="invisible"
@@ -229,10 +231,10 @@
                 android:id="@+id/mc2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:paddingVertical="4dp"
                 android:text="TextView"
                 android:visibility="invisible"
-                app:layout_constraintStart_toEndOf="@+id/mc1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/v2" />
 
 
@@ -240,7 +242,8 @@
                 android:id="@+id/yh1"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:paddingStart="4dp"
+                android:paddingVertical="4dp"
                 android:text="Year High"
                 android:textStyle="bold"
                 android:visibility="invisible"
@@ -251,17 +254,18 @@
                 android:id="@+id/yh2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:paddingVertical="4dp"
                 android:text="TextView"
                 android:visibility="invisible"
-                app:layout_constraintStart_toEndOf="@+id/yh1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mc2" />
 
             <TextView
                 android:id="@+id/yl1"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:paddingStart="4dp"
+                android:paddingVertical="4dp"
                 android:text="Year Low"
                 android:textStyle="bold"
                 android:visibility="invisible"
@@ -273,10 +277,10 @@
                 android:id="@+id/yl2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:paddingVertical="4dp"
                 android:text="TextView"
                 android:visibility="invisible"
-                app:layout_constraintStart_toEndOf="@+id/yl1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/yh2" />
 
 
@@ -323,6 +327,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Waiting for real time data.."
+            app:layout_constraintTop_toBottomOf="@id/trade_small_text_container"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
