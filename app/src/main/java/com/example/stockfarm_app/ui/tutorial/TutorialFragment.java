@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -138,7 +140,7 @@ public class TutorialFragment extends Fragment implements AdapterView.OnItemClic
         }
 
         arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, options);
-        arrayAdapter1 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. a", "2. b", "3. c", "4. d", "5. e"});
+        arrayAdapter1 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Explanation", "2. Goal", "3. Terms & Definitions", "4. Real Time", "5. Levels"});
         arrayAdapter2 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. f", "2. g", "3. h", "4. i", "5. j"});
         arrayAdapter3 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. k", "2. l", "3. m", "4. n", "5. o"});
         arrayAdapter4 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. p", "2. q", "3. r", "4. s", "5. t"});
@@ -459,6 +461,11 @@ public class TutorialFragment extends Fragment implements AdapterView.OnItemClic
                     }
                     if (counter == 0) {
                         app.userData.getCompleteBol()[25+(index/5)] = true;
+                        app.userData.setFunds(2000);
+                        app.userData.setFundsFix(2000);
+                        Toast toast = Toast.makeText(getContext(),"  Well Done!!\nYou earn $2000!", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
                     // fireStore
                     app.updateUserDataToServer();
@@ -473,8 +480,8 @@ public class TutorialFragment extends Fragment implements AdapterView.OnItemClic
                     .setTimeToLive(5000L)
                     .addShapes(Shape.RECT,Shape.CIRCLE)
                     .addSizes(new Size(8, 20))
-                    .setPosition(konfettiView.getX()+konfettiView.getWidth()/2f,
-                            konfettiView.getY()+konfettiView.getHeight()/2f)
+                    .setPosition(question.getX()+question.getWidth()/2f,
+                            question.getY()+question.getHeight()/2f)
                     .burst(5000);
         } else {
             question.setText("Wrong..\nTry Again");

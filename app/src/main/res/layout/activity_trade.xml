@@ -308,7 +308,6 @@
                 android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/ex1"
                 app:layout_constraintTop_toBottomOf="@+id/pc2" />
-            ex2
 
             <TextView
                 android:id="@+id/open_close"
