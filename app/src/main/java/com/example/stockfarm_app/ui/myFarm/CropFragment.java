@@ -26,6 +26,8 @@ public class CropFragment extends Fragment {
     String color2;
     FloatingActionButton floatingActionButton;
     Double sum;
+    LayoutInflater inflater;
+    View treeView;
 
     public CropFragment(UserStockData stock)
     {
@@ -37,6 +39,7 @@ public class CropFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.inflater = inflater;
         final ViewGroup view = (ViewGroup) inflater.inflate(
                 R.layout.crop_layout, container, false);
         stockName = view.findViewById(R.id.stock_name_header);
@@ -54,8 +57,7 @@ public class CropFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-        View treeView = setTrees(inflater);
+        setTrees();
         ConstraintLayout.LayoutParams p = new ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT);
         treeView.setLayoutParams(p);
@@ -63,7 +65,7 @@ public class CropFragment extends Fragment {
         return view;
     }
 
-    private View setTrees(LayoutInflater inflater)
+    public void setTrees()
     {
         int treeConditionLayoutId;
         if (sum >= 8) treeConditionLayoutId = R.layout.trees_layout4;
@@ -71,7 +73,7 @@ public class CropFragment extends Fragment {
         else if (sum >= 2 && sum < 4) treeConditionLayoutId = R.layout.trees_layout2;
         else if (sum > -3 && sum < 2) treeConditionLayoutId = R.layout.trees_layout1;
         else treeConditionLayoutId = R.layout.trees_layout_bad;
-        View treeView = inflater.inflate(treeConditionLayoutId, null);
+        treeView = inflater.inflate(treeConditionLayoutId, null);
         int treeNum = Math.toIntExact(stock.getCurrAmount());
         if (treeNum < 5)
         {
@@ -86,7 +88,6 @@ public class CropFragment extends Fragment {
                 }
             }
         }
-        return treeView;
     }
 
     public void setWindowText() {
@@ -133,23 +134,23 @@ public class CropFragment extends Fragment {
         return (String.format("%.2f", sum) + "%");
     }
 
-    private void restartFragment()
-    {
-        FragmentTransaction tr = getFragmentManager().beginTransaction();
-        tr.replace(R.id.crop_layout, this);
-        tr.commit();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        restartFragment();
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        restartFragment();
-    }
+//    private void restartFragment()
+//    {
+//        FragmentTransaction tr = getFragmentManager().beginTransaction();
+//        tr.replace(R.id.crop_layout, this);
+//        tr.commit();
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        restartFragment();
+//    }
+//
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        restartFragment();
+//    }
 }
