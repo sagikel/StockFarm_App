@@ -30,9 +30,9 @@ public class StockFarmApplication extends Application
 {
     StockFarmApplication app;
     public SharedPreferences sp;
-    FirebaseFirestore db;
+    public FirebaseFirestore db;
     public UserData userData;
-    String currId;
+    public String currId;
     boolean notification;
 
     // updating values from the sp/server:

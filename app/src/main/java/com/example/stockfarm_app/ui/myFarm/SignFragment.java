@@ -2,6 +2,7 @@ package com.example.stockfarm_app.ui.myFarm;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -19,11 +20,13 @@ import android.widget.Toast;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.stockfarm_app.LoginActivity;
 import com.example.stockfarm_app.MainActivity;
 import com.example.stockfarm_app.R;
 import com.example.stockfarm_app.StockFarmApplication;
 import com.example.stockfarm_app.data.UserStockData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -133,9 +136,8 @@ public class SignFragment extends Fragment
                         .setMessage("\nAre you sure?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
-                                // TODO log out : app.updateUserDataToServer();
-
+                                app.updateUserDataToServer();
+                                SignFragment.this.signOut();
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
@@ -143,6 +145,7 @@ public class SignFragment extends Fragment
                         .show();
             }
         });
+
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +155,8 @@ public class SignFragment extends Fragment
                         .setMessage("\nAre you sure?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO delete account
+                                app.db.collection("users").document(app.currId).delete();
+                                SignFragment.this.signOut();
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
@@ -177,6 +181,13 @@ public class SignFragment extends Fragment
         return view;
     }
 
+    public void signOut()
+    {
+        app.userData = null;
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+        getActivity().finish();
+    }
 
     public void getData() {
         NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);

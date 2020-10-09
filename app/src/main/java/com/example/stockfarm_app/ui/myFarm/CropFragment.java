@@ -1,17 +1,15 @@
 package com.example.stockfarm_app.ui.myFarm;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.stockfarm_app.R;
 import com.example.stockfarm_app.TradeActivity;
@@ -57,13 +55,38 @@ public class CropFragment extends Fragment {
             }
         });
 
-//        LayoutInflater inf = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View treeView = inflater.inflate(R.layout.trees_layout1, null);
+        View treeView = setTrees(inflater);
         ConstraintLayout.LayoutParams p = new ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT);
         treeView.setLayoutParams(p);
         view.addView(treeView);
         return view;
+    }
+
+    private View setTrees(LayoutInflater inflater)
+    {
+        int treeConditionLayoutId;
+        if (sum >= 8) treeConditionLayoutId = R.layout.trees_layout4;
+        else if (sum >= 4 && sum < 8) treeConditionLayoutId = R.layout.trees_layout3;
+        else if (sum >= 2 && sum < 4) treeConditionLayoutId = R.layout.trees_layout2;
+        else if (sum > -3 && sum < 2) treeConditionLayoutId = R.layout.trees_layout1;
+        else treeConditionLayoutId = R.layout.trees_layout_bad;
+        View treeView = inflater.inflate(treeConditionLayoutId, null);
+        int treeNum = Math.toIntExact(stock.getCurrAmount());
+        if (treeNum < 5)
+        {
+            treeView.findViewById(R.id.tree5).setVisibility(View.INVISIBLE);
+            if (treeNum < 4) {
+                treeView.findViewById(R.id.tree4).setVisibility(View.INVISIBLE);
+                if (treeNum < 3) {
+                    treeView.findViewById(R.id.tree3).setVisibility(View.INVISIBLE);
+                    if (treeNum < 2) {
+                        treeView.findViewById(R.id.tree2).setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        }
+        return treeView;
     }
 
     public void setWindowText() {
@@ -108,5 +131,25 @@ public class CropFragment extends Fragment {
             color2 = "";
         }
         return (String.format("%.2f", sum) + "%");
+    }
+
+    private void restartFragment()
+    {
+        FragmentTransaction tr = getFragmentManager().beginTransaction();
+        tr.replace(R.id.crop_layout, this);
+        tr.commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        restartFragment();
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        restartFragment();
     }
 }

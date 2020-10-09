@@ -2,89 +2,76 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:id="@+id/trees_layout1"
+    android:id="@+id/trees_layout_bad"
     android:layout_height="match_parent">
 
 
-    <com.airbnb.lottie.LottieAnimationView
+    <ImageView
         android:id="@+id/tree2"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:scaleType="fitStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.27"
+        android:scaleY="0.27"
         android:translationX="-60dp"
-        android:translationY="-10dp"
-        app:lottie_scale="1"
-        app:lottie_speed="0.20"
+        android:translationY="-60dp"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/smalltree1" />
+        android:background="@drawable/deadplant2"/>
 
-    <com.airbnb.lottie.LottieAnimationView
+    <ImageView
         android:id="@+id/tree3"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:scaleType="fitStart"
-        android:translationX="65dp"
-        android:translationY="-3dp"
-        app:lottie_scale="1"
-        app:lottie_speed="0.24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.27"
+        android:scaleY="0.27"
+        android:translationX="50dp"
+        android:translationY="-65dp"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/smalltree1" />
+        android:background="@drawable/deadplant3"/>
 
-
-    <com.airbnb.lottie.LottieAnimationView
+    <ImageView
         android:id="@+id/tree1"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:scaleType="fitStart"
-        android:translationY="50dp"
-        app:lottie_scale="1"
-        app:lottie_speed="0.30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.27"
+        android:scaleY="0.27"
+        android:translationX="-30dp"
+        android:translationY="-20dp"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/smalltree1" />
+        android:background="@drawable/deadplant3"/>
 
-    <com.airbnb.lottie.LottieAnimationView
+    <ImageView
         android:id="@+id/tree4"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:scaleType="fitStart"
-        android:translationX="-80dp"
-        android:translationY="95dp"
-        app:lottie_scale="1"
-        app:lottie_speed="0.27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.27"
+        android:scaleY="0.27"
+        android:translationX="-85dp"
+        android:translationY="79dp"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/smalltree1" />
+        android:background="@drawable/deadplant1"/>
 
-    <com.airbnb.lottie.LottieAnimationView
+    <ImageView
         android:id="@+id/tree5"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:scaleType="fitStart"
-        android:translationX="80dp"
-        android:translationY="90dp"
-        app:lottie_scale="1"
-        app:lottie_speed="0.30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.27"
+        android:scaleY="0.27"
+        android:translationX="85dp"
+        android:translationY="52dp"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/smalltree1" />
+        android:background="@drawable/deadplant2"/>
+
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bottomGuide"
