@@ -20,16 +20,30 @@
     <TextView
         android:id="@+id/textView11"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
-        android:layout_marginTop="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
         android:gravity="center"
-        android:text="Welcome to your\n𝕊𝕥𝕠𝕔𝕜𝔽𝕒𝕣𝕞"
-        android:textColor="#689F38"
-        android:textSize="30sp"
+        android:text="Welcome to your"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/farm_reel" />
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="80dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@id/player_name"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView11" />
+
 
     <TextView
         android:id="@+id/player_name"
@@ -39,7 +53,7 @@
         android:textColor="#689F38"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView11" />
+        app:layout_constraintTop_toBottomOf="@id/app_logo" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -121,10 +135,11 @@
             android:text="\?"
             android:textSize="18dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView4" />
+            app:layout_constraintBottom_toBottomOf="@+id/guideline7"
+            app:layout_constraintTop_toTopOf="@+id/imageView4"
+            />
 
     </LinearLayout>
 
@@ -148,9 +163,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="56dp"
         android:src="@drawable/ic_baseline_settings_24"
+        android:tooltipText="Setting"
         app:backgroundTint="#9575CD"
         app:fabSize="mini"
-        android:tooltipText="Setting"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -165,16 +180,17 @@
         android:textStyle="italic|bold"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/player_name" />
+        app:layout_constraintTop_toBottomOf="@+id/player_name"
+        />
 
 
     <LinearLayout
         android:id="@+id/backkk"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
         android:background="#A3605F5F"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
     </LinearLayout>
 
@@ -186,10 +202,10 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="80dp"
-        android:background="@drawable/round2"
-        android:visibility="invisible"
-        android:padding="20dp"
         android:animateLayoutChanges="true"
+        android:background="@drawable/round2"
+        android:padding="20dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -204,28 +220,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="#FFFFFF"
-                android:textSize="26dp"
-                android:text="Stock Farm History"
                 android:paddingTop="16dp"
                 android:paddingBottom="4dp"
-                />
+                android:text="Stock Farm History"
+                android:textColor="#FFFFFF"
+                android:textSize="26dp" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="#FFFFFF"
+                android:paddingBottom="12dp"
                 android:text="(New York Time Zone)"
-                android:paddingBottom="12dp"/>
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:text="History.." />
+                android:text="History.."
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
 
@@ -235,8 +250,8 @@
         android:id="@+id/setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@drawable/round2"
+        android:orientation="vertical"
         android:padding="16dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -254,8 +269,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/white"
-                android:text="Notification - Market Open" />
+                android:text="Notification - Market Open"
+                android:textColor="@color/white" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch1"
@@ -271,19 +286,26 @@
             android:id="@+id/log_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginTop="16dp"
-            android:text="Log out"
-            android:backgroundTint="@color/greyFont"/>
+            android:layout_weight="1"
+            android:backgroundTint="@color/greyFont"
+            android:text="Log out" />
 
         <Button
             android:id="@+id/delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/greyFont"
             android:text="Delete Account"
-            android:textColor="#D32F2F"
-            android:backgroundTint="@color/greyFont"/>
+            android:textColor="#D32F2F" />
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.58"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
