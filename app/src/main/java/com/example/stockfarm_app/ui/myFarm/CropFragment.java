@@ -20,6 +20,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class CropFragment extends Fragment {
+    ViewGroup view;
     private UserStockData stock;
     TextView stockName;
     String color1;
@@ -40,7 +41,7 @@ public class CropFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.inflater = inflater;
-        final ViewGroup view = (ViewGroup) inflater.inflate(
+        view = (ViewGroup) inflater.inflate(
                 R.layout.crop_layout, container, false);
         stockName = view.findViewById(R.id.stock_name_header);
         floatingActionButton = view.findViewById(R.id.floatingActionButton);
@@ -58,11 +59,13 @@ public class CropFragment extends Fragment {
             }
         });
         setTrees();
-        ConstraintLayout.LayoutParams p = new ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT);
-        treeView.setLayoutParams(p);
-        view.addView(treeView);
         return view;
+    }
+
+    public void updateTrees()
+    {
+        view.removeView(treeView);
+        setTrees();
     }
 
     public void setTrees()
@@ -88,6 +91,10 @@ public class CropFragment extends Fragment {
                 }
             }
         }
+        ConstraintLayout.LayoutParams p = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT);
+        treeView.setLayoutParams(p);
+        view.addView(treeView);
     }
 
     public void setWindowText() {
@@ -134,12 +141,12 @@ public class CropFragment extends Fragment {
         return (String.format("%.2f", sum) + "%");
     }
 
-//    private void restartFragment()
-//    {
-//        FragmentTransaction tr = getFragmentManager().beginTransaction();
-//        tr.replace(R.id.crop_layout, this);
-//        tr.commit();
-//    }
+    public void restartFragment()
+    {
+        FragmentTransaction tr = getFragmentManager().beginTransaction();
+        tr.replace(R.id.crop_layout, this);
+        tr.commit();
+    }
 //
 //    @Override
 //    public void onResume() {

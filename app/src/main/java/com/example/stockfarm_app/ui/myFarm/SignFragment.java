@@ -72,7 +72,6 @@ public class SignFragment extends Fragment
         logOut = view.findViewById(R.id.log_out);
         delete = view.findViewById(R.id.delete);
         switchCompat = view.findViewById(R.id.switch1);
-
         app = (StockFarmApplication) getActivity().getApplication();
         playerName.setText(app.userData.getName());
 
