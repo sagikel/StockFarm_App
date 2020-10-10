@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,50 +49,71 @@ public class MyFarmFragment extends Fragment {
     private ImageView farmReel;
     int pageNum;
     boolean refresh;
+    boolean refreshFirst;
     ViewPagerAdapter viewPagerAdapter;
     LinkedList<UserStockData> activeStocks;
     VolleyApiKeyUrl volleyApiKeyUrl;
     RequestQueue queue;
-
+    RelativeLayout openNote;
+    Button buttonGotIt;
+    View view;
+    LinearLayout linearLayout;
 
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_my_farm, container, false);
+        view = inflater.inflate(R.layout.fragment_my_farm, container, false);
         app = (StockFarmApplication) getActivity().getApplication();
         farmReel = view.findViewById(R.id.farm_reel);
         farmPager = view.findViewById(R.id.farm_pager);
         floatingActionButton = view.findViewById(R.id.floatingActionButton);
+        buttonGotIt = view.findViewById(R.id.button_got_it);
         activeStocks = app.userData.getActiveStocks();
         viewPagerAdapter = new ViewPagerAdapter(getActivity(), activeStocks);
         farmPager.setAdapter(viewPagerAdapter);
         farmPager.registerOnPageChangeCallback(new PagerAnimationCallback());
-        refresh = false;
+        refreshFirst = true;
         volleyApiKeyUrl = new VolleyApiKeyUrl();
         queue = Volley.newRequestQueue(getContext());
 
+
         pageNum = app.userData.getActiveStocks().size() + 1; // TODO update this field during trade
 
+        refresh = true;
         refreshDataFromServer();
+        openNoteCheck();
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
                 if (!refresh) {
-                    refreshDataFromServer();
                     refresh = true;
+                    refreshDataFromServer();
                 }
             }
         });
 
-        floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+        buttonGotIt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                return false;
+            public void onClick(View v)
+            {
+                openNote.setVisibility(View.INVISIBLE);
+                linearLayout.setVisibility(View.INVISIBLE);
             }
         });
         return view;
+    }
+
+    private void openNoteCheck() {
+
+        if (app.sp.getBoolean(app.userData.getName()+"S", true)) {
+            linearLayout = view.findViewById(R.id.backk);
+            openNote = view.findViewById(R.id.open_note);
+            linearLayout.setVisibility(View.VISIBLE);
+            openNote.setVisibility(View.VISIBLE);
+            app.sp.edit().putBoolean(app.userData.getName()+"S", false).apply();
+        }
     }
 
     @Override
@@ -142,10 +165,13 @@ public class MyFarmFragment extends Fragment {
                                 ((SignFragment) fragment).getData();
                             }
                         }
-                        Toast toast = Toast.makeText(getContext(),"Refreshing..", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-
+                        if (refreshFirst) {
+                            refreshFirst = false;
+                        } else {
+                            Toast toast = Toast.makeText(getContext(),"Refreshing", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

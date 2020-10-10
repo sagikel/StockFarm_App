@@ -16,7 +16,7 @@
         tools:replace="android:supportsRtl">
         <activity
             android:name=".TradeActivity"
-            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
         <activity

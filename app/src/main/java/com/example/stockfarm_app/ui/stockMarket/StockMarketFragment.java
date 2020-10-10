@@ -241,6 +241,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
         sectorText.setText(stocksFixedData.getMap().get(symbol).get(2));
         industryText.setText(stocksFixedData.getMap().get(symbol).get(3));
         descriptionText.setText(stocksFixedData.getMap().get(symbol).get(6));
+        descriptionText.scrollTo(0,0);
         String mDrawableName = symbol.toLowerCase();
         int resID = getResources().getIdentifier(mDrawableName , "drawable", getContext().getPackageName());
         circleImageView.setImageResource(resID);

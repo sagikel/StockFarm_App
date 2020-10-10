@@ -88,4 +88,8 @@ public class UserData
     public void setFunds(double funds) {
     this.funds += funds;
     }
+
+    public void setFundsFix(double fundsFix) {
+        this.fundsFix += fundsFix;
+    }
 }

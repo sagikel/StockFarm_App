@@ -48,7 +48,6 @@ public class NotificationHelper extends ContextWrapper {
                 .setContentTitle("Market Bell")
                 .setColor(0xFF00802b)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.bell))
-                .setContentText("Reminder message")
                 .setSmallIcon(R.drawable.bell)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }

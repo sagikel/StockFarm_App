@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -159,6 +160,7 @@ public class TradeActivity extends AppCompatActivity {
 
         stockAmount = stockFarmApplication.userData.getStocks().get(symbol).getCurrAmount();
         setMoney();
+
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

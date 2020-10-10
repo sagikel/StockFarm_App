@@ -53,6 +53,7 @@ public class SignFragment extends Fragment
     Button logOut;
     Button delete;
     SwitchCompat switchCompat;
+    LinearLayout linearLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +73,9 @@ public class SignFragment extends Fragment
         logOut = view.findViewById(R.id.log_out);
         delete = view.findViewById(R.id.delete);
         switchCompat = view.findViewById(R.id.switch1);
+
+        linearLayout = view.findViewById(R.id.backkk);
+
         app = (StockFarmApplication) getActivity().getApplication();
         playerName.setText(app.userData.getName());
 
@@ -93,14 +97,17 @@ public class SignFragment extends Fragment
                 historyData();
                 if (settingBol) {
                     setting.setVisibility(View.INVISIBLE);
+                    linearLayout.setVisibility(View.INVISIBLE);
                     settingBol = false;
                     return;
                 }
                 if (historyBol) {
                     scrollView.setVisibility(View.INVISIBLE);
+                    linearLayout.setVisibility(View.INVISIBLE);
                     scrollView.fullScroll(scrollView.FOCUS_UP);
                     historyBol = false;
                 } else {
+                    linearLayout.setVisibility(View.VISIBLE);
                     scrollView.setVisibility(View.VISIBLE);
                     historyBol = true;
                 }
@@ -113,17 +120,40 @@ public class SignFragment extends Fragment
                 historyData();
                 if (historyBol) {
                     scrollView.setVisibility(View.INVISIBLE);
+                    linearLayout.setVisibility(View.INVISIBLE);
                     scrollView.fullScroll(scrollView.FOCUS_UP);
                     historyBol = false;
                     return;
                 }
                 if (settingBol) {
                     setting.setVisibility(View.INVISIBLE);
+                    linearLayout.setVisibility(View.INVISIBLE);
                     settingBol = false;
                 } else {
+                    linearLayout.setVisibility(View.VISIBLE);
                     setting.setVisibility(View.VISIBLE);
                     settingBol = true;
                 }
+            }
+        });
+
+
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linearLayout.setVisibility(View.INVISIBLE);
+                setting.setVisibility(View.INVISIBLE);
+                scrollView.setVisibility(View.INVISIBLE);
+                scrollView.fullScroll(scrollView.FOCUS_UP);
+                settingBol = false;
+                historyBol = false;
+            }
+        });
+
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Need to be empty
             }
         });
 
@@ -135,6 +165,7 @@ public class SignFragment extends Fragment
                         .setMessage("\nAre you sure?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                app.cancelAlarm();
                                 app.updateUserDataToServer();
                                 SignFragment.this.signOut();
                             }
@@ -154,6 +185,7 @@ public class SignFragment extends Fragment
                         .setMessage("\nAre you sure?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                app.cancelAlarm();
                                 app.db.collection("users").document(app.currId).delete();
                                 SignFragment.this.signOut();
                             }
@@ -214,37 +246,37 @@ public class SignFragment extends Fragment
     private void level(double change) {
         String level = "Dynamic Level: ";
         String rank = "Beginner";
-        if (change < 2) {
+        if (change < 1) {
             rank = "Beginner";
-        } else if (change < 5) {
+        } else if (change < 3) {
             rank = "Trainee";
-        } else if (change < 10) {
+        } else if (change < 5) {
             rank = "Amateur";
-        } else if (change < 15) {
+        } else if (change < 10) {
             rank = "Hotshot";
-        } else if (change < 20) {
+        } else if (change < 15) {
             rank = "Virtuoso";
-        } else if (change < 25) {
+        } else if (change < 20) {
             rank = "Expert";
-        } else if (change < 30) {
+        } else if (change < 25) {
             rank = "Veteran";
-        } else if (change < 35) {
+        } else if (change < 30) {
             rank = "Semi-Pro";
-        } else if (change < 40) {
+        } else if (change < 35) {
             rank = "Professional";
-        } else if (change < 45) {
+        } else if (change < 40) {
             rank = "Master";
-        } else if (change < 50) {
+        } else if (change < 45) {
             rank = "Champ";
-        } else if (change < 75) {
+        } else if (change < 50) {
             rank = "Superstar";
-        } else if (change < 100) {
+        } else if (change < 60) {
             rank = "Hero";
-        } else if (change < 150) {
+        } else if (change < 75) {
             rank = "Legend";
-        } else if (change < 200) {
+        } else if (change < 100) {
             rank = "Immortal";
-        } else if (change >= 200) {
+        } else if (change >= 100) {
             rank = "God";
         }
         Level.setText(level + rank);
@@ -254,11 +286,13 @@ public class SignFragment extends Fragment
     public void onPause() {
         super.onPause();
         if (historyBol){
+            linearLayout.setVisibility(View.INVISIBLE);
             scrollView.setVisibility(View.INVISIBLE);
             scrollView.fullScroll(scrollView.FOCUS_UP);
             historyBol = false;
         }
         if (settingBol) {
+            linearLayout.setVisibility(View.INVISIBLE);
             setting.setVisibility(View.INVISIBLE);
             settingBol = false;
         }
@@ -266,7 +300,7 @@ public class SignFragment extends Fragment
 
     private void historyData() {
         StringBuilder toShow = new StringBuilder();
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
         String color = "";
         for (UserStockData userStockData : app.userData.getStocks().values()) {
             toShow.append("<big><b>").append(userStockData.getStockName()).append("</b><br></big>");
