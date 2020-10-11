@@ -5,6 +5,7 @@
     <string name="firestore_fieldname_initialfunds">initial_funds</string>
     <string name="firestore_docID_values">0dySfQ90Q62TiT9mT3yo</string>
 
+    <string name="last_user_id">last_user_id</string>
     <string name="loading_message">Loading, please wait…</string>
     <string name="new_account_created">! a new StockFarm account is created for you…</string>
     <string name="account_creation_failed">Could not create new account!</string>

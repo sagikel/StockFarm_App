@@ -13,8 +13,6 @@ import java.util.Calendar;
 public class StockMarketBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("BroadcastReceiver", "I AM AWAKE!");
-
         Calendar rightNow = Calendar.getInstance();
         if (rightNow.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || rightNow.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
             //stock market closed

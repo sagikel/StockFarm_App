@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,6 +22,8 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity {
 
     Context context;
+    StockFarmApplication app;
+    BottomNavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         context = this;
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        app = (StockFarmApplication) getApplication();
+        navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -65,5 +69,17 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, StockMarketBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         alarmManager.cancel(pendingIntent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (app.autoTransition != null)
+        {
+//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.main_frame, new ReservationInfo());
+//            fragmentTransaction.commitNow();
+            navView.setSelectedItemId(R.id.navigation_my_farm);
+        }
     }
 }

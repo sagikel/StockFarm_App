@@ -34,6 +34,7 @@ public class StockFarmApplication extends Application
     public UserData userData;
     public String currId;
     boolean notification;
+    public String autoTransition;
 
     // updating values from the sp/server:
     double initialFunds;
@@ -75,6 +76,7 @@ public class StockFarmApplication extends Application
                 regPassword,
                 initialFunds);
         userData = newUser;
+        currId = id;
         final String json = new Gson().toJson(newUser);
         sp.edit().putString(getString(R.string.firestore_fieldname_userdata), json).apply();
         Map<String, String> data = new HashMap<String, String>()
@@ -86,6 +88,11 @@ public class StockFarmApplication extends Application
             @Override
             public void onComplete(@NonNull Task<Void> task) {activity.registerResult(task.isSuccessful());}
         });
+    }
+
+    public void saveUserForAutoLogIn(String id)
+    {
+        sp.edit().putString(getString(R.string.last_user_id), id).apply();
     }
 
     public void generateAccountGoogleUser(final FirebaseUser user, LoginActivity activity)

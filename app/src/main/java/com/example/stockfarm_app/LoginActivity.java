@@ -108,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        String lastUserId = app.sp.getString(getString(R.string.last_user_id), "");
         if (currentUser != null) {
             openLoadingWindow();
             app.getUserById(currentUser.getUid(), this);
@@ -115,6 +116,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         else if (app.userData != null)
         {
             goToFarm();
+        }
+        else if (!lastUserId.equals(""))
+        {
+            app.currId = lastUserId;
+            openLoadingWindow();
+            app.getUserById(lastUserId, this);
         }
     }
 
@@ -146,6 +153,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
                 break;
             case R.id.login_button:
+                openLoadingWindow();
                 regularSignInOrRegister();
                 break;
             case R.id.cancel_button:
@@ -192,7 +200,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d("FireBase", "firebaseAuthWithGoogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -215,15 +222,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (task.isSuccessful()) {
             //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             FirebaseUser user = mAuth.getCurrentUser();
-            String name = user.getDisplayName();
+            String name;
             DocumentSnapshot document = (DocumentSnapshot) task.getResult();
             if (document != null && document.exists()) {
                 // found existing StockFarm account with uid, now we retrieve its data
                 String json = (String) document.get(getString(R.string.firestore_fieldname_userdata));
-                app.setUserDataFromServer(user.getUid(), json);
+                if (user != null) {
+                    app.setUserDataFromServer(user.getUid(), json);
+                    name = user.getDisplayName();
+                }
+                else if (app.currId != null){
+                    app.setUserDataFromServer(app.currId, json);
+                    name = app.userData.getName();
+                }
+                else throw new NullPointerException();
                 String welcomeMsg = "Welcome Back, " + name;
                 Snackbar.make(loadingView, welcomeMsg, Snackbar.LENGTH_SHORT).show();
-            } else {
+            }
+            else {
                 // no such account, need to create one for google user
                 app.generateAccountGoogleUser(user, activity);
             }
@@ -259,6 +275,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (verifyPassword(document, password)) {   // password match
                             String json = (String) document.get(getString(R.string.firestore_fieldname_userdata));
                             String name = app.setUserDataFromServer(email, json);
+                            app.saveUserForAutoLogIn(email);
                             String welcomeMsg = "Welcome Back, " + name;
                             Snackbar.make(loadingView, welcomeMsg, Snackbar.LENGTH_SHORT).show();
                             new CountDownTimer(2000, 2000) {
@@ -274,6 +291,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else {   // wrong password
                             Snackbar.make(findViewById(R.id.sign_in_layout),
                                     getString(R.string.wrong_password), Snackbar.LENGTH_SHORT).show();
+                            closeLoadingWindow();
                         }
                     } else {   // no account associated with mail, refer to register
                         registerNewAccount();

@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -207,7 +208,7 @@ public class TradeActivity extends AppCompatActivity {
                     closeKeyboard();
                     calculate();
                 } else {
-                    if (trade) { // TODO להוציא את הסימן שאלה ברגע שעוברים לזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if (!trade) { // TODO להוציא את הסימן שאלה ברגע שעוברים לזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         findViewById(R.id.trade_layout).setBackground(ContextCompat.getDrawable(activity, R.drawable.market_scale_seeds));
                         action = true;
                         charts.setText("Back");
@@ -362,7 +363,6 @@ public class TradeActivity extends AppCompatActivity {
                 if (!action) {
                     visible();
                 }
-                Log.d("server","information was pass to the app from: " + finalUrl);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -413,7 +413,6 @@ public class TradeActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }
-                Log.d("server","information was pass to the app from: " + finalUrl);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -506,7 +505,7 @@ public class TradeActivity extends AppCompatActivity {
                     Toast.makeText(context, "You don't have " + amount + " stocks to sell", Toast.LENGTH_LONG).show();
                     return;
                 }
-            } if (!trade){ //TODO(!trade) להוסיף סימן קריאה בזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            } if (trade){ //TODO(!trade) להוסיף סימן קריאה בזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 Toast.makeText(context, "You pass the trading time!", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -516,14 +515,14 @@ public class TradeActivity extends AppCompatActivity {
                     .setMessage("\nAre you sure?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            if (!trade){ //TODO(!trade) להוסיף סימן קריאה בזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            if (trade){ //TODO(!trade) להוסיף סימן קריאה בזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                 Toast.makeText(context, "You pass the trading time!", Toast.LENGTH_LONG).show();
                                 return;
                             }
                             currentPriceForTransaction = currentPrice;
                             mainTrade();
                             updateAmount(finalBuy);
-                            Toast.makeText(context, "Trade executed!", Toast.LENGTH_LONG).show();
+                            transitionToFarm();
                         }
                     })
                     .setNegativeButton(android.R.string.no, null)
@@ -532,6 +531,21 @@ public class TradeActivity extends AppCompatActivity {
         }
     }
 
+    private void transitionToFarm()
+    {
+        Toast.makeText(context, "Trade executed!", Toast.LENGTH_LONG).show();
+        if (stockAmount == 0) // no crop plot, transition to sign
+            stockFarmApplication.autoTransition = "sign";
+        else stockFarmApplication.autoTransition = symbol;
+        new CountDownTimer(1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+            public void onFinish() {
+                finish();
+            }
+        }.start();
+    }
 
     private void updateAmount(boolean buy){
         NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);

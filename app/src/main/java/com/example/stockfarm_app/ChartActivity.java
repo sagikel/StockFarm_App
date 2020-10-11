@@ -169,7 +169,6 @@ public class ChartActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("server","information was pass to the app from: " + finalUrl);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -217,7 +216,6 @@ public class ChartActivity extends AppCompatActivity {
                     textView2.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
                 }
-                Log.d("server","information was pass to the app from: " + finalUrl);
             }
         }, new Response.ErrorListener() {
             @Override

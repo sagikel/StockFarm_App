@@ -141,23 +141,8 @@ public class CropFragment extends Fragment {
         return (String.format("%.2f", sum) + "%");
     }
 
-    public void restartFragment()
+    public UserStockData getStock()
     {
-        FragmentTransaction tr = getFragmentManager().beginTransaction();
-        tr.replace(R.id.crop_layout, this);
-        tr.commit();
+        return stock;
     }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        restartFragment();
-//    }
-//
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        restartFragment();
-//    }
 }

@@ -6,19 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/signin">
-    tools:context=".ui.login.LoginActivity">
 
-    <!--    <com.airbnb.lottie.LottieAnimationView-->
-    <!--        android:id="@+id/animationView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:lottie_url="REPLACE_JSON_URL"-->
-    <!--        app:lottie_autoPlay="true"-->
-    <!--        app:lottie_loop="true"/>-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="140dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/logo"
+        android:layout_marginHorizontal="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline1"/>
+
 
     <EditText
         android:id="@+id/email_box"
@@ -68,7 +66,7 @@
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="45sp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -78,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.46"/>
+        app:layout_constraintGuide_end="395dp" />
 
     <Button
         android:id="@+id/login_button"
@@ -97,6 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="skip"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

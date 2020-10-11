@@ -8,16 +8,16 @@
     tools:context=".ui.myFarm.MyFarmFragment">
 
 
-        <ImageView
-            android:id="@+id/farm_reel"
-            android:layout_width="700dp"
-            android:layout_height="0dp"
-            android:translationX="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:adjustViewBounds="true"
-            android:src="@drawable/farmscene_reel"
-            app:layout_constraintBottom_toTopOf="@id/reel_guide"
-            android:contentDescription="farm_reel" />
+    <ImageView
+        android:id="@+id/farm_reel"
+        android:layout_width="700dp"
+        android:layout_height="0dp"
+        android:translationX="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:adjustViewBounds="true"
+        android:src="@drawable/farmscene_reel"
+        app:layout_constraintBottom_toTopOf="@id/reel_guide"
+        android:contentDescription="farm_reel" />
 
 
     <androidx.viewpager2.widget.ViewPager2

@@ -201,10 +201,8 @@ public class SignFragment extends Fragment
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     app.startAlarm();
-                    Log.d("switch", "onCheckedChanged: yes");
                 } else {
                     app.cancelAlarm();
-                    Log.d("switch", "onCheckedChanged: no");
                 }
             }
         });
@@ -215,6 +213,7 @@ public class SignFragment extends Fragment
     public void signOut()
     {
         app.userData = null;
+        app.sp.edit().putString(getString(R.string.last_user_id), "").apply();
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getActivity(), LoginActivity.class));
         getActivity().finish();

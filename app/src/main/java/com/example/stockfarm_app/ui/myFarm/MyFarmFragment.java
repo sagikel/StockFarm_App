@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -120,7 +121,7 @@ public class MyFarmFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //farmPager.setCurrentItem(0,true);
-        for (Fragment fragment : viewPagerAdapter.mFragments) // SAGI NOTICE: example for how crop fragments are updated
+        for (Fragment fragment : viewPagerAdapter.mFragments)
         {
             if (fragment instanceof CropFragment && ((CropFragment) fragment).stockName != null)
             {   // the last condition is important because we can't update fragment which haven't yet been viewed
@@ -161,6 +162,7 @@ public class MyFarmFragment extends Fragment {
                             if (fragment instanceof CropFragment && ((CropFragment) fragment).stockName != null)
                             {   // the last condition is important because we can't update fragment which haven't yet been viewed
                                 ((CropFragment) fragment).setWindowText();
+                                ((CropFragment) fragment).setTrees();
                             } else if (fragment instanceof SignFragment && ((SignFragment) fragment).playerName != null) {
                                 ((SignFragment) fragment).getData();
                             }
@@ -180,13 +182,11 @@ public class MyFarmFragment extends Fragment {
                     }
                 }
                 refresh = false;
-                Log.d("server","information was pass to the app from: " + finalUrl);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Log.e("server","error in respond");
                 Toast.makeText(getContext(),"Refreshing prices failed", Toast.LENGTH_SHORT).show();
                 refresh = false;
             }
@@ -199,7 +199,6 @@ public class MyFarmFragment extends Fragment {
     {
         int reelWidth = farmReel.getMeasuredWidth();
         int screenWidth = this.getResources().getDisplayMetrics().widthPixels;
-//        Log.d("TAG", "reel: " + String.valueOf(reelWidth) + ", screen: " + String.valueOf(screenWidth));
         return (int) (reelWidth - screenWidth) / (pageNum - 1);
     }
 
@@ -213,6 +212,46 @@ public class MyFarmFragment extends Fragment {
         {
             super();
             prevPage = 0;
+        }
+
+        @Override
+        public void onPageSelected(int position)
+        {
+            super.onPageSelected(position);
+            if (app.autoTransition != null)
+            {
+                if (app.autoTransition.equals("sign"))
+                    {if (position != 0) {
+                        farmPager.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                farmPager.setCurrentItem(0, true);
+                            }
+                        }, 100);
+                        }
+                    }
+                else
+                {
+                    for (int i = 1; i < viewPagerAdapter.mFragments.size(); i++)
+                    {
+                        CropFragment fragment = (CropFragment) viewPagerAdapter.mFragments.get(i);
+                        if (fragment.getStock().getStockName().equals(app.autoTransition))
+                        {
+                            final int pos = i;
+                            farmPager.postDelayed(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    farmPager.setCurrentItem(pos, true);
+                                }
+                            }, 100);
+                            break;
+                        }
+                    }
+                }
+                app.autoTransition = null;
+            }
         }
 
         @Override
