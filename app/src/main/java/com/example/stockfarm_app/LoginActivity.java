@@ -262,7 +262,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void regularSignInOrRegister() {
         final String email = emailBox.getText().toString();
         final String password = passwordBox.getText().toString();
-        if (!validEmailPassword(findViewById(R.id.sign_in_layout), email, password)) return;
+        if (!validEmailPassword(findViewById(R.id.sign_in_layout), email, password))
+        {
+            closeLoadingWindow();
+            return;
+        }
         DocumentReference userDocRef = app.db.collection("users").document(email);
         userDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
