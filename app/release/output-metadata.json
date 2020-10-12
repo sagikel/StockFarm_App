@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.example.stockfarm_app",
+  "applicationId": "postpc.y2020.stockfarm_app",
   "variantName": "release",
   "elements": [
     {

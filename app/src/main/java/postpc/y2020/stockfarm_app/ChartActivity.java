@@ -26,7 +26,7 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
-import com.example.stockfarm_app.R;
+import postpc.y2020.stockfarm_app.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

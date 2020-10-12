@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import com.example.stockfarm_app.R;
+import postpc.y2020.stockfarm_app.R;
 import postpc.y2020.stockfarm_app.TradeActivity;
 import postpc.y2020.stockfarm_app.data.UserStockData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

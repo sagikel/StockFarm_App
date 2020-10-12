@@ -14,7 +14,7 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.stockfarm_app.R;
+import postpc.y2020.stockfarm_app.R;
 
 public class NotificationHelper extends ContextWrapper {
 

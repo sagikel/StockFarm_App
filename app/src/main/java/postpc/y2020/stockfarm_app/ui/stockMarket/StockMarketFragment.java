@@ -37,7 +37,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import postpc.y2020.stockfarm_app.ChartActivity;
-import com.example.stockfarm_app.R;
+import postpc.y2020.stockfarm_app.R;
 import postpc.y2020.stockfarm_app.TradeActivity;
 import postpc.y2020.stockfarm_app.VolleyApiKeyUrl;
 import postpc.y2020.stockfarm_app.data.StocksFixedData;

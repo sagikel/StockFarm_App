@@ -25,7 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.stockfarm_app.R;
+import postpc.y2020.stockfarm_app.R;
 import postpc.y2020.stockfarm_app.StockFarmApplication;
 import postpc.y2020.stockfarm_app.data.TutorialData;
 

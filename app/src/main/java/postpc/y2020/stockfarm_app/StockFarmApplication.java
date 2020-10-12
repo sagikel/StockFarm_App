@@ -11,7 +11,7 @@ import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 
-import com.example.stockfarm_app.R;
+import postpc.y2020.stockfarm_app.R;
 
 import postpc.y2020.stockfarm_app.data.UserData;
 import com.google.android.gms.tasks.OnCompleteListener;

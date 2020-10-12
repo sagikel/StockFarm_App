@@ -20,7 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.stockfarm_app.R;
+import postpc.y2020.stockfarm_app.R;
 
 import com.google.android.gms.auth.api.signin.*;
 import com.google.android.gms.common.SignInButton;

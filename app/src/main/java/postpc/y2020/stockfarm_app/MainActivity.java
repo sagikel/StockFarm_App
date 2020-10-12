@@ -12,7 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.stockfarm_app.R;
+import postpc.y2020.stockfarm_app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
