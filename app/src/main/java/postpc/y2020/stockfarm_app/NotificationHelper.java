@@ -49,6 +49,7 @@ public class NotificationHelper extends ContextWrapper {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText("Stock Market is Open!"))
                 .setContentTitle("Market Bell")
                 .setColor(0xFF00802b)
+                .setContentText("Stock Market is Open!")
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.bell))
                 .setSmallIcon(R.drawable.bell)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
