@@ -5,19 +5,6 @@
     android:id="@+id/trees_layout4"
     android:layout_height="match_parent">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/land"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="-5dp"-->
-<!--        android:layout_marginEnd="-5dp"-->
-<!--        android:adjustViewBounds="true"-->
-<!--        android:contentDescription="farm_crop"-->
-<!--        android:src="@drawable/farm_crop2"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/tree2"
         android:layout_width="wrap_content"
@@ -31,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_speed="0.22"
+        app:lottie_speed="0.12"
         app:lottie_rawRes="@raw/tree4" />
 
     <com.airbnb.lottie.LottieAnimationView
@@ -47,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_speed="0.25"
+        app:lottie_speed="0.14"
         app:lottie_rawRes="@raw/tree4" />
 
     <com.airbnb.lottie.LottieAnimationView
@@ -56,7 +43,7 @@
         android:layout_height="wrap_content"
         android:scaleType="center"
         app:lottie_scale="0.5"
-        app:lottie_speed="0.30"
+        app:lottie_speed="0.18"
         android:translationX="15dp"
         android:translationY="115dp"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
@@ -79,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_speed="0.20"
+        app:lottie_speed="0.10"
         app:lottie_rawRes="@raw/tree4" />
 
     <com.airbnb.lottie.LottieAnimationView
@@ -95,7 +82,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_speed="0.28"
+        app:lottie_speed="0.15"
         app:lottie_rawRes="@raw/tree4" />
 
     <androidx.constraintlayout.widget.Guideline

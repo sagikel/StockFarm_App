@@ -158,6 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.cancel_button:
                 regAlert.cancel();
+                closeLoadingWindow();
                 break;
             case R.id.register_button:
                 EditText emailRegBox = (EditText) registerView.findViewById(R.id.email_box);
