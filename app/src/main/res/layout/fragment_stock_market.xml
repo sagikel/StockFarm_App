@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/market_back"
     android:paddingBottom="?attr/actionBarSize"
-    tools:context=".ui.stockMarket.StockMarketFragment">
+    tools:context="postpc.y2020.stockfarm_app.ui.stockMarket.StockMarketFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.tutorial.TutorialFragment">
+    tools:context="postpc.y2020.stockfarm_app.ui.tutorial.TutorialFragment">
 
     <ImageView
         android:layout_width="match_parent"
