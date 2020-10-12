@@ -69,6 +69,7 @@ public class CropFragment extends Fragment {
 
     public void setTrees()
     {
+        view.removeView(treeView);
         int treeConditionLayoutId;
         if (sum >= 8) treeConditionLayoutId = R.layout.trees_layout4;
         else if (sum >= 4 && sum < 8) treeConditionLayoutId = R.layout.trees_layout3;
