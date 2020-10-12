@@ -175,7 +175,7 @@
                 android:gravity="center"
                 android:paddingTop="16dp"
                 android:paddingBottom="4dp"
-                android:text="Definition"
+                android:text="Description"
                 android:textColor="#FFFFFF"
                 android:textSize="26dp" />
 
