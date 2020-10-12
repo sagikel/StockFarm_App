@@ -1,6 +1,6 @@
 package postpc.y2020.stockfarm_app;
 
-import android.app.Activity;
+
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
@@ -10,8 +10,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
-
-import postpc.y2020.stockfarm_app.R;
 
 import postpc.y2020.stockfarm_app.data.UserData;
 import com.google.android.gms.tasks.OnCompleteListener;

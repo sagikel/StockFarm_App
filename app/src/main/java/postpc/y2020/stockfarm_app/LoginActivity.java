@@ -2,7 +2,6 @@ package postpc.y2020.stockfarm_app;
 
 import androidx.annotation.NonNull;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,8 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import postpc.y2020.stockfarm_app.R;
 
 import com.google.android.gms.auth.api.signin.*;
 import com.google.android.gms.common.SignInButton;
@@ -50,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     AlertDialog regAlert;
     View loadingView;
     View registerView;
-    Button skip;
+    //Button skip;
 
 
 
@@ -63,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailBox = findViewById(R.id.email_box);
         passwordBox = findViewById(R.id.password_box);
         logInButton = findViewById(R.id.login_button);
-        skip = findViewById(R.id.skip);
+        //skip = findViewById(R.id.skip);
         logInButton.setOnClickListener(this);
         TextWatcher textListen = new TextWatcher() {
             @Override
@@ -94,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleButton = findViewById(R.id.sign_in_button);
         googleButton.setSize(SignInButton.SIZE_WIDE);
         googleButton.setOnClickListener(this);
-        skip.setOnClickListener(this);
+        //skip.setOnClickListener(this);
         getSupportActionBar().hide();
     }
 
@@ -167,10 +164,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 openLoadingWindow();
                 app.generateAccountRegularUser(regEmail, regEmail, regName, regPassword, activity);
                 break;
-            case R.id.skip:
-                dummyUser();
+//            case R.id.skip:
+//                dummyUser();
 //                goToFarm();
-                break;
+//                break;
 
         }
     }

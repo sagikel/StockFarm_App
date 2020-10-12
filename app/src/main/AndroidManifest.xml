@@ -32,6 +32,7 @@
         <activity
             android:name="postpc.y2020.stockfarm_app.MainActivity"
             android:parentActivityName="postpc.y2020.stockfarm_app.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name="postpc.y2020.stockfarm_app.ChartActivity"

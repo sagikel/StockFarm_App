@@ -226,14 +226,6 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
         if (symbol.equals("Choose Stock Symbol"))
         {
             basicStockInfoLayout.setVisibility(View.INVISIBLE);
-//            stockNameText.setVisibility(View.INVISIBLE);
-//            ceoText.setVisibility(View.INVISIBLE);
-//            sectorText.setVisibility(View.INVISIBLE);
-//            industryText.setVisibility(View.INVISIBLE);
-//            descriptionText.setVisibility(View.INVISIBLE);
-//            tradeButton.setVisibility(View.INVISIBLE);
-//            moreInfoButton.setVisibility(View.INVISIBLE);
-//            circleImageView.setVisibility(View.INVISIBLE);
             return;
         }
         stockNameText.setText(stocksFixedData.getMap().get(symbol).get(0));
@@ -248,15 +240,6 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
         basicStockInfoLayout.setVisibility(View.VISIBLE);
         FragmentTransaction tx = getChildFragmentManager().beginTransaction();
         tx.addToBackStack( "tag" ).commit();
-//        tx.replace(R.id.market_fragment, new StockMarketFragment()).addToBackStack( "tag" ).commit();
-//        stockNameText.setVisibility(View.VISIBLE);
-//        ceoText.setVisibility(View.VISIBLE);
-//        sectorText.setVisibility(View.VISIBLE);
-//        industryText.setVisibility(View.VISIBLE);
-//        descriptionText.setVisibility(View.VISIBLE);
-//        tradeButton.setVisibility(View.VISIBLE);
-//        moreInfoButton.setVisibility(View.VISIBLE);
-//        circleImageView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -383,7 +366,7 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
         else {
             url = volleyApiKeyUrl.getCorrectUrlForMany(symbol, type);
         }
-        final String finalUrl = url;
+        //final String finalUrl = url;
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -411,13 +394,13 @@ public class StockMarketFragment extends Fragment implements AdapterView.OnItemS
                         parseForC(response, textViewForData);
 
                 }
-                Log.d("server","information was pass to the app from: " + finalUrl);
+                //Log.d("server","information was pass to the app from: " + finalUrl);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Log.e("server","error in respond");
+                //Log.e("server","error in respond");
                 progressBar.setVisibility(View.INVISIBLE);
                 ceoText.setText("Error response from our server.. Please try again!");
                 ceoText.setVisibility(View.VISIBLE);

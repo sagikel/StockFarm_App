@@ -1,5 +1,4 @@
 package postpc.y2020.stockfarm_app;
-// UPDATE GODDAMMIT!!!!
 
 import android.content.Context;
 import android.graphics.Canvas;

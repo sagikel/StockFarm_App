@@ -3,6 +3,7 @@ package postpc.y2020.stockfarm_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,6 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
-import postpc.y2020.stockfarm_app.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,6 +75,7 @@ public class ChartActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         symbol = intent.getExtras().getString("symbol");
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         button1min.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,5 +275,6 @@ public class ChartActivity extends AppCompatActivity {
         button30min.setVisibility(View.INVISIBLE);
         button1hour.setVisibility(View.INVISIBLE);
         button1day.setVisibility(View.INVISIBLE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 }

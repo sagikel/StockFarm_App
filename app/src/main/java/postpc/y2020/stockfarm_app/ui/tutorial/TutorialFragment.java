@@ -143,7 +143,7 @@ public class TutorialFragment extends Fragment implements AdapterView.OnItemClic
         arrayAdapter1 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Explanation", "2. Goal", "3. Terms & Definitions", "4. Real Time", "5. Levels"});
         arrayAdapter2 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Three parts", "2. The sign", "3. The fields", "4. Stock market", "5. More info"});
         arrayAdapter3 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Stock", "2. Shareholder", "3. Stock Exchange", "4. Open Price", "5. Stock Symbol"});
-        arrayAdapter4 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Return", "2. Risk and Reward", "3. Risk", "4. Reward", "5. Balance"});
+        arrayAdapter4 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Return", "2. Risk and Reward", "3. Losses", "4. Reward", "5. Balance"});
         arrayAdapter5 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Charts", "2. Press Release and News", "3. Annual and Quarter Reports", "4. Analysts", "5. Consider All together"});
 
         listView.setAdapter(arrayAdapter);
@@ -187,7 +187,7 @@ public class TutorialFragment extends Fragment implements AdapterView.OnItemClic
                 syllabusD.setVisibility(View.VISIBLE);
                 syllabusE.setVisibility(View.VISIBLE);
                 buttonBack.setVisibility(View.VISIBLE);
-                headline.setText("Syllabus");
+                headline.setText("SYLLABUS");
                 headline.setVisibility(View.VISIBLE);
                 syllabusBol = true;
             }
@@ -463,7 +463,7 @@ public class TutorialFragment extends Fragment implements AdapterView.OnItemClic
                         app.userData.getCompleteBol()[25+(index/5)] = true;
                         app.userData.setFunds(2000);
                         app.userData.setFundsFix(2000);
-                        Toast toast = Toast.makeText(getContext(),"  Well Done!!\nYou earn $2000!", Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getContext(),"Well Done!! You earned $2000!", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                     }

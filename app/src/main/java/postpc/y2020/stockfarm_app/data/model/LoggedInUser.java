@@ -1,5 +1,5 @@
 package postpc.y2020.stockfarm_app.data.model;
-// UPDATE GODDAMMIT!!!!
+
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */

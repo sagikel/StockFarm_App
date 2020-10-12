@@ -116,11 +116,10 @@ public class MyFarmFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //farmPager.setCurrentItem(0,true);
         for (Fragment fragment : viewPagerAdapter.mFragments)
         {
             if (fragment instanceof CropFragment && ((CropFragment) fragment).stockName != null)
-            {   // the last condition is important because we can't update fragment which haven't yet been viewed
+            {
                 ((CropFragment) fragment).setWindowText();
                 ((CropFragment) fragment).updateTrees();
             } else if (fragment instanceof SignFragment && ((SignFragment) fragment).playerName != null) {
@@ -137,7 +136,6 @@ public class MyFarmFragment extends Fragment {
 
     private void refreshDataFromServer() {
         String url = volleyApiKeyUrl.getCorrectUrlA();
-        final String finalUrl = url;
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -148,15 +146,10 @@ public class MyFarmFragment extends Fragment {
                                 .setLastPrice(Double.parseDouble(jsonObject.getString("price")));
                     }
                     if (refresh) {
-//                        if (farmPager.getCurrentItem() == 0) {
-//                            farmPager.setAdapter(viewPagerAdapter);
-//                        } else {
-//                            farmPager.setCurrentItem(0,true);
-//                        }
-                        for (Fragment fragment : viewPagerAdapter.mFragments) // SAGI NOTICE: example for how crop fragments are updated
+                        for (Fragment fragment : viewPagerAdapter.mFragments)
                         {
                             if (fragment instanceof CropFragment && ((CropFragment) fragment).stockName != null)
-                            {   // the last condition is important because we can't update fragment which haven't yet been viewed
+                            {
                                 ((CropFragment) fragment).setWindowText();
                                 ((CropFragment) fragment).setTrees();
                             } else if (fragment instanceof SignFragment && ((SignFragment) fragment).playerName != null) {
@@ -195,7 +188,7 @@ public class MyFarmFragment extends Fragment {
     {
         int reelWidth = farmReel.getMeasuredWidth();
         int screenWidth = this.getResources().getDisplayMetrics().widthPixels;
-        return (int) (reelWidth - screenWidth) / (pageNum - 1);
+        return (int) (reelWidth - screenWidth) / (31);
     }
 
     // === Utility nested Classes: === //

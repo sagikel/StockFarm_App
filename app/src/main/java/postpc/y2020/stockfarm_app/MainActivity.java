@@ -12,7 +12,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import postpc.y2020.stockfarm_app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
@@ -32,22 +31,12 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         app = (StockFarmApplication) getApplication();
         navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_my_farm, R.id.navigation_stock_market, R.id.navigation_tutorial)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-
-
-        //NotificationHelper notificationHelper = new NotificationHelper(this);
-        //NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
-        //notificationHelper.getManager().notify(1, nb.build());
-
-
     }
 
     public void startAlarm() {
