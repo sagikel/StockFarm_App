@@ -141,10 +141,10 @@ public class TutorialFragment extends Fragment implements AdapterView.OnItemClic
 
         arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, options);
         arrayAdapter1 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Explanation", "2. Goal", "3. Terms & Definitions", "4. Real Time", "5. Levels"});
-        arrayAdapter2 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. f", "2. g", "3. h", "4. i", "5. j"});
-        arrayAdapter3 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. k", "2. l", "3. m", "4. n", "5. o"});
-        arrayAdapter4 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. p", "2. q", "3. r", "4. s", "5. t"});
-        arrayAdapter5 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. u", "2. v", "3. w", "4. x", "5. y"});
+        arrayAdapter2 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Three parts", "2. The sign", "3. The fields", "4. Stock market", "5. More info"});
+        arrayAdapter3 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Stock", "2. Shareholder", "3. Stock Exchange", "4. Open Price", "5. Stock Symbol"});
+        arrayAdapter4 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Return", "2. Risk and Reward", "3. Risk", "4. Reward", "5. Balance"});
+        arrayAdapter5 = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[]{"1. Charts", "2. Press Release and News", "3. Annual and Quarter Reports", "4. Analysts", "5. Consider All together"});
 
         listView.setAdapter(arrayAdapter);
         listView2.setAdapter(arrayAdapter1);
