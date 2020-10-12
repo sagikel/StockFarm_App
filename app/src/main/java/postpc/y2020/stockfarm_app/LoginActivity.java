@@ -2,6 +2,7 @@ package postpc.y2020.stockfarm_app;
 
 import androidx.annotation.NonNull;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -35,8 +36,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener,
-        OnCompleteListener<DocumentSnapshot> {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     int RC_GOOGLE_SIGN_IN = 646;
     StockFarmApplication app;
     LoginActivity activity;
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String lastUserId = app.sp.getString(getString(R.string.last_user_id), "");
         if (currentUser != null) {
             openLoadingWindow();
-            app.getUserById(currentUser.getUid(), this);
+            getUserById(currentUser.getUid());
         }
         else if (app.userData != null)
         {
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         {
             app.currId = lastUserId;
             openLoadingWindow();
-            app.getUserById(lastUserId, this);
+            getUserById(lastUserId);
         }
     }
 
@@ -203,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            app.getUserById(user.getUid(), activity);
+                            getUserById(user.getUid());
                         } else {
                             // Sign in failed
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
@@ -213,46 +213,52 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
-    @Override
-    public void onComplete(@NonNull Task<DocumentSnapshot> task) { // user data request result
-        if (task.isSuccessful()) {
-            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            FirebaseUser user = mAuth.getCurrentUser();
-            String name;
-            DocumentSnapshot document = (DocumentSnapshot) task.getResult();
-            if (document != null && document.exists()) {
-                // found existing StockFarm account with uid, now we retrieve its data
-                String json = (String) document.get(getString(R.string.firestore_fieldname_userdata));
-                if (user != null) {
-                    app.setUserDataFromServer(user.getUid(), json);
-                    name = user.getDisplayName();
-                }
-                else if (app.currId != null){
-                    app.setUserDataFromServer(app.currId, json);
-                    name = app.userData.getName();
-                }
-                else throw new NullPointerException();
-                String welcomeMsg = "Welcome Back, " + name;
-                Snackbar.make(loadingView, welcomeMsg, Snackbar.LENGTH_SHORT).show();
-            }
-            else {
-                // no such account, need to create one for google user
-                app.generateAccountGoogleUser(user, activity);
-            }
-            new CountDownTimer(2000, 2000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                }
+    public void getUserById(final String Id)
+    {
+        DocumentReference userDocRef = app.db.collection("users").document(Id);
+        userDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    String name;
+                    DocumentSnapshot document = (DocumentSnapshot) task.getResult();
+                    if (document != null && document.exists()) {
+                        // found existing StockFarm account with uid, now we retrieve its data
+                        String json = (String) document.get(getString(R.string.firestore_fieldname_userdata));
+                        if (user != null) {
+                            app.setUserDataFromServer(user.getUid(), json);
+                            name = user.getDisplayName();
+                        }
+                        else if (app.currId != null){
+                            app.setUserDataFromServer(app.currId, json);
+                            name = app.userData.getName();
+                        }
+                        else throw new NullPointerException();
+                        String welcomeMsg = "Welcome Back, " + name;
+                        Snackbar.make(loadingView, welcomeMsg, Snackbar.LENGTH_SHORT).show();
+                    }
+                    else {
+                        // no such account, need to create one for google user
+                        app.generateAccountGoogleUser(user, activity);
+                    }
+                    new CountDownTimer(2000, 2000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                        }
 
-                public void onFinish() {
+                        public void onFinish() {
+                            closeLoadingWindow();
+                            goToFarm();
+                        }
+                    }.start();
+                } else {
                     closeLoadingWindow();
-                    goToFarm();
+                    Snackbar.make(findViewById(R.id.sign_in_layout), getString(R.string.err_query_user_data), Snackbar.LENGTH_SHORT).show();
                 }
-            }.start();
-        } else {
-            closeLoadingWindow();
-            Snackbar.make(findViewById(R.id.sign_in_layout), getString(R.string.err_query_user_data), Snackbar.LENGTH_SHORT).show();
-        }
+            }
+        });
     }
 
     private void regularSignInOrRegister() {

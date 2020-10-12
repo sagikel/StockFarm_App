@@ -207,7 +207,7 @@ public class TradeActivity extends AppCompatActivity {
                     closeKeyboard();
                     calculate();
                 } else {
-                    if (trade) { // TODO להוציא את הסימן שאלה ברגע שעוברים לזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if (trade) { // TODO (trade)
                         findViewById(R.id.trade_layout).setBackground(ContextCompat.getDrawable(activity, R.drawable.market_scale_seeds));
                         action = true;
                         charts.setText("Back");
@@ -504,7 +504,7 @@ public class TradeActivity extends AppCompatActivity {
                     Toast.makeText(context, "You don't have " + amount + " stocks to sell", Toast.LENGTH_LONG).show();
                     return;
                 }
-            } if (!trade){ //TODO(!trade) להוסיף סימן קריאה בזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            } if (!trade){ //TODO(!trade)
                 Toast.makeText(context, "You pass the trading time!", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -514,7 +514,7 @@ public class TradeActivity extends AppCompatActivity {
                     .setMessage("\nAre you sure?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            if (!trade){ //TODO(!trade) להוסיף סימן קריאה בזמן אמת!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            if (!trade){ //TODO(!trade)
                                 Toast.makeText(context, "You pass the trading time!", Toast.LENGTH_LONG).show();
                                 return;
                             }

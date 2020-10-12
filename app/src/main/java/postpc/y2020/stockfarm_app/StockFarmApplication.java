@@ -53,13 +53,6 @@ public class StockFarmApplication extends Application
         updateValues();
     }
 
-
-    public void getUserById(final String Id, Activity activity)
-    {
-        DocumentReference userDocRef = db.collection("users").document(Id);
-        userDocRef.get().addOnCompleteListener((OnCompleteListener<DocumentSnapshot>) activity);
-    }
-
     public String setUserDataFromServer(String id, String json)
     {
         currId = id;
@@ -69,7 +62,8 @@ public class StockFarmApplication extends Application
         return userData.getName();
     }
 
-    public void generateAccountRegularUser(String id, final String regEmail, final String regName, final String regPassword, final LoginActivity activity)
+    public void generateAccountRegularUser(String id, final String regEmail, final String regName,
+                                           final String regPassword, final LoginActivity activity)
     {
         UserData newUser = new UserData(regName,
                 regEmail,
