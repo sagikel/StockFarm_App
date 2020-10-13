@@ -3,6 +3,7 @@ package postpc.y2020.stockfarm_app;
 import androidx.annotation.NonNull;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,17 +15,18 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.*;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.*;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -47,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     AlertDialog regAlert;
     View loadingView;
     View registerView;
-    //Button skip;
+    Context context;
 
 
 
@@ -60,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailBox = findViewById(R.id.email_box);
         passwordBox = findViewById(R.id.password_box);
         logInButton = findViewById(R.id.login_button);
-        //skip = findViewById(R.id.skip);
+        context = this;
         logInButton.setOnClickListener(this);
         TextWatcher textListen = new TextWatcher() {
             @Override
@@ -91,7 +93,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleButton = findViewById(R.id.sign_in_button);
         googleButton.setSize(SignInButton.SIZE_WIDE);
         googleButton.setOnClickListener(this);
-        //skip.setOnClickListener(this);
         getSupportActionBar().hide();
     }
 
@@ -140,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_in_button: // google sign in button pressed
-                openLoadingWindow();
+                //openLoadingWindow();
                 Intent signInIntent = googleClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
                 break;
@@ -184,11 +185,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void HandleGoogleSignIn(@NonNull Task<GoogleSignInAccount> task) {
         try {
             GoogleSignInAccount acct = task.getResult(ApiException.class);
-            if (acct != null) firebaseAuthWithGoogle(acct);
-
+            if (acct != null){
+                firebaseAuthWithGoogle(acct);
+            }
         } catch (ApiException e) {
             Log.w("signIn", "handleSignInResult:error", e);
-            // updateUI(null);
+            //closeLoadingWindow();
+            Toast toast = Toast.makeText(context,getString(R.string.account_creation_failed), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
     }
 
@@ -204,7 +209,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else {
                             // Sign in failed
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
-                            Snackbar.make(findViewById(R.id.sign_in_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            Toast toast = Toast.makeText(context,"Authentication Failed.", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+
                         }
                     }
                 });
@@ -233,14 +241,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             name = app.userData.getName();
                         }
                         else throw new NullPointerException();
-                        String welcomeMsg = "Welcome Back, " + name;
-                        Snackbar.make(loadingView, welcomeMsg, Snackbar.LENGTH_SHORT).show();
                     }
                     else {
                         // no such account, need to create one for google user
                         app.generateAccountGoogleUser(user, activity);
                     }
-                    new CountDownTimer(2000, 2000) {
+                    new CountDownTimer(250, 250) {
                         @Override
                         public void onTick(long millisUntilFinished) {
                         }
@@ -252,7 +258,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }.start();
                 } else {
                     closeLoadingWindow();
-                    Snackbar.make(findViewById(R.id.sign_in_layout), getString(R.string.err_query_user_data), Snackbar.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(context,getString(R.string.err_query_user_data), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
             }
         });
@@ -279,9 +287,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             String json = (String) document.get(getString(R.string.firestore_fieldname_userdata));
                             String name = app.setUserDataFromServer(email, json);
                             app.saveUserForAutoLogIn(email);
-                            String welcomeMsg = "Welcome Back, " + name;
-                            Snackbar.make(loadingView, welcomeMsg, Snackbar.LENGTH_SHORT).show();
-                            new CountDownTimer(2000, 2000) {
+                            new CountDownTimer(250, 250) {
                                 @Override
                                 public void onTick(long millisUntilFinished) {
                                 }
@@ -292,9 +298,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 }
                             }.start();
                         } else {   // wrong password
-                            Snackbar.make(findViewById(R.id.sign_in_layout),
-                                    getString(R.string.wrong_password), Snackbar.LENGTH_SHORT).show();
                             closeLoadingWindow();
+                            Toast toast = Toast.makeText(context,getString(R.string.wrong_password), Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
                         }
                     } else {   // no account associated with mail, refer to register
                         registerNewAccount();
@@ -345,13 +352,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean validEmailPassword(View v, String email, String password)
     {
         if (email.equals("") || !isEmailValid(email)) {
-            Snackbar.make(findViewById(R.id.sign_in_layout),
-                    getString(R.string.invalid_email), Snackbar.LENGTH_SHORT).show();
+            Toast toast = Toast.makeText(context,getString(R.string.invalid_email), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
             return false;
         }
         else if (!isPasswordValid(password)) {
-            Snackbar.make(findViewById(R.id.sign_in_layout),
-                    getString(R.string.invalid_password), 10000).show();
+            Toast toast = Toast.makeText(context,getString(R.string.invalid_password), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
             return false;
         }
         return true;
@@ -375,10 +384,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     {
         if (successful)
         {
-            String msg = "Welcome, " + app.userData.getName() + getString(R.string.new_account_created);
-            Snackbar.make(loadingView,
-                    msg, 4000).show();
-            new CountDownTimer(2000, 2000) {
+            new CountDownTimer(250, 250) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                 }
@@ -391,8 +397,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         else
         {
-            Snackbar.make(loadingView, getString(R.string.account_creation_failed) , 3000).show();
-            closeLoadingWindow();
+            Toast toast = Toast.makeText(context, getString(R.string.account_creation_failed), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
     }
 
@@ -400,14 +407,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
-    }
-
-    private void dummyUser()
-    {
-        emailBox.setText("rishon.babidur@hotmail.co.il");
-        passwordBox.setText("123456");
-        openLoadingWindow();
-        regularSignInOrRegister();
     }
 }
 
