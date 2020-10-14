@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             app.currId = lastUserId;
             openLoadingWindow();
             getUserById(lastUserId);
-        }
+        }//
     }
 
     void openLoadingWindow() {

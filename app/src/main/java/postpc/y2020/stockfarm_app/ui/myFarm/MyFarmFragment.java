@@ -74,7 +74,7 @@ public class MyFarmFragment extends Fragment {
         queue = Volley.newRequestQueue(getContext());
 
 
-        pageNum = app.userData.getActiveStocks().size() + 1; // TODO update this field during trade
+        pageNum = app.userData.getActiveStocks().size() + 1;
 
         refresh = true;
         refreshDataFromServer();

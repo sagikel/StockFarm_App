@@ -220,7 +220,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="63dp"
         android:gravity="center"
         android:text="Learning Area"
         android:textColor="@color/greyFont"
