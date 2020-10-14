@@ -94,12 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleButton.setSize(SignInButton.SIZE_WIDE);
         googleButton.setOnClickListener(this);
         getSupportActionBar().hide();
-    }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String lastUserId = app.sp.getString(getString(R.string.last_user_id), "");
         if (currentUser != null) {

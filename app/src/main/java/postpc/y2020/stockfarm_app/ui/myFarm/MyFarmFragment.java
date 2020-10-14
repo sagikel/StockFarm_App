@@ -97,6 +97,7 @@ public class MyFarmFragment extends Fragment {
             {
                 openNote.setVisibility(View.INVISIBLE);
                 linearLayout.setVisibility(View.INVISIBLE);
+                app.sp.edit().putBoolean(app.userData.getName()+"S", false).apply();
             }
         });
         return view;
@@ -109,7 +110,6 @@ public class MyFarmFragment extends Fragment {
             openNote = view.findViewById(R.id.open_note);
             linearLayout.setVisibility(View.VISIBLE);
             openNote.setVisibility(View.VISIBLE);
-            app.sp.edit().putBoolean(app.userData.getName()+"S", false).apply();
         }
     }
 
