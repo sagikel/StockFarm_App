@@ -10,16 +10,53 @@
       "client_info": {
         "mobilesdk_app_id": "1:334553520115:android:94d55ba3c30d2f8211e486",
         "android_client_info": {
+          "package_name": "com.example.stockfarm_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334553520115-qhorp08e3r7tce7rir54vpgq9v97s2se.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stockfarm_app",
+            "certificate_hash": "73e0f50a722299faa874338dc99e542f900757f0"
+          }
+        },
+        {
+          "client_id": "334553520115-lkejcaefjo1orri5lntuqksnlr1ssgtn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNLhNDmo1uVvLrwNUDNsZLWQh879R2pjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334553520115-q05kjul1kf9poqqf7pnnpjv4bkuesoiv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334553520115:android:cb57714e4686c33e11e486",
+        "android_client_info": {
           "package_name": "postpc.y2020.stockfarm_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "334553520115-gev6bbh1i53oi8683fht69os4fb12mad.apps.googleusercontent.com",
+          "client_id": "334553520115-b96glliacm7u58q7c8i0orrdhk4j5qqc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "postpc.y2020.stockfarm_app",
-            "certificate_hash": "42d4b4d05752fa38ba38bde2be6851a6d7c55f50"
+            "certificate_hash": "73e0f50a722299faa874338dc99e542f900757f0"
           }
         },
         {
