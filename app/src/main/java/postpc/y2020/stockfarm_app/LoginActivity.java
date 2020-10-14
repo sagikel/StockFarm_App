@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     void closeLoadingWindow() {
-        loadingAlert.cancel();
+        if (loadingAlert != null) loadingAlert.cancel();
     }
 
 
@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_in_button: // google sign in button pressed
-                //openLoadingWindow();
+                openLoadingWindow();
                 Intent signInIntent = googleClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
                 break;
@@ -190,7 +190,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         } catch (ApiException e) {
             Log.w("signIn", "handleSignInResult:error", e);
-            //closeLoadingWindow();
+            closeLoadingWindow();
             Toast toast = Toast.makeText(context,getString(R.string.account_creation_failed), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
