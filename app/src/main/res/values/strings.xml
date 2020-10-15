@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">StockFarm</string>
-    <string name="server_client_id">334553520115-q05kjul1kf9poqqf7pnnpjv4bkuesoiv.apps.googleusercontent.com</string>
+    <string name="server_client_id">334553520115–8fgj3pbhlrhu204h0208j2ebr6qqsfho.apps.googleusercontent.com</string>
     <string name="firestore_fieldname_userdata">user_data</string>
     <string name="firestore_fieldname_initialfunds">initial_funds</string>
     <string name="firestore_docID_values">0dySfQ90Q62TiT9mT3yo</string>

@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "334553520115-b96glliacm7u58q7c8i0orrdhk4j5qqc.apps.googleusercontent.com",
+          "client_id": "334553520115-8fgj3pbhlrhu204h0208j2ebr6qqsfho.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "postpc.y2020.stockfarm_app",
@@ -23,7 +23,7 @@
           }
         },
         {
-          "client_id": "334553520115-lkejcaefjo1orri5lntuqksnlr1ssgtn.apps.googleusercontent.com",
+          "client_id": "334553520115-bb6348np98jbth1t3abk5do3jl45takh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -36,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "334553520115-q05kjul1kf9poqqf7pnnpjv4bkuesoiv.apps.googleusercontent.com",
+              "client_id": "334553520115-bb6348np98jbth1t3abk5do3jl45takh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
