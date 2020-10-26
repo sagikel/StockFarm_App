@@ -103,7 +103,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         else if (app.userData != null)
         {
-            Log.d("release!", "got here1");
             goToFarm();
         }
         else if (!lastUserId.equals(""))
@@ -251,7 +250,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         public void onFinish() {
                             closeLoadingWindow();
-                            Log.d("release!", "got here2");
                             goToFarm();
                         }
                     }.start();
@@ -293,7 +291,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                 public void onFinish() {
                                     closeLoadingWindow();
-                                    Log.d("release!", "got here3");
                                     goToFarm();
                                 }
                             }.start();
@@ -391,7 +388,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 public void onFinish() {
                     closeLoadingWindow();
-                    Log.d("release!", "got here4");
                     goToFarm();
                 }
             }.start();
