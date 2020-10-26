@@ -159,6 +159,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 regAlert.cancel();
                 openLoadingWindow();
                 app.generateAccountRegularUser(regEmail, regEmail, regName, regPassword, activity);
+                app.saveUserForAutoLogIn(regEmail);
                 break;
 //            case R.id.skip:
 //                dummyUser();
