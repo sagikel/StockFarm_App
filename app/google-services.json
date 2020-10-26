@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "334553520115-m7iqq2dd8fqaej5fbgqb2bt4q09optap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "postpc.y2020.stockfarm_app",
+            "certificate_hash": "5fe9748990da86dbe99261ae5d0a2f08be5acdeb"
+          }
+        },
+        {
           "client_id": "334553520115-8fgj3pbhlrhu204h0208j2ebr6qqsfho.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -23,7 +31,7 @@
           }
         },
         {
-          "client_id": "334553520115-bb6348np98jbth1t3abk5do3jl45takh.apps.googleusercontent.com",
+          "client_id": "334553520115-q05kjul1kf9poqqf7pnnpjv4bkuesoiv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
