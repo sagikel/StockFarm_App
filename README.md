@@ -9,11 +9,7 @@
 
 Course: POSTPC 2020
 
-Team: Sagi kelner (203666516) & Tomer Fueredi (205700586)
-
-Emails: 
-        sagi.kelner@mail.huji.ac.il 
-        tomerayman@gmail.com
+Team: Sagikel & Tomer Fueredi
 
 ###### App Version: 1.1
  :seedling:
